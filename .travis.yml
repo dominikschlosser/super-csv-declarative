@@ -1,7 +1,7 @@
 language: java
 jdk:
   - oraclejdk8
-script: mvn test $MVN_ARGS
+script: cd super-csv-declarative && mvn test $MVN_ARGS
 env:
   - MVN_ARGS=
   - MVN_ARGS="-P germanLocale"
