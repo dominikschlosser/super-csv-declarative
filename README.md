@@ -1,6 +1,7 @@
 # super-csv-declarative [![Build Status](https://travis-ci.org/dkschlos/super-csv-declarative.svg?branch=master)](https://travis-ci.org/dkschlos/super-csv-declarative)
 
 Unofficial declarative extension to super-csv, currently supporting version 2.4.0.
+
 It mainly provides two new classes:
 - CsvDeclarativeBeanReader
 - CsvDeclarativeBeanWriter
