@@ -33,7 +33,7 @@ public interface CellProcessorProvider<T extends Annotation> {
 	 *            the given annotation
 	 * @return a CellProcessor based on the information in the given annotation
 	 */
-	CellProcessor create(T annotation);
+	CellProcessor create(T annotation, CellProcessor next);
 	
 	/**
 	 * @return the annotation-type (necessary because of Java type-erasure)

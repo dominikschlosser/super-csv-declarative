@@ -29,8 +29,8 @@ public class ConvertToNullCellProcessorProvider implements CellProcessorProvider
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(ConvertNullTo annotation) {
-		return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value());
+	public CellProcessor create(ConvertNullTo annotation, CellProcessor next) {
+		return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value(), next);
 	}
 	
 	/**
