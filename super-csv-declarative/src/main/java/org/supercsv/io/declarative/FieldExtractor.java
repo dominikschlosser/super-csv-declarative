@@ -3,7 +3,9 @@ package org.supercsv.io.declarative;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.util.Form;
@@ -14,7 +16,10 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Ordering;
 
-public class FieldExtractor {
+public final class FieldExtractor {
+	
+	private static final Map<Class<?>, List<Field>> FIELD_CACHE = new HashMap<Class<?>, List<Field>>();
+	
 	/**
 	 * Returns all fields of the given class including those of superclasses.
 	 * 
@@ -23,10 +28,14 @@ public class FieldExtractor {
 	 * @return all fields of the class and its hierarchy
 	 */
 	public static List<Field> getFields(Class<?> clazz) {
+		if( FIELD_CACHE.containsKey(clazz) ) {
+			return FIELD_CACHE.get(clazz);
+		}
 		List<Field> fields = new ArrayList<Field>();
 		extractFields(clazz, fields);
 		List<Field> orderedFields = orderFields(fields);
 		
+		FIELD_CACHE.put(clazz, orderedFields);
 		return orderedFields;
 	}
 	
