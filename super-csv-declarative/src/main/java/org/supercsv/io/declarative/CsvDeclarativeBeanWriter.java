@@ -27,8 +27,6 @@ import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.AbstractCsvWriter;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.Form;
-import org.supercsv.util.ReflectionUtils;
-import org.supercsv.util.ReflectionUtilsExt;
 import org.supercsv.util.Util;
 
 /**
@@ -80,7 +78,7 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 		
 		incrementRowAndLineNo();
 		
-		List<Field> fields = ReflectionUtilsExt.getFields(source.getClass());
+		List<Field> fields = FieldExtractor.getFields(source.getClass());
 		List<Object> beanValues = extractBeanValues(source, fields);
 		
 		List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass());

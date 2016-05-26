@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.provider.OptionalCellProcessorProvider;
 
 /**
@@ -33,5 +34,8 @@ import org.supercsv.io.declarative.provider.OptionalCellProcessorProvider;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface Optional {
-	
+	/**
+	 * Explicitly specifies the order in which processors should be called
+	 */
+	int order() default ProcessorOrder.NOT_SPECIFIED;
 }

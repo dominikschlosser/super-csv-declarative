@@ -37,7 +37,6 @@ import org.supercsv.io.AbstractCsvReader;
 import org.supercsv.io.ITokenizer;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.Form;
-import org.supercsv.util.ReflectionUtils;
 import org.supercsv.util.ReflectionUtilsExt;
 
 /**
@@ -124,7 +123,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
 			throw new IllegalArgumentException("clazz should not be null");
 		}
 		
-		List<Field> fields = ReflectionUtilsExt.getFields(clazz);
+		List<Field> fields = FieldExtractor.getFields(clazz);
 		
 		return readIntoBean(ReflectionUtilsExt.instantiateBean(clazz), fields,
 			cellProcessorExtractor.getCellProcessors(clazz));

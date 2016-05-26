@@ -80,7 +80,7 @@ class BeanCellProcessorExtractor {
 		}
 		
 		List<CellProcessor> cellProcessors = new ArrayList<CellProcessor>();
-		for( Field field : ReflectionUtilsExt.getFields(clazz) ) {
+		for( Field field : FieldExtractor.getFields(clazz) ) {
 			cellProcessors.add(createCellProcessorFor(field));
 		}
 		

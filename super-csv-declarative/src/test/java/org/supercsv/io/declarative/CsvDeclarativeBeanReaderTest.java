@@ -25,10 +25,19 @@ import java.io.StringReader;
 
 import org.junit.After;
 import org.junit.Test;
+import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.Tokenizer;
 import org.supercsv.prefs.CsvPreference;
+import org.supercsv.testbeans.BeanForDefaultOverridingTest;
+import org.supercsv.testbeans.BeanWithChainedAnnotations;
+import org.supercsv.testbeans.BeanWithInheritedProperties;
+import org.supercsv.testbeans.BeanWithSimpleAnnotations;
+import org.supercsv.testbeans.BeanWithoutAnnotations;
+import org.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
+import org.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
+import org.supercsv.testbeans.order.BeanWithPartiallyExplicitlyOrderedFields;
 
 /**
  * Tests the {@link CsvDeclarativeBeanReader}
@@ -84,6 +93,41 @@ public class CsvDeclarativeBeanReaderTest {
 		assertEquals(john, beanReader.read(BeanWithChainedAnnotations.class));
 		assertEquals(max, beanReader.read(BeanWithChainedAnnotations.class));
 		assertNull(beanReader.read(BeanWithChainedAnnotations.class));
+	}
+	
+	@Test
+	public void readBeanWithExplicitFieldOrdering() throws IOException {
+		setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+		BeanWithExplicitlyOrderedFields john = new BeanWithExplicitlyOrderedFields(null, "Doe", 42, 100.5);
+		BeanWithExplicitlyOrderedFields max = new BeanWithExplicitlyOrderedFields("Max", "Mus", 22, 21.4);
+		
+		assertEquals(john, beanReader.read(BeanWithExplicitlyOrderedFields.class));
+		assertEquals(max, beanReader.read(BeanWithExplicitlyOrderedFields.class));
+		assertNull(beanReader.read(BeanWithExplicitlyOrderedFields.class));
+	}
+	
+	@Test(expected = SuperCsvException.class)
+	public void readBeanWithIllegalExplicitFieldOrdering() throws IOException {
+		setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+		BeanWithIllegalExplicitFieldOrder john = new BeanWithIllegalExplicitFieldOrder(null, "Doe", 42, 100.5);
+		BeanWithIllegalExplicitFieldOrder max = new BeanWithIllegalExplicitFieldOrder("Max", "Mus", 22, 21.4);
+		
+		assertEquals(john, beanReader.read(BeanWithIllegalExplicitFieldOrder.class));
+		assertEquals(max, beanReader.read(BeanWithIllegalExplicitFieldOrder.class));
+		assertNull(beanReader.read(BeanWithIllegalExplicitFieldOrder.class));
+	}
+	
+	@Test(expected = SuperCsvException.class)
+	public void readBeanWithPartialExplicitFieldOrdering() throws IOException {
+		setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+		BeanWithPartiallyExplicitlyOrderedFields john = new BeanWithPartiallyExplicitlyOrderedFields(null, "Doe", 42,
+			100.5);
+		BeanWithPartiallyExplicitlyOrderedFields max = new BeanWithPartiallyExplicitlyOrderedFields("Max", "Mus", 22,
+			21.4);
+		
+		assertEquals(john, beanReader.read(BeanWithPartiallyExplicitlyOrderedFields.class));
+		assertEquals(max, beanReader.read(BeanWithPartiallyExplicitlyOrderedFields.class));
+		assertNull(beanReader.read(BeanWithPartiallyExplicitlyOrderedFields.class));
 	}
 	
 	@Test

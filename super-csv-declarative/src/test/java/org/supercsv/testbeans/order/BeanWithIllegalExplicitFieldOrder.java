@@ -1,8 +1,3 @@
-package org.supercsv.io.declarative;
-
-import org.supercsv.io.declarative.annotation.Optional;
-import org.supercsv.io.declarative.annotation.Trim;
-
 /*
  * Copyright 2007 Kasper B. Graversen
  * 
@@ -18,6 +13,12 @@ import org.supercsv.io.declarative.annotation.Trim;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.supercsv.testbeans.order;
+
+import org.supercsv.io.declarative.CsvField;
+import org.supercsv.io.declarative.annotation.Optional;
+import org.supercsv.io.declarative.annotation.Trim;
+import org.supercsv.io.declarative.annotation.Truncate;
 
 /**
  * Test class for declarative mapping
@@ -25,18 +26,28 @@ import org.supercsv.io.declarative.annotation.Trim;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class BeanWithSimpleAnnotations {
+public class BeanWithIllegalExplicitFieldOrder {
 	@Optional
-	private String name;
 	@Trim
+	@Truncate(maxSize = 3)
+	@CsvField(order = 1)
 	private String lastName;
+	
+	@Optional
+	@Trim
+	@CsvField(order = 1)
+	private String name;
+	
+	@CsvField(order = 2)
 	private int age;
+	
+	@CsvField(order = 3)
 	private double weight;
 	
-	public BeanWithSimpleAnnotations() {
+	public BeanWithIllegalExplicitFieldOrder() {
 	}
 	
-	public BeanWithSimpleAnnotations(String name, String lastName, int age, double weight) {
+	public BeanWithIllegalExplicitFieldOrder(String name, String lastName, int age, double weight) {
 		this.name = name;
 		this.lastName = lastName;
 		this.age = age;
@@ -80,7 +91,7 @@ public class BeanWithSimpleAnnotations {
 			return false;
 		if( getClass() != obj.getClass() )
 			return false;
-		BeanWithSimpleAnnotations other = (BeanWithSimpleAnnotations) obj;
+		BeanWithIllegalExplicitFieldOrder other = (BeanWithIllegalExplicitFieldOrder) obj;
 		if( age != other.age )
 			return false;
 		if( lastName == null ) {

@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.io.declarative;
-
-import org.supercsv.io.declarative.annotation.Optional;
-import org.supercsv.io.declarative.annotation.Trim;
-import org.supercsv.io.declarative.annotation.Truncate;
+package org.supercsv.testbeans;
 
 /**
  * Test class for declarative mapping
@@ -25,21 +21,16 @@ import org.supercsv.io.declarative.annotation.Truncate;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class BeanWithChainedAnnotations {
-	@Optional
-	@Trim
+public class BeanWithoutAnnotations {
 	private String name;
-	
-	@Trim
-	@Truncate(maxSize = 3)
 	private String lastName;
 	private int age;
 	private double weight;
 	
-	public BeanWithChainedAnnotations() {
+	public BeanWithoutAnnotations() {
 	}
 	
-	public BeanWithChainedAnnotations(String name, String lastName, int age, double weight) {
+	public BeanWithoutAnnotations(String name, String lastName, int age, double weight) {
 		this.name = name;
 		this.lastName = lastName;
 		this.age = age;
@@ -83,7 +74,7 @@ public class BeanWithChainedAnnotations {
 			return false;
 		if( getClass() != obj.getClass() )
 			return false;
-		BeanWithChainedAnnotations other = (BeanWithChainedAnnotations) obj;
+		BeanWithoutAnnotations other = (BeanWithoutAnnotations) obj;
 		if( age != other.age )
 			return false;
 		if( lastName == null ) {
@@ -99,12 +90,6 @@ public class BeanWithChainedAnnotations {
 		if( Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight) )
 			return false;
 		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "SimpleBeanWithSimpleAnnotations [name=" + name + ", lastName=" + lastName + ", age=" + age
-			+ ", weight=" + weight + "]";
 	}
 	
 }

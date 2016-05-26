@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.provider.ConvertCellProcessorProvider;
 
 /**
@@ -34,4 +35,9 @@ import org.supercsv.io.declarative.provider.ConvertCellProcessorProvider;
 @Target({ ElementType.FIELD })
 public @interface Convert {
 	Class<? extends Converter> value();
+	
+	/**
+	 * Explicitly specifies the order in which processors should be called
+	 */
+	int order() default ProcessorOrder.NOT_SPECIFIED;
 }

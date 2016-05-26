@@ -24,6 +24,10 @@ import java.io.Writer;
 import org.junit.After;
 import org.junit.Test;
 import org.supercsv.prefs.CsvPreference;
+import org.supercsv.testbeans.BeanWithChainedAnnotations;
+import org.supercsv.testbeans.BeanWithInheritedProperties;
+import org.supercsv.testbeans.BeanWithSimpleAnnotations;
+import org.supercsv.testbeans.BeanWithoutAnnotations;
 
 /**
  * @since 2.5
