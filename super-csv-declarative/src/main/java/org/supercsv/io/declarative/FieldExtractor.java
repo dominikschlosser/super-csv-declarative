@@ -40,6 +40,19 @@ public final class FieldExtractor {
 	}
 	
 	private static List<Field> orderFields(List<Field> fields) {
+		final Map<Field, Integer> order = getFieldOrder(fields);
+		
+		Ordering<Field> ordering = Ordering.natural().onResultOf(new Function<Field, Integer>() {
+			
+			public Integer apply(Field field) {
+				return order.get(field);
+			}
+		});
+		
+		return ordering.immutableSortedCopy(fields);
+	}
+	
+	private static Map<Field, Integer> getFieldOrder(List<Field> fields) {
 		final BiMap<Field, Integer> order = HashBiMap.create();
 		BiMap<Integer, Field> inverse = order.inverse();
 		
@@ -69,15 +82,7 @@ public final class FieldExtractor {
 					"If you use @CsvField to explicitly define field-order, you have to do it on all fields. Missing on: {}",
 					missingFields));
 		}
-		
-		Ordering<Field> ordering = Ordering.natural().onResultOf(new Function<Field, Integer>() {
-			
-			public Integer apply(Field field) {
-				return order.get(field);
-			}
-		});
-		
-		return ordering.immutableSortedCopy(fields);
+		return order;
 	}
 	
 	private static void extractFields(Class<?> clazz, List<Field> fields) {
