@@ -60,7 +60,7 @@ class BeanCellProcessorExtractor {
 	 * Constructor that gets a map with default processors
 	 * 
 	 * @param defaultProcessors
-	 *            default processors which are used when no {@link org.supercsv.io.declarative.CellProcessor}
+	 *            default processors which are used when no {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}
 	 *            -annotations can be found on a field
 	 */
 	public BeanCellProcessorExtractor(Map<Class<?>, CellProcessor> defaultProcessors) {
@@ -98,8 +98,8 @@ class BeanCellProcessorExtractor {
 		CellProcessor root = new Transient();
 		boolean foundCellProcessorAnnotation = false;
 		for( Annotation annotation : annotations ) {
-			org.supercsv.io.declarative.CellProcessor cellProcessorMarker = annotation.annotationType().getAnnotation(
-				org.supercsv.io.declarative.CellProcessor.class);
+			org.supercsv.io.declarative.CellProcessorAnnotationDescriptor cellProcessorMarker = annotation.annotationType().getAnnotation(
+				org.supercsv.io.declarative.CellProcessorAnnotationDescriptor.class);
 			if( cellProcessorMarker != null ) {
 				CellProcessorProvider provider = ReflectionUtilsExt.instantiateBean(cellProcessorMarker.provider());
 				if( !provider.getType().isAssignableFrom(annotation.getClass()) ) {

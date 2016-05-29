@@ -30,7 +30,7 @@ import org.supercsv.util.Form;
 import org.supercsv.util.Util;
 
 /**
- * CsvDeclarativeBeanWriter writes a CSV file via conventions and {@link org.supercsv.io.declarative.CellProcessor}
+ * CsvDeclarativeBeanWriter writes a CSV file via conventions and {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}
  * -annotations.
  * 
  * @author Dominik Schlosser
@@ -57,7 +57,7 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 	
 	/**
 	 * Writes a row of a CSV file, using the conventions and mappings provided
-	 * {@link org.supercsv.io.declarative.CellProcessor}-annotations
+	 * {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}-annotations
 	 * 
 	 * @param source
 	 *            The bean-instance to write

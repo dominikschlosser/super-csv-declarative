@@ -40,7 +40,7 @@ import org.supercsv.util.Form;
 import org.supercsv.util.ReflectionUtilsExt;
 
 /**
- * This reader maps csv files to beans via conventions and {@link org.supercsv.io.declarative.CellProcessor}
+ * This reader maps csv files to beans via conventions and {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}
  * -annotations. The fields in the bean must match the csv's fields in type and order. {@link CellProcessor}s are
  * created automatically for all known types. Additional processors can be added by annotating fields with their
  * respective annotations. Annotation-order defines processor call-order.
@@ -99,7 +99,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
 	
 	/**
 	 * Reads a row of a CSV file and populates an instance of the specified class, using the conventional mappings and
-	 * provided {@link org.supercsv.io.declarative.CellProcessor}-annotations
+	 * provided {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}-annotations
 	 * 
 	 * @param clazz
 	 *            the type to instantiate. If the type is a class then a new instance will be created using the default

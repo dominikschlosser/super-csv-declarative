@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.supercsv.io.declarative.CellProcessor;
+import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.supercsv.io.declarative.constraint.provider.UniqueCellProcessorProvider;
 
 /**
@@ -29,7 +29,7 @@ import org.supercsv.io.declarative.constraint.provider.UniqueCellProcessorProvid
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessor(provider = UniqueCellProcessorProvider.class)
+@CellProcessorAnnotationDescriptor(provider = UniqueCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface Unique {

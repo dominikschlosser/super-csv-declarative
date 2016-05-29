@@ -20,8 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.supercsv.io.declarative.CellProcessor;
-import org.supercsv.io.declarative.ProcessorOrder;
+import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.supercsv.io.declarative.provider.TrimCellProcessorProvider;
 
 /**
@@ -30,12 +29,9 @@ import org.supercsv.io.declarative.provider.TrimCellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessor(provider = TrimCellProcessorProvider.class)
+@CellProcessorAnnotationDescriptor(provider = TrimCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface Trim {
-	/**
-	 * Explicitly specifies the order in which processors should be called
-	 */
-	int order() default ProcessorOrder.NOT_SPECIFIED;
+	
 }

@@ -23,10 +23,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.reflections.Reflections;
-import org.supercsv.io.declarative.CellProcessor;
+import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 
 /**
- * Tests all {@link CellProcessor}-annotations and their providers for consistency since the type system cannot do this
+ * Tests all {@link CellProcessorAnnotationDescriptor}-annotations and their providers for consistency since the type system cannot do this
  * for us
  * 
  * @since 2.5
@@ -37,7 +37,7 @@ public class AnnotationAndProviderConsistencyCheck {
 	@Parameters
 	public static Collection<Class<?>> getCellProcessorAnnotations() {
 		Reflections reflections = new Reflections("org.supercsv");
-		return reflections.getTypesAnnotatedWith(CellProcessor.class);
+		return reflections.getTypesAnnotatedWith(CellProcessorAnnotationDescriptor.class);
 	}
 	
 	private Class<?> cellProcessorAnnotationType;
@@ -49,7 +49,7 @@ public class AnnotationAndProviderConsistencyCheck {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void test() throws InstantiationException, IllegalAccessException {
-		CellProcessor cellProcessorAnnotation = cellProcessorAnnotationType.getAnnotation(CellProcessor.class);
+		CellProcessorAnnotationDescriptor cellProcessorAnnotation = cellProcessorAnnotationType.getAnnotation(CellProcessorAnnotationDescriptor.class);
 		Class<? extends CellProcessorProvider> providerType = cellProcessorAnnotation.provider();
 		
 		CellProcessorProvider provider = providerType.newInstance();

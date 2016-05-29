@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.supercsv.io.declarative.CellProcessor;
+import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.supercsv.io.declarative.constraint.provider.ForbidSubStrCellProcessorProvider;
 
 /**
@@ -29,7 +29,7 @@ import org.supercsv.io.declarative.constraint.provider.ForbidSubStrCellProcessor
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessor(provider = ForbidSubStrCellProcessorProvider.class)
+@CellProcessorAnnotationDescriptor(provider = ForbidSubStrCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface ForbidSubStr {

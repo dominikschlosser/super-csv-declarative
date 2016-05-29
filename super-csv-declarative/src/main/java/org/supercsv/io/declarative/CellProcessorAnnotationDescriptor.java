@@ -30,7 +30,7 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.ANNOTATION_TYPE })
-public @interface CellProcessor {
+public @interface CellProcessorAnnotationDescriptor {
 	/**
 	 * @return the provider responsible for CellProcessor-creation
 	 */
