@@ -51,7 +51,7 @@ There is some support for this scenario, though:
 
 ```Java
 public class Person {
-        @Trim
+	@Trim
 	@CsvField(order = 0)
 	private String name;
 	
