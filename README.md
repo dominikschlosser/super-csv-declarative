@@ -75,6 +75,7 @@ public class Person {
 ```
 
 Field ordering can be defined explicitly by the @CsvField-annotation.
+
 **Note**: Using this annotation is all or nothing. You don't use it at all or you need to use it on each field.
 
 Annotation ordering can be defined explicitly by using the @CellProcessors-annotation which gets a list of @CellProcessor-annotations which basically wrap an implementation of the CellProcessorProvider-interface:
