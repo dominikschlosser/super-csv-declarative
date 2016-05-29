@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.annotation.FmtDate;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class FmtDateCellProcessorProvider implements CellProcessorProvider<FmtDate> {
+public class FmtDateCellProcessorProvider implements CellProcessorByAnnotationProvider<FmtDate> {
 	
 	/**
 	 * {@inheritDoc}

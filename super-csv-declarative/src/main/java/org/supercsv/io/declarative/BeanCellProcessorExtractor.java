@@ -33,6 +33,7 @@ import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
 import org.supercsv.io.declarative.provider.CellProcessorProvider;
 import org.supercsv.util.CsvContext;
 import org.supercsv.util.Form;
@@ -60,8 +61,9 @@ class BeanCellProcessorExtractor {
 	 * Constructor that gets a map with default processors
 	 * 
 	 * @param defaultProcessors
-	 *            default processors which are used when no {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}
-	 *            -annotations can be found on a field
+	 *            default processors which are used when no
+	 *            {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor} -annotations can be found on a
+	 *            field
 	 */
 	public BeanCellProcessorExtractor(Map<Class<?>, CellProcessor> defaultProcessors) {
 		this.defaultProcessors = defaultProcessors;
@@ -97,11 +99,17 @@ class BeanCellProcessorExtractor {
 		
 		CellProcessor root = new Transient();
 		boolean foundCellProcessorAnnotation = false;
+		CellProcessors cellProcessors = field.getAnnotation(CellProcessors.class);
+		if( cellProcessors != null ) {
+			return createExplicitlyOrderedCellProcessorPipeline(field, cellProcessors);
+		}
+		
 		for( Annotation annotation : annotations ) {
-			org.supercsv.io.declarative.CellProcessorAnnotationDescriptor cellProcessorMarker = annotation.annotationType().getAnnotation(
-				org.supercsv.io.declarative.CellProcessorAnnotationDescriptor.class);
+			org.supercsv.io.declarative.CellProcessorAnnotationDescriptor cellProcessorMarker = annotation
+				.annotationType().getAnnotation(org.supercsv.io.declarative.CellProcessorAnnotationDescriptor.class);
 			if( cellProcessorMarker != null ) {
-				CellProcessorProvider provider = ReflectionUtilsExt.instantiateBean(cellProcessorMarker.provider());
+				CellProcessorByAnnotationProvider provider = ReflectionUtilsExt.instantiateBean(cellProcessorMarker
+					.provider());
 				if( !provider.getType().isAssignableFrom(annotation.getClass()) ) {
 					throw new SuperCsvReflectionException(
 						Form.at(
@@ -119,6 +127,21 @@ class BeanCellProcessorExtractor {
 		}
 		
 		return mapFieldToDefaultProcessor(field);
+	}
+	
+	private CellProcessor createExplicitlyOrderedCellProcessorPipeline(Field field, CellProcessors cellProcessors) {
+		if( cellProcessors.value().length == 0 ) {
+			return mapFieldToDefaultProcessor(field);
+		}
+		
+		CellProcessor root = new Transient();
+		for( int i = cellProcessors.value().length - 1; i >= 0; i-- ) {
+			org.supercsv.io.declarative.CellProcessor cellProcessorAnnotation = cellProcessors.value()[i];
+			CellProcessorProvider provider = ReflectionUtilsExt.instantiateBean(cellProcessorAnnotation.value());
+			root = provider.create(field, root);
+		}
+		
+		return root;
 	}
 	
 	@SuppressWarnings("unchecked")

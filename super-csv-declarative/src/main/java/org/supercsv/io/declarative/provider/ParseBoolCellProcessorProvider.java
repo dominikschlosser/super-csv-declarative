@@ -15,6 +15,8 @@
  */
 package org.supercsv.io.declarative.provider;
 
+import java.lang.reflect.Field;
+
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.annotation.ParseBool;
@@ -25,7 +27,8 @@ import org.supercsv.io.declarative.annotation.ParseBool;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ParseBoolCellProcessorProvider implements CellProcessorProvider<ParseBool> {
+public class ParseBoolCellProcessorProvider implements CellProcessorByAnnotationProvider<ParseBool>,
+	CellProcessorProvider {
 	
 	/**
 	 * {@inheritDoc}
@@ -33,6 +36,13 @@ public class ParseBoolCellProcessorProvider implements CellProcessorProvider<Par
 	public CellProcessor create(ParseBool annotation, CellProcessor next) {
 		return new org.supercsv.cellprocessor.ParseBool(annotation.trueValue(), annotation.falseValue(),
 			annotation.ignoreCase(), (BoolCellProcessor) next);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public CellProcessor create(Field forField, CellProcessor next) {
+		return new org.supercsv.cellprocessor.ParseBool("true", "false", true, (BoolCellProcessor) next);
 	}
 	
 	/**

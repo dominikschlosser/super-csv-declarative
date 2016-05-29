@@ -15,6 +15,8 @@
  */
 package org.supercsv.io.declarative.provider;
 
+import java.lang.reflect.Field;
+
 import org.supercsv.cellprocessor.Trim;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -25,12 +27,20 @@ import org.supercsv.cellprocessor.ift.StringCellProcessor;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class TrimCellProcessorProvider implements CellProcessorProvider<org.supercsv.io.declarative.annotation.Trim> {
+public class TrimCellProcessorProvider implements
+	CellProcessorByAnnotationProvider<org.supercsv.io.declarative.annotation.Trim>, CellProcessorProvider {
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public CellProcessor create(org.supercsv.io.declarative.annotation.Trim annotation, CellProcessor next) {
+		return new Trim((StringCellProcessor) next);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public CellProcessor create(Field forField, CellProcessor next) {
 		return new Trim((StringCellProcessor) next);
 	}
 	

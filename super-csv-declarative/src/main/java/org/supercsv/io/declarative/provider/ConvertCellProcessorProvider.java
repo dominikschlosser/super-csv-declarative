@@ -26,7 +26,7 @@ import org.supercsv.util.ReflectionUtilsExt;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ConvertCellProcessorProvider implements CellProcessorProvider<Convert> {
+public class ConvertCellProcessorProvider implements CellProcessorByAnnotationProvider<Convert> {
 	
 	/**
 	 * {@inheritDoc}

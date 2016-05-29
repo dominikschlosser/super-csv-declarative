@@ -18,7 +18,7 @@ package org.supercsv.io.declarative.constraint.provider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.DMinMax;
-import org.supercsv.io.declarative.provider.CellProcessorProvider;
+import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
 
 /**
  * CellProcessorProvider for DMinMax
@@ -26,7 +26,7 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class DMinMaxCellProcessorProvider implements CellProcessorProvider<DMinMax> {
+public class DMinMaxCellProcessorProvider implements CellProcessorByAnnotationProvider<DMinMax> {
 	
 	/**
 	 * {@inheritDoc}

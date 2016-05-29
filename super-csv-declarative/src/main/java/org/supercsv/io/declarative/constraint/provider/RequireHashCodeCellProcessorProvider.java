@@ -17,7 +17,7 @@ package org.supercsv.io.declarative.constraint.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.RequireHashCode;
-import org.supercsv.io.declarative.provider.CellProcessorProvider;
+import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
 
 /**
  * CellProcessorProvider for RequireHashCode
@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class RequireHashCodeCellProcessorProvider implements CellProcessorProvider<RequireHashCode> {
+public class RequireHashCodeCellProcessorProvider implements CellProcessorByAnnotationProvider<RequireHashCode> {
 	
 	/**
 	 * {@inheritDoc}

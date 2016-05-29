@@ -17,7 +17,7 @@ package org.supercsv.io.declarative.constraint.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.StrMinMax;
-import org.supercsv.io.declarative.provider.CellProcessorProvider;
+import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
 
 /**
  * CellProcessorProvider for StrMinMax
@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class StrMinMaxCellProcessorProvider implements CellProcessorProvider<StrMinMax> {
+public class StrMinMaxCellProcessorProvider implements CellProcessorByAnnotationProvider<StrMinMax> {
 	
 	/**
 	 * {@inheritDoc}

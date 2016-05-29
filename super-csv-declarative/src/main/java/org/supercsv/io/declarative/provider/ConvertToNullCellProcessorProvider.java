@@ -24,7 +24,7 @@ package org.supercsv.io.declarative.provider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.annotation.ConvertNullTo;
 
-public class ConvertToNullCellProcessorProvider implements CellProcessorProvider<ConvertNullTo> {
+public class ConvertToNullCellProcessorProvider implements CellProcessorByAnnotationProvider<ConvertNullTo> {
 	
 	/**
 	 * {@inheritDoc}

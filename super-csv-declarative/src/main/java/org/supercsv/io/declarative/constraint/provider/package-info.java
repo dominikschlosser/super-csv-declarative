@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * This package contains {@link org.supercsv.io.declarative.provider.CellProcessorProvider}-implementations 
+ * This package contains {@link org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider}-implementations 
  * which are used to instantiate {@link org.supercsv.cellprocessor.ift.CellProcessor}s from annotations
  */
 package org.supercsv.io.declarative.constraint.provider;

@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.annotation.Truncate;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class TruncateCellProcessorProvider implements CellProcessorProvider<Truncate> {
+public class TruncateCellProcessorProvider implements CellProcessorByAnnotationProvider<Truncate> {
 	
 	/**
 	 * {@inheritDoc}

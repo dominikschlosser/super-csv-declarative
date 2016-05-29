@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.annotation.FmtNumber;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class FmtNumberCellProcessorProvider implements CellProcessorProvider<FmtNumber> {
+public class FmtNumberCellProcessorProvider implements CellProcessorByAnnotationProvider<FmtNumber> {
 	
 	/**
 	 * {@inheritDoc}

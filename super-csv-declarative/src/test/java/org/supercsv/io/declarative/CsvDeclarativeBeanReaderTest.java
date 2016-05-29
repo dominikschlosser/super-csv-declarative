@@ -35,6 +35,7 @@ import org.supercsv.testbeans.BeanWithChainedAnnotations;
 import org.supercsv.testbeans.BeanWithInheritedProperties;
 import org.supercsv.testbeans.BeanWithSimpleAnnotations;
 import org.supercsv.testbeans.BeanWithoutAnnotations;
+import org.supercsv.testbeans.order.BeanWithExplicitlyOrderedAnnotations;
 import org.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
 import org.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
 import org.supercsv.testbeans.order.BeanWithPartiallyExplicitlyOrderedFields;
@@ -93,6 +94,17 @@ public class CsvDeclarativeBeanReaderTest {
 		assertEquals(john, beanReader.read(BeanWithChainedAnnotations.class));
 		assertEquals(max, beanReader.read(BeanWithChainedAnnotations.class));
 		assertNull(beanReader.read(BeanWithChainedAnnotations.class));
+	}
+	
+	@Test
+	public void readSimpleBeanWithExplicitlyOrderedAnnotations() throws IOException {
+		setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+		BeanWithExplicitlyOrderedAnnotations john = new BeanWithExplicitlyOrderedAnnotations(null, "Doe", 42, 100.5);
+		BeanWithExplicitlyOrderedAnnotations max = new BeanWithExplicitlyOrderedAnnotations("Max", "Mus", 22, 21.4);
+		
+		assertEquals(john, beanReader.read(BeanWithExplicitlyOrderedAnnotations.class));
+		assertEquals(max, beanReader.read(BeanWithExplicitlyOrderedAnnotations.class));
+		assertNull(beanReader.read(BeanWithExplicitlyOrderedAnnotations.class));
 	}
 	
 	@Test

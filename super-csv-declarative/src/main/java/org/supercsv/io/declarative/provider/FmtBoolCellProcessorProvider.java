@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.annotation.FmtBool;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class FmtBoolCellProcessorProvider implements CellProcessorProvider<FmtBool> {
+public class FmtBoolCellProcessorProvider implements CellProcessorByAnnotationProvider<FmtBool> {
 	
 	/**
 	 * {@inheritDoc}

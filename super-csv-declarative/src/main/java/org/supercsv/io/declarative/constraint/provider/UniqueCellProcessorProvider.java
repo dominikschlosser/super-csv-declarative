@@ -15,8 +15,11 @@
  */
 package org.supercsv.io.declarative.constraint.provider;
 
+import java.lang.reflect.Field;
+
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.Unique;
+import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
 import org.supercsv.io.declarative.provider.CellProcessorProvider;
 
 /**
@@ -25,12 +28,19 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class UniqueCellProcessorProvider implements CellProcessorProvider<Unique> {
+public class UniqueCellProcessorProvider implements CellProcessorByAnnotationProvider<Unique>, CellProcessorProvider {
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public CellProcessor create(Unique annotation, CellProcessor next) {
+		return new org.supercsv.cellprocessor.constraint.Unique(next);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public CellProcessor create(Field forField, CellProcessor next) {
 		return new org.supercsv.cellprocessor.constraint.Unique(next);
 	}
 	

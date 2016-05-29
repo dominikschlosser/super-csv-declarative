@@ -25,7 +25,7 @@ import org.supercsv.io.declarative.annotation.StrReplace;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class StrReplaceCellProcessorProvider implements CellProcessorProvider<StrReplace> {
+public class StrReplaceCellProcessorProvider implements CellProcessorByAnnotationProvider<StrReplace> {
 	
 	/**
 	 * {@inheritDoc}

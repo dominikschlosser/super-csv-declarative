@@ -15,6 +15,8 @@
  */
 package org.supercsv.io.declarative.provider;
 
+import java.lang.reflect.Field;
+
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.io.declarative.annotation.ParseDouble;
@@ -25,12 +27,20 @@ import org.supercsv.io.declarative.annotation.ParseDouble;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ParseDoubleCellProcessorProvider implements CellProcessorProvider<ParseDouble> {
+public class ParseDoubleCellProcessorProvider implements CellProcessorByAnnotationProvider<ParseDouble>,
+	CellProcessorProvider {
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public CellProcessor create(ParseDouble annotation, CellProcessor next) {
+		return new org.supercsv.cellprocessor.ParseDouble((DoubleCellProcessor) next);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public CellProcessor create(Field forField, CellProcessor next) {
 		return new org.supercsv.cellprocessor.ParseDouble((DoubleCellProcessor) next);
 	}
 	

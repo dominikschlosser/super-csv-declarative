@@ -15,40 +15,28 @@
  */
 package org.supercsv.io.declarative.provider;
 
-import java.lang.reflect.Field;
+import java.lang.annotation.Annotation;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.cellprocessor.ift.LongCellProcessor;
-import org.supercsv.io.declarative.annotation.ParseInt;
 
 /**
- * CellProcessorProvider for {@link ParseInt}
+ * Responsible for creation of {@link CellProcessor}s from Annotations
  * 
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ParseIntCellProcessorProvider implements CellProcessorByAnnotationProvider<ParseInt>,
-	CellProcessorProvider {
+public interface CellProcessorByAnnotationProvider<T extends Annotation> {
+	/**
+	 * Creates the cell processor from the given annotation
+	 * 
+	 * @param annotation
+	 *            the given annotation
+	 * @return a CellProcessor based on the information in the given annotation
+	 */
+	CellProcessor create(T annotation, CellProcessor next);
 	
 	/**
-	 * {@inheritDoc}
+	 * @return the annotation-type (necessary because of Java type-erasure)
 	 */
-	public CellProcessor create(ParseInt annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ParseInt((LongCellProcessor) next);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessor create(Field forField, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ParseInt((LongCellProcessor) next);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseInt> getType() {
-		return ParseInt.class;
-	}
-	
+	Class<T> getType();
 }

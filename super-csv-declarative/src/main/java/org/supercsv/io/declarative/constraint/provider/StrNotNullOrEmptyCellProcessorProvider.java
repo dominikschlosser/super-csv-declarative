@@ -15,8 +15,11 @@
  */
 package org.supercsv.io.declarative.constraint.provider;
 
+import java.lang.reflect.Field;
+
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.StrNotNullOrEmpty;
+import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
 import org.supercsv.io.declarative.provider.CellProcessorProvider;
 
 /**
@@ -25,12 +28,20 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class StrNotNullOrEmptyCellProcessorProvider implements CellProcessorProvider<StrNotNullOrEmpty> {
+public class StrNotNullOrEmptyCellProcessorProvider implements CellProcessorByAnnotationProvider<StrNotNullOrEmpty>,
+	CellProcessorProvider {
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public CellProcessor create(StrNotNullOrEmpty annotation, CellProcessor next) {
+		return new org.supercsv.cellprocessor.constraint.StrNotNullOrEmpty(next);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public CellProcessor create(Field forField, CellProcessor next) {
 		return new org.supercsv.cellprocessor.constraint.StrNotNullOrEmpty(next);
 	}
 	
