@@ -41,10 +41,10 @@ CellProcessor[] processors = new CellProcessor[] {
 		};
 ```
 
-**Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the written order but others like Dalvik may sort them alphabetically or in any other way.
-Since super-csv-declarative relies heavily on field/annotation-order, it is right now **only** usable on JVMs which return fields/annotations in the written order.
+**Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
-**If you are certain that your application will only be executed on JVMs which return fields/annotations in the written order, the following is irrelevant to you.**
+
+**If you are certain that your application will only be executed on JVMs which return fields/annotations in the declared order, the following is irrelevant to you.**
 
 If your application needs to support such environments you should consider using vanilla-super-csv since the declarative approach won't work as smoothly if you can not rely on field/annotation-ordering.
 There is some support for this scenario, though:
