@@ -81,22 +81,7 @@ Annotation ordering can be defined explicitly by using the @CellProcessors-annot
 
 
 ```Java
-/**
- * Responsible for creation of a {@link CellProcessor}
- * 
- * @since 2.5
- * @author Dominik Schlosser
- */
 public interface CellProcessorProvider {
-	/**
-	 * Creates a new cell processor-instance
-	 * 
-	 * @param forField
-	 *            the corresponding bean-field for this processor
-	 * @param next
-	 *            the next {@link CellProcessor} in the chain
-	 * @return created cell processor
-	 */
 	CellProcessor create(Field forField, CellProcessor next);
 }
 ```
