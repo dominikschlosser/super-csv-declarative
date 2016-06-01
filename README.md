@@ -48,8 +48,7 @@ CellProcessor[] processors = new CellProcessor[] {
 
 **If you are certain that your application will only be executed on JVMs which return fields/annotations in the declared order, the following section is irrelevant to you.**
 
-If your application needs to support such environments you should consider using vanilla-super-csv since the declarative approach won't work as smoothly if you can not rely on field/annotation-ordering.
-There is some support for this scenario, though:
+If your application needs to support such environments you should use the *@CsvField*-annotation for fields and the *order*-fields which is defined in all standard CellProcessor-annotations and can be added to custom ones as well:
 
 ```Java
 public class Person {
@@ -76,13 +75,26 @@ public class Person {
 }
 ```
 
-Field ordering can be defined explicitly by the @CsvField-annotation.
+**Note**: Using the *@CsvField*-annotation is all or nothing. You don't use it at all or you need to use it on each field.
 
-**Note**: Using this annotation is all or nothing. You don't use it at all or you need to use it on each field.
+## Implementing new Processors
 
-Annotation ordering can be defined explicitly by defining an "order"-field in your annotation, which then has to be used in the corresponding *DeclarativeCellProcessorProvider<T>*.
-This is how the OptionalCellProcessorProvider is implemented:
+If you want to add a new processor and use it in a declarative way, you need to implement the corresponding *annotation* and a *DeclarativeCellProcessorProvider*-implementation which gets the annotation-instance and creates a *CellProcessorFactory*.
 
+The following example shows how to implement all those necessary parts:
+
+### The annotation
+
+```Java
+@CellProcessorAnnotationDescriptor(provider = OptionalCellProcessorProvider.class)
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD })
+public @interface Optional {
+	int order() default ProcessorOrder.UNDEFINED;
+}
+```
+
+### The provider
 
 ```Java
 public class OptionalCellProcessorProvider implements
@@ -107,19 +119,3 @@ public class OptionalCellProcessorProvider implements
 	
 }
 ```
-
-## Implementing new Processors
-
-If you want to add a new processor and use it in a declarative way, you need to implement the corresponding *annotation* and a *DeclarativeCellProcessorProvider*-implementation which gets the annotation-instance and creates a *CellProcessorFactory*.
-The provider/factory-part should be done as shown above, the corresponding Optional-annotation looks like this:
-
-```Java
-@CellProcessorAnnotationDescriptor(provider = OptionalCellProcessorProvider.class)
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
-public @interface Optional {
-	int order() default ProcessorOrder.UNDEFINED;
-}
-```
-
-Note the *@CellProcessorAnnotationDescriptor*-annotation.
