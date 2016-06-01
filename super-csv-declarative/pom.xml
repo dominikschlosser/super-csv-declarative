@@ -16,9 +16,9 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.sf.supercsv</groupId>
+	<groupId>de.dkschlos</groupId>
 	<artifactId>super-csv-declarative</artifactId>
-	<version>2.4.0</version>
+	<version>1.0</version>
 	
 	<name>Super CSV Declarative Extension</name>
 	<description>An extension for Super CSV that enables declarative/implicit configuration of POJO-CSV-Mappings</description>
@@ -72,27 +72,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	<profiles>
-		<profile>
-			<id>germanLocale</id>
-			<properties>
-				<surefireArgs>-Duser.country=DE -Duser.language=de</surefireArgs>
-			</properties>
-		</profile>
-		<profile>
-			<id>turkishLocale</id>
-			<properties>
-				<surefireArgs>-Duser.country=TR -Duser.language=tr</surefireArgs>
-			</properties>
-		</profile>
-		<profile>
-			<id>englishLocale</id>
-			<properties>
-				<surefireArgs>-Duser.country=GB -Duser.language=en</surefireArgs>
-			</properties>
-		</profile>
-	</profiles>
 	
 	<dependencies>
 		<dependency>
