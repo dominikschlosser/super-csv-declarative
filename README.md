@@ -44,7 +44,7 @@ CellProcessor[] processors = new CellProcessor[] {
 **Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
 
-**If you are certain that your application will only be executed on JVMs which return fields/annotations in the declared order, the following is irrelevant to you.**
+**If you are certain that your application will only be executed on JVMs which return fields/annotations in the declared order, the following section is irrelevant to you.**
 
 If your application needs to support such environments you should consider using vanilla-super-csv since the declarative approach won't work as smoothly if you can not rely on field/annotation-ordering.
 There is some support for this scenario, though:
@@ -55,8 +55,8 @@ public class Person {
 	@CsvField(order = 0)
 	private String name;
 	
-	@CellProcessors({ @CellProcessor(OptionalCellProcessorProvider.class),
-		@CellProcessor(TrimCellProcessorProvider.class) })
+	@Optional(order = 0)
+	@Trim(order = 1)
 	@CsvField(order = 1)
 	private String middleName;
 	
@@ -78,13 +78,45 @@ Field ordering can be defined explicitly by the @CsvField-annotation.
 
 **Note**: Using this annotation is all or nothing. You don't use it at all or you need to use it on each field.
 
-Annotation ordering can be defined explicitly by using the @CellProcessors-annotation which gets a list of @CellProcessor-annotations which basically wrap an implementation of the CellProcessorProvider-interface:
+Annotation ordering can be defined explicitly by defining an "order"-field in your annotation, which then has to be used in the corresponding *DeclarativeCellProcessorProvider<T>*.
+This is how the OptionalCellProcessorProvider is implemented:
 
 
 ```Java
-public interface CellProcessorProvider {
-	CellProcessor create(Field forField, CellProcessor next);
+public class OptionalCellProcessorProvider implements
+	DeclarativeCellProcessorProvider<org.supercsv.io.declarative.annotation.Optional> {
+	
+	public CellProcessorFactory create(final org.supercsv.io.declarative.annotation.Optional annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new Optional(next);
+			}
+		};
+	}
+	
+	public Class<org.supercsv.io.declarative.annotation.Optional> getType() {
+		return org.supercsv.io.declarative.annotation.Optional.class;
+	}
+	
 }
 ```
 
-There are default implementations for processors which dont need parameters. If you need to pass parameters to a processor you have to provide your own implementation of the above interface.
+**Implementing new Processors**
+If you want to add a new processor and use it in a declarative way, you need to implement the corresponding *annotation*, a *DeclarativeCellProcessorProvider*-implementation which gets the annotation-instance and creates a *CellProcessorFactory*.
+The provider/factory-part should be done as shown above, the corresponding Optional-annotation looks like this:
+
+```Java
+@CellProcessorAnnotationDescriptor(provider = OptionalCellProcessorProvider.class)
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD })
+public @interface Optional {
+	int order() default ProcessorOrder.UNDEFINED;
+}
+```
+
+Note the *@CellProcessorAnnotationDescriptor*-annotation.
