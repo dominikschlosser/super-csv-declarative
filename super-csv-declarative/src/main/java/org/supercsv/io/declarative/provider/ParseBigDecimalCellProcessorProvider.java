@@ -15,8 +15,6 @@
  */
 package org.supercsv.io.declarative.provider;
 
-import java.lang.reflect.Field;
-
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.annotation.ParseBigDecimal;
 
@@ -26,21 +24,22 @@ import org.supercsv.io.declarative.annotation.ParseBigDecimal;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ParseBigDecimalCellProcessorProvider implements CellProcessorByAnnotationProvider<ParseBigDecimal>,
-	CellProcessorProvider {
+public class ParseBigDecimalCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseBigDecimal> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(ParseBigDecimal annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ParseBigDecimal(next);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessor create(Field forField, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ParseBigDecimal(next);
+	public CellProcessorFactory create(final ParseBigDecimal annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.ParseBigDecimal(next);
+			}
+		};
 	}
 	
 	/**

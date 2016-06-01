@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * This package contains {@link org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider}-implementations 
- * which are used to instantiate {@link org.supercsv.cellprocessor.ift.CellProcessor}s from annotations
- */
-package org.supercsv.io.declarative.provider;
+package org.supercsv.io.declarative;
+
+public final class ProcessorOrder {
+	public static final int UNDEFINED = -1;
+}

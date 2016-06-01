@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * Marker-annotation for CellProcessor-Annotations
@@ -34,5 +34,5 @@ public @interface CellProcessorAnnotationDescriptor {
 	/**
 	 * @return the provider responsible for CellProcessor-creation
 	 */
-	Class<? extends CellProcessorByAnnotationProvider> provider();
+	Class<? extends DeclarativeCellProcessorProvider> provider();
 }

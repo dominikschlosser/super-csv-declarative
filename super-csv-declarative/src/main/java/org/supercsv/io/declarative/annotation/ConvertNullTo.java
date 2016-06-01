@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.provider.ConvertToNullCellProcessorProvider;
 
 /**
@@ -37,4 +38,6 @@ public @interface ConvertNullTo {
 	 * @return the String to use if the value is null
 	 */
 	String value();
+	
+	int order() default ProcessorOrder.UNDEFINED;
 }

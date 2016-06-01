@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.provider.TruncateCellProcessorProvider;
 
 /**
@@ -42,4 +43,6 @@ public @interface Truncate {
 	 * @return the String to append if the input is truncated (e.g. "...")
 	 */
 	String suffix() default "";
+	
+	int order() default ProcessorOrder.UNDEFINED;
 }

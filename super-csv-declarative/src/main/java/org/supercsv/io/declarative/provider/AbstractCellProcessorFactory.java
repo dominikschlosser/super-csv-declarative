@@ -15,22 +15,10 @@
  */
 package org.supercsv.io.declarative.provider;
 
-import java.lang.reflect.Field;
+import org.supercsv.io.declarative.ProcessorOrder;
 
-import org.supercsv.cellprocessor.ift.CellProcessor;
-
-/**
- * Responsible for creation of a {@link CellProcessor}
- * 
- * @since 2.5
- * @author Dominik Schlosser
- */
-public interface CellProcessorProvider {
-	/**
-	 * Creates a new cell processor-instance
-	 * 
-	 * @return created cell processor
-	 */
-	CellProcessor create(Field forField, CellProcessor next);
-	
+public abstract class AbstractCellProcessorFactory implements CellProcessorFactory {
+	public int getOrder() {
+		return ProcessorOrder.UNDEFINED;
+	}
 }

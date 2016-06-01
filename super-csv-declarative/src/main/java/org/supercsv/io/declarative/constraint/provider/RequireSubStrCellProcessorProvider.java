@@ -17,7 +17,8 @@ package org.supercsv.io.declarative.constraint.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.RequireSubStr;
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
+import org.supercsv.io.declarative.provider.CellProcessorFactory;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for RequireSubStr
@@ -25,13 +26,22 @@ import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class RequireSubStrCellProcessorProvider implements CellProcessorByAnnotationProvider<RequireSubStr> {
+public class RequireSubStrCellProcessorProvider implements DeclarativeCellProcessorProvider<RequireSubStr> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(RequireSubStr annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.RequireSubStr(annotation.requiredSubStrings(), next);
+	public CellProcessorFactory create(final RequireSubStr annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.constraint.RequireSubStr(annotation.requiredSubStrings(), next);
+			}
+		};
 	}
 	
 	/**

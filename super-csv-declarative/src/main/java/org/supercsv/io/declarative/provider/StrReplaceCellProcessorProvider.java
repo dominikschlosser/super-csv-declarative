@@ -25,13 +25,23 @@ import org.supercsv.io.declarative.annotation.StrReplace;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class StrReplaceCellProcessorProvider implements CellProcessorByAnnotationProvider<StrReplace> {
+public class StrReplaceCellProcessorProvider implements DeclarativeCellProcessorProvider<StrReplace> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(StrReplace annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.StrReplace(annotation.pattern(), annotation.replacement(), (StringCellProcessor) next);
+	public CellProcessorFactory create(final StrReplace annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.StrReplace(annotation.pattern(), annotation.replacement(),
+					(StringCellProcessor) next);
+			}
+		};
 	}
 	
 	/**

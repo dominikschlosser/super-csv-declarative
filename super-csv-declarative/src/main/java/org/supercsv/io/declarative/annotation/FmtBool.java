@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.provider.FmtBoolCellProcessorProvider;
 
 /**
@@ -42,4 +43,6 @@ public @interface FmtBool {
 	 * @return the String to use if the value is false
 	 */
 	String falseValue();
+	
+	int order() default ProcessorOrder.UNDEFINED;
 }

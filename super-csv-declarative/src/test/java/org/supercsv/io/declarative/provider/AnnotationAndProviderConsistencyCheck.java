@@ -50,9 +50,9 @@ public class AnnotationAndProviderConsistencyCheck {
 	@Test
 	public void test() throws InstantiationException, IllegalAccessException {
 		CellProcessorAnnotationDescriptor cellProcessorAnnotation = cellProcessorAnnotationType.getAnnotation(CellProcessorAnnotationDescriptor.class);
-		Class<? extends CellProcessorByAnnotationProvider> providerType = cellProcessorAnnotation.provider();
+		Class<? extends DeclarativeCellProcessorProvider> providerType = cellProcessorAnnotation.provider();
 		
-		CellProcessorByAnnotationProvider provider = providerType.newInstance();
+		DeclarativeCellProcessorProvider provider = providerType.newInstance();
 		
 		Assert.assertEquals(cellProcessorAnnotationType, provider.getType());
 	}

@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 import java.text.SimpleDateFormat;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.provider.FmtDateCellProcessorProvider;
 
 /**
@@ -38,4 +39,6 @@ public @interface FmtDate {
 	 * @return the date format String (see {@link SimpleDateFormat})
 	 */
 	String format() default "";
+	
+	int order() default ProcessorOrder.UNDEFINED;
 }

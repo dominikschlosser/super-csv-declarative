@@ -17,7 +17,8 @@ package org.supercsv.io.declarative.constraint.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.ForbidSubStr;
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
+import org.supercsv.io.declarative.provider.CellProcessorFactory;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for ForbidSubStr
@@ -25,13 +26,22 @@ import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ForbidSubStrCellProcessorProvider implements CellProcessorByAnnotationProvider<ForbidSubStr> {
+public class ForbidSubStrCellProcessorProvider implements DeclarativeCellProcessorProvider<ForbidSubStr> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(ForbidSubStr annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.ForbidSubStr(annotation.forbiddenSubStrings(), next);
+	public CellProcessorFactory create(final ForbidSubStr annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.constraint.ForbidSubStr(annotation.forbiddenSubStrings(), next);
+			}
+		};
 	}
 	
 	/**

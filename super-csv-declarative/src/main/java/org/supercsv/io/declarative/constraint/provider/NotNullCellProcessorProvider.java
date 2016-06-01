@@ -15,12 +15,10 @@
  */
 package org.supercsv.io.declarative.constraint.provider;
 
-import java.lang.reflect.Field;
-
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.NotNull;
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
-import org.supercsv.io.declarative.provider.CellProcessorProvider;
+import org.supercsv.io.declarative.provider.CellProcessorFactory;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for NotNull
@@ -28,20 +26,22 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class NotNullCellProcessorProvider implements CellProcessorByAnnotationProvider<NotNull>, CellProcessorProvider {
+public class NotNullCellProcessorProvider implements DeclarativeCellProcessorProvider<NotNull> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(NotNull annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.NotNull(next);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessor create(Field forField, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.NotNull(next);
+	public CellProcessorFactory create(final NotNull annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.constraint.NotNull(next);
+			}
+		};
 	}
 	
 	/**

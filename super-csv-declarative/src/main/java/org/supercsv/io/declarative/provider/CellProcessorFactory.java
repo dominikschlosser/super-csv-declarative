@@ -15,28 +15,10 @@
  */
 package org.supercsv.io.declarative.provider;
 
-import java.lang.annotation.Annotation;
-
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
-/**
- * Responsible for creation of {@link CellProcessor}s from Annotations
- * 
- * @since 2.5
- * @author Dominik Schlosser
- */
-public interface CellProcessorByAnnotationProvider<T extends Annotation> {
-	/**
-	 * Creates the cell processor from the given annotation
-	 * 
-	 * @param annotation
-	 *            the given annotation
-	 * @return a CellProcessor based on the information in the given annotation
-	 */
-	CellProcessor create(T annotation, CellProcessor next);
+public interface CellProcessorFactory {
+	CellProcessor create(CellProcessor next);
 	
-	/**
-	 * @return the annotation-type (necessary because of Java type-erasure)
-	 */
-	Class<T> getType();
+	int getOrder();
 }

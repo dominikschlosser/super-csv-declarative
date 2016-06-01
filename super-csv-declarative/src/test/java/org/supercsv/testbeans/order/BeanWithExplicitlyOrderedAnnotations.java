@@ -15,12 +15,9 @@
  */
 package org.supercsv.testbeans.order;
 
-import org.supercsv.io.declarative.CellProcessor;
-import org.supercsv.io.declarative.CellProcessors;
+import org.supercsv.io.declarative.annotation.Optional;
 import org.supercsv.io.declarative.annotation.Trim;
 import org.supercsv.io.declarative.annotation.Truncate;
-import org.supercsv.io.declarative.provider.OptionalCellProcessorProvider;
-import org.supercsv.io.declarative.provider.TrimCellProcessorProvider;
 
 /**
  * Test class for declarative mapping
@@ -30,12 +27,12 @@ import org.supercsv.io.declarative.provider.TrimCellProcessorProvider;
  */
 public class BeanWithExplicitlyOrderedAnnotations {
 	
-	@CellProcessors({ @CellProcessor(OptionalCellProcessorProvider.class),
-		@CellProcessor(TrimCellProcessorProvider.class) })
+	@Trim(order = 1)
+	@Optional(order = 0)
 	private String name;
 	
-	@Trim
-	@Truncate(maxSize = 3)
+	@Trim(order = 0)
+	@Truncate(order = 1, maxSize = 3)
 	private String lastName;
 	private int age;
 	private double weight;

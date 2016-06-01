@@ -17,7 +17,8 @@ package org.supercsv.io.declarative.constraint.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.StrLen;
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
+import org.supercsv.io.declarative.provider.CellProcessorFactory;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for StrLen
@@ -25,13 +26,22 @@ import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class StrLenCellProcessorProvider implements CellProcessorByAnnotationProvider<StrLen> {
+public class StrLenCellProcessorProvider implements DeclarativeCellProcessorProvider<StrLen> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(StrLen annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.Strlen(annotation.requiredLengths(), next);
+	public CellProcessorFactory create(final StrLen annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.constraint.Strlen(annotation.requiredLengths(), next);
+			}
+		};
 	}
 	
 	/**

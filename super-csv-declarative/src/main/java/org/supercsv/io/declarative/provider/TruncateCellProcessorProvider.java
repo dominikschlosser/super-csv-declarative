@@ -25,13 +25,23 @@ import org.supercsv.io.declarative.annotation.Truncate;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class TruncateCellProcessorProvider implements CellProcessorByAnnotationProvider<Truncate> {
+public class TruncateCellProcessorProvider implements DeclarativeCellProcessorProvider<Truncate> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(Truncate annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.Truncate(annotation.maxSize(), annotation.suffix(), (StringCellProcessor) next);
+	public CellProcessorFactory create(final Truncate annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.Truncate(annotation.maxSize(), annotation.suffix(),
+					(StringCellProcessor) next);
+			}
+		};
 	}
 	
 	/**

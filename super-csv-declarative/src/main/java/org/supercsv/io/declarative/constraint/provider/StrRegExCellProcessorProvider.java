@@ -18,7 +18,8 @@ package org.supercsv.io.declarative.constraint.provider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.StrRegEx;
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
+import org.supercsv.io.declarative.provider.CellProcessorFactory;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for StrRegEx
@@ -26,13 +27,23 @@ import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class StrRegExCellProcessorProvider implements CellProcessorByAnnotationProvider<StrRegEx> {
+public class StrRegExCellProcessorProvider implements DeclarativeCellProcessorProvider<StrRegEx> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(StrRegEx annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.StrRegEx(annotation.regex(), (StringCellProcessor) next);
+	public CellProcessorFactory create(final StrRegEx annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.constraint.StrRegEx(annotation.regex(),
+					(StringCellProcessor) next);
+			}
+		};
 	}
 	
 	/**

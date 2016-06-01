@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.constraint.provider.UniqueHashCodeCellProcessorProvider;
 
 /**
@@ -33,5 +34,5 @@ import org.supercsv.io.declarative.constraint.provider.UniqueHashCodeCellProcess
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface UniqueHashCode {
-	
+	int order() default ProcessorOrder.UNDEFINED;
 }

@@ -15,39 +15,28 @@
  */
 package org.supercsv.io.declarative.provider;
 
+import java.lang.annotation.Annotation;
+
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.io.declarative.annotation.FmtNumber;
 
 /**
- * CellProcessorProvider for FmtNumber
+ * Responsible for creation of {@link CellProcessor}s from Annotations
  * 
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class FmtNumberCellProcessorProvider implements DeclarativeCellProcessorProvider<FmtNumber> {
+public interface DeclarativeCellProcessorProvider<T extends Annotation> {
+	/**
+	 * Creates the cell processor from the given annotation
+	 * 
+	 * @param annotation
+	 *            the given annotation
+	 * @return a CellProcessor based on the information in the given annotation
+	 */
+	CellProcessorFactory create(T annotation);
 	
 	/**
-	 * {@inheritDoc}
+	 * @return the annotation-type (necessary because of Java type-erasure)
 	 */
-	public CellProcessorFactory create(final FmtNumber annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.FmtNumber(annotation.decimalFormat(), (StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<FmtNumber> getType() {
-		return FmtNumber.class;
-	}
-	
+	Class<T> getType();
 }

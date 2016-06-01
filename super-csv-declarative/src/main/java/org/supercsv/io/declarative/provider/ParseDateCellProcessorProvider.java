@@ -15,7 +15,6 @@
  */
 package org.supercsv.io.declarative.provider;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -28,23 +27,24 @@ import org.supercsv.io.declarative.annotation.ParseDate;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ParseDateCellProcessorProvider implements CellProcessorByAnnotationProvider<ParseDate>,
-	CellProcessorProvider {
+public class ParseDateCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseDate> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(ParseDate annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ParseDate(annotation.format(), annotation.lenient(),
-			annotation.locale() == null || annotation.locale() == "" ? null : new Locale(annotation.locale()),
-			(DateCellProcessor) next);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessor create(Field forField, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ParseDate("yyyyMMdd", false, null, (DateCellProcessor) next);
+	public CellProcessorFactory create(final ParseDate annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.ParseDate(annotation.format(), annotation.lenient(),
+					annotation.locale() == null || annotation.locale() == "" ? null : new Locale(annotation.locale()),
+					(DateCellProcessor) next);
+			}
+		};
 	}
 	
 	/**

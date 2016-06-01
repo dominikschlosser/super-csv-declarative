@@ -24,13 +24,22 @@ package org.supercsv.io.declarative.provider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.annotation.ConvertNullTo;
 
-public class ConvertToNullCellProcessorProvider implements CellProcessorByAnnotationProvider<ConvertNullTo> {
+public class ConvertToNullCellProcessorProvider implements DeclarativeCellProcessorProvider<ConvertNullTo> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(ConvertNullTo annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value(), next);
+	public CellProcessorFactory create(final ConvertNullTo annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value(), next);
+			}
+		};
 	}
 	
 	/**

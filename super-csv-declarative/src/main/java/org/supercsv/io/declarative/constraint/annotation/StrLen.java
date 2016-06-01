@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.constraint.provider.StrLenCellProcessorProvider;
 
 /**
@@ -34,4 +35,6 @@ import org.supercsv.io.declarative.constraint.provider.StrLenCellProcessorProvid
 @Target({ ElementType.FIELD })
 public @interface StrLen {
 	int[] requiredLengths();
+	
+	int order() default ProcessorOrder.UNDEFINED;
 }

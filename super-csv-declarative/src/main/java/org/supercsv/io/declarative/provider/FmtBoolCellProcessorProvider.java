@@ -25,13 +25,23 @@ import org.supercsv.io.declarative.annotation.FmtBool;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class FmtBoolCellProcessorProvider implements CellProcessorByAnnotationProvider<FmtBool> {
+public class FmtBoolCellProcessorProvider implements DeclarativeCellProcessorProvider<FmtBool> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(FmtBool annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.FmtBool(annotation.trueValue(), annotation.falseValue(), (StringCellProcessor) next);
+	public CellProcessorFactory create(final FmtBool annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.FmtBool(annotation.trueValue(), annotation.falseValue(),
+					(StringCellProcessor) next);
+			}
+		};
 	}
 	
 	/**

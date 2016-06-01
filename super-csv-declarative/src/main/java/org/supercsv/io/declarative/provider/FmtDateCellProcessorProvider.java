@@ -25,13 +25,22 @@ import org.supercsv.io.declarative.annotation.FmtDate;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class FmtDateCellProcessorProvider implements CellProcessorByAnnotationProvider<FmtDate> {
+public class FmtDateCellProcessorProvider implements DeclarativeCellProcessorProvider<FmtDate> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(FmtDate annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.FmtDate(annotation.format(), (StringCellProcessor) next);
+	public CellProcessorFactory create(final FmtDate annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.FmtDate(annotation.format(), (StringCellProcessor) next);
+			}
+		};
 	}
 	
 	/**

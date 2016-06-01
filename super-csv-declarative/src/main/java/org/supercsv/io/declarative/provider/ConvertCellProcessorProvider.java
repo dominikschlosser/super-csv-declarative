@@ -17,7 +17,6 @@ package org.supercsv.io.declarative.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.annotation.Convert;
-import org.supercsv.util.ReflectionUtils;
 import org.supercsv.util.ReflectionUtilsExt;
 
 /**
@@ -26,13 +25,23 @@ import org.supercsv.util.ReflectionUtilsExt;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class ConvertCellProcessorProvider implements CellProcessorByAnnotationProvider<Convert> {
+public class ConvertCellProcessorProvider implements DeclarativeCellProcessorProvider<Convert> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(Convert annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.Convert(ReflectionUtilsExt.instantiateBean(annotation.value()), next);
+	public CellProcessorFactory create(final Convert annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.Convert(ReflectionUtilsExt.instantiateBean(annotation.value()),
+					next);
+			}
+		};
 	}
 	
 	/**

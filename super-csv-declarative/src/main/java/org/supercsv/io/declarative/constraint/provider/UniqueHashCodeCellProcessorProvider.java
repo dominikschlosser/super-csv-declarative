@@ -15,12 +15,10 @@
  */
 package org.supercsv.io.declarative.constraint.provider;
 
-import java.lang.reflect.Field;
-
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.declarative.constraint.annotation.UniqueHashCode;
-import org.supercsv.io.declarative.provider.CellProcessorByAnnotationProvider;
-import org.supercsv.io.declarative.provider.CellProcessorProvider;
+import org.supercsv.io.declarative.provider.CellProcessorFactory;
+import org.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for UniqueHashCode
@@ -28,21 +26,22 @@ import org.supercsv.io.declarative.provider.CellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class UniqueHashCodeCellProcessorProvider implements CellProcessorByAnnotationProvider<UniqueHashCode>,
-	CellProcessorProvider {
+public class UniqueHashCodeCellProcessorProvider implements DeclarativeCellProcessorProvider<UniqueHashCode> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public CellProcessor create(UniqueHashCode annotation, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.UniqueHashCode(next);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessor create(Field forField, CellProcessor next) {
-		return new org.supercsv.cellprocessor.constraint.UniqueHashCode(next);
+	public CellProcessorFactory create(final UniqueHashCode annotation) {
+		return new CellProcessorFactory() {
+			
+			public int getOrder() {
+				return annotation.order();
+			}
+			
+			public CellProcessor create(CellProcessor next) {
+				return new org.supercsv.cellprocessor.constraint.UniqueHashCode(next);
+			}
+		};
 	}
 	
 	/**

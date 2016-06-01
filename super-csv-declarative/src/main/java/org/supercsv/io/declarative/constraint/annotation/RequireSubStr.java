@@ -21,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import org.supercsv.io.declarative.ProcessorOrder;
 import org.supercsv.io.declarative.constraint.provider.RequireSubStrCellProcessorProvider;
 
 /**
@@ -34,4 +35,6 @@ import org.supercsv.io.declarative.constraint.provider.RequireSubStrCellProcesso
 @Target({ ElementType.FIELD })
 public @interface RequireSubStr {
 	String[] requiredSubStrings();
+	
+	int order() default ProcessorOrder.UNDEFINED;
 }
