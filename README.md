@@ -41,7 +41,50 @@ CellProcessor[] processors = new CellProcessor[] {
 		};
 ```
 
-**Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the written order but others like Dalvik may sort them alphabetically or in any other way.
-Since super-csv-declarative relies heavily on field/annotation-order, it is right now **only** usable on JVMs which return fields/annotations in the written order.
+**Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
-A possible future extension is the possibility to provide the order manually (an extra annotation for fields and a new annotation parameter for processor-annotations).
+
+**If you are certain that your application will only be executed on JVMs which return fields/annotations in the declared order, the following is irrelevant to you.**
+
+If your application needs to support such environments you should consider using vanilla-super-csv since the declarative approach won't work as smoothly if you can not rely on field/annotation-ordering.
+There is some support for this scenario, though:
+
+```Java
+public class Person {
+	@Trim
+	@CsvField(order = 0)
+	private String name;
+	
+	@CellProcessors({ @CellProcessor(OptionalCellProcessorProvider.class),
+		@CellProcessor(TrimCellProcessorProvider.class) })
+	@CsvField(order = 1)
+	private String middleName;
+	
+	@Trim
+	@CsvField(order = 2)
+	private String lastName;
+	
+	@CsvField(order = 3)
+	private int age;
+	
+	@CsvField(order = 4)
+	private double weight;
+
+	// getters omitted
+}
+```
+
+Field ordering can be defined explicitly by the @CsvField-annotation.
+
+**Note**: Using this annotation is all or nothing. You don't use it at all or you need to use it on each field.
+
+Annotation ordering can be defined explicitly by using the @CellProcessors-annotation which gets a list of @CellProcessor-annotations which basically wrap an implementation of the CellProcessorProvider-interface:
+
+
+```Java
+public interface CellProcessorProvider {
+	CellProcessor create(Field forField, CellProcessor next);
+}
+```
+
+There are default implementations for processors which dont need parameters. If you need to pass parameters to a processor you have to provide your own implementation of the above interface.
