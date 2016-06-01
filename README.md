@@ -45,9 +45,6 @@ CellProcessor[] processors = new CellProcessor[] {
 
 **Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
-
-**If you are certain that your application will only be executed on JVMs which return fields/annotations in the declared order, the following section is irrelevant to you.**
-
 If your application needs to support such environments you should use the *@CsvField*-annotation for fields and the *order*-fields which is defined in all standard CellProcessor-annotations and can be added to custom ones as well:
 
 ```Java
