@@ -41,6 +41,8 @@ CellProcessor[] processors = new CellProcessor[] {
 		};
 ```
 
+## Explicit field/annotation-order
+
 **Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
 
@@ -106,7 +108,8 @@ public class OptionalCellProcessorProvider implements
 }
 ```
 
-**Implementing new Processors**
+## Implementing new Processors
+
 If you want to add a new processor and use it in a declarative way, you need to implement the corresponding *annotation*, a *DeclarativeCellProcessorProvider*-implementation which gets the annotation-instance and creates a *CellProcessorFactory*.
 The provider/factory-part should be done as shown above, the corresponding Optional-annotation looks like this:
 
