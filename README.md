@@ -41,6 +41,19 @@ CellProcessor[] processors = new CellProcessor[] {
 		};
 ```
 
+## Ignoring fields
+
+```Java
+public class Person {
+	private static final int THE_ANSWER = 42;
+	
+	@CsvTransient
+	private String toIgnore;
+}
+```
+
+Static fields are ignored as well as all fields annotated with *@CsvTransient*.
+
 ## Explicit field/annotation-order
 
 **Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
