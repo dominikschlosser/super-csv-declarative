@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.supercsv.io.declarative.ProcessorOrder;
+import org.supercsv.io.declarative.StandardCsvContexts;
 import org.supercsv.io.declarative.provider.FmtDateCellProcessorProvider;
 
 /**
@@ -31,7 +32,7 @@ import org.supercsv.io.declarative.provider.FmtDateCellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtDateCellProcessorProvider.class)
+@CellProcessorAnnotationDescriptor(provider = FmtDateCellProcessorProvider.class, contexts = { StandardCsvContexts.WRITE })
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface FmtDate {

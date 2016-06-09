@@ -24,6 +24,7 @@ import java.io.Writer;
 import org.junit.After;
 import org.junit.Test;
 import org.supercsv.prefs.CsvPreference;
+import org.supercsv.testbeans.BeanForReadAndWrite;
 import org.supercsv.testbeans.BeanWithChainedAnnotations;
 import org.supercsv.testbeans.BeanWithInheritedProperties;
 import org.supercsv.testbeans.BeanWithSimpleAnnotations;
@@ -88,6 +89,16 @@ public class CsvDeclarativeBeanWriterTest {
 		beanWriter.write(max);
 		
 		assertEquals("John,Doe,42,100.5,Note 1\r\nMax,Mustermann,22,21.4,Note 2\r\n", result.toString());
+	}
+	
+	@Test
+	public void writeBeanWithReadAndWriteAnnotations() throws IOException {
+		BeanForReadAndWrite beanForReadAndWrite = new BeanForReadAndWrite(false);
+		beanWriter = new CsvDeclarativeBeanWriter(result, CsvPreference.STANDARD_PREFERENCE);
+		
+		beanWriter.write(beanForReadAndWrite);
+		
+		assertEquals("falsch\r\n", result.toString());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

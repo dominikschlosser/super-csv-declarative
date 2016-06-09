@@ -30,8 +30,8 @@ import org.supercsv.util.Form;
 import org.supercsv.util.Util;
 
 /**
- * CsvDeclarativeBeanWriter writes a CSV file via conventions and {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}
- * -annotations.
+ * CsvDeclarativeBeanWriter writes a CSV file via conventions and
+ * {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor} -annotations.
  * 
  * @author Dominik Schlosser
  */
@@ -81,7 +81,8 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 		List<Field> fields = FieldExtractor.getFields(source.getClass());
 		List<Object> beanValues = extractBeanValues(source, fields);
 		
-		List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass());
+		List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass(),
+			StandardCsvContexts.WRITE);
 		
 		Util.executeCellProcessors(processedColumns, beanValues,
 			processors.toArray(new CellProcessor[processors.size()]), getLineNumber(), getRowNumber());

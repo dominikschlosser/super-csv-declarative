@@ -31,6 +31,7 @@ import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.Tokenizer;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.testbeans.BeanForDefaultOverridingTest;
+import org.supercsv.testbeans.BeanForReadAndWrite;
 import org.supercsv.testbeans.BeanWithChainedAnnotations;
 import org.supercsv.testbeans.BeanWithInheritedProperties;
 import org.supercsv.testbeans.BeanWithSimpleAnnotations;
@@ -94,6 +95,14 @@ public class CsvDeclarativeBeanReaderTest {
 		assertEquals(john, beanReader.read(BeanWithChainedAnnotations.class));
 		assertEquals(max, beanReader.read(BeanWithChainedAnnotations.class));
 		assertNull(beanReader.read(BeanWithChainedAnnotations.class));
+	}
+	
+	@Test
+	public void readBeanWithReadAndWriteAnnotations() throws IOException {
+		BeanForReadAndWrite beanForReadAndWrite = new BeanForReadAndWrite(true);
+		beanReader = new CsvDeclarativeBeanReader(new StringReader("j"), CsvPreference.STANDARD_PREFERENCE);
+		
+		assertEquals(beanForReadAndWrite, beanReader.read(BeanForReadAndWrite.class));
 	}
 	
 	@Test

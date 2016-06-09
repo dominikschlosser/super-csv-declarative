@@ -47,7 +47,7 @@ import org.supercsv.util.ReflectionUtilsExt;
  * @author Dominik Schlosser
  */
 class BeanCellProcessorExtractor {
-	private Map<Class<?>, List<CellProcessor>> CELL_PROCESSOR_CACHE = new HashMap<Class<?>, List<CellProcessor>>();
+	private Map<CacheKey, List<CellProcessor>> CELL_PROCESSOR_CACHE = new HashMap<CacheKey, List<CellProcessor>>();
 	
 	private Map<Class<?>, CellProcessor> defaultProcessors;
 	
@@ -77,23 +77,24 @@ class BeanCellProcessorExtractor {
 	 *            class to extract processors from
 	 * @return all found cell processors
 	 */
-	public <T> List<CellProcessor> getCellProcessors(Class<T> clazz) {
-		if( CELL_PROCESSOR_CACHE.containsKey(clazz) ) {
-			return CELL_PROCESSOR_CACHE.get(clazz);
+	public <T> List<CellProcessor> getCellProcessors(Class<T> clazz, String context) {
+		CacheKey cacheKey = new CacheKey(clazz, context);
+		if( CELL_PROCESSOR_CACHE.containsKey(cacheKey) ) {
+			return CELL_PROCESSOR_CACHE.get(cacheKey);
 		}
 		
 		List<CellProcessor> cellProcessors = new ArrayList<CellProcessor>();
 		for( Field field : FieldExtractor.getFields(clazz) ) {
-			cellProcessors.add(createCellProcessorFor(field));
+			cellProcessors.add(createCellProcessorFor(field, context));
 		}
 		
-		CELL_PROCESSOR_CACHE.put(clazz, cellProcessors);
+		CELL_PROCESSOR_CACHE.put(cacheKey, cellProcessors);
 		
 		return cellProcessors;
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private CellProcessor createCellProcessorFor(Field field) {
+	private CellProcessor createCellProcessorFor(Field field, String context) {
 		List<Annotation> annotations = Arrays.asList(field.getAnnotations());
 		Collections.reverse(annotations);
 		
@@ -104,7 +105,7 @@ class BeanCellProcessorExtractor {
 		for( Annotation annotation : annotations ) {
 			org.supercsv.io.declarative.CellProcessorAnnotationDescriptor cellProcessorMarker = annotation
 				.annotationType().getAnnotation(org.supercsv.io.declarative.CellProcessorAnnotationDescriptor.class);
-			if( cellProcessorMarker != null ) {
+			if( cellProcessorMarker != null && Arrays.asList(cellProcessorMarker.contexts()).contains(context) ) {
 				DeclarativeCellProcessorProvider provider = ReflectionUtilsExt.instantiateBean(cellProcessorMarker
 					.provider());
 				if( !provider.getType().isAssignableFrom(annotation.getClass()) ) {
@@ -156,6 +157,56 @@ class BeanCellProcessorExtractor {
 		StringCellProcessor, DateCellProcessor, BoolCellProcessor {
 		public <T> T execute(Object value, CsvContext context) {
 			return next.execute(value, context);
+		}
+		
+	}
+	
+	private static class CacheKey {
+		private Class<?> fieldClass;
+		private String context;
+		
+		public CacheKey(Class<?> fieldClass, String context) {
+			this.fieldClass = fieldClass;
+			this.context = context;
+		}
+		
+		public Class<?> getFieldClass() {
+			return fieldClass;
+		}
+		
+		public String getContext() {
+			return context;
+		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((context == null) ? 0 : context.hashCode());
+			result = prime * result + ((fieldClass == null) ? 0 : fieldClass.hashCode());
+			return result;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if( this == obj )
+				return true;
+			if( obj == null )
+				return false;
+			if( getClass() != obj.getClass() )
+				return false;
+			CacheKey other = (CacheKey) obj;
+			if( context == null ) {
+				if( other.context != null )
+					return false;
+			} else if( !context.equals(other.context) )
+				return false;
+			if( fieldClass == null ) {
+				if( other.fieldClass != null )
+					return false;
+			} else if( !fieldClass.equals(other.fieldClass) )
+				return false;
+			return true;
 		}
 		
 	}

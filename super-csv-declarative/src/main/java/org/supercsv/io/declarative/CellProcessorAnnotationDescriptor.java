@@ -34,5 +34,11 @@ public @interface CellProcessorAnnotationDescriptor {
 	/**
 	 * @return the provider responsible for CellProcessor-creation
 	 */
+	@SuppressWarnings("rawtypes")
 	Class<? extends DeclarativeCellProcessorProvider> provider();
+	
+	/**
+	 * @return contexts for which the cell processor is applicable
+	 */
+	String[] contexts() default { StandardCsvContexts.READ, StandardCsvContexts.WRITE };
 }

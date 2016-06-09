@@ -40,10 +40,11 @@ import org.supercsv.util.Form;
 import org.supercsv.util.ReflectionUtilsExt;
 
 /**
- * This reader maps csv files to beans via conventions and {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor}
- * -annotations. The fields in the bean must match the csv's fields in type and order. {@link CellProcessor}s are
- * created automatically for all known types. Additional processors can be added by annotating fields with their
- * respective annotations. Annotation-order defines processor call-order.
+ * This reader maps csv files to beans via conventions and
+ * {@link org.supercsv.io.declarative.CellProcessorAnnotationDescriptor} -annotations. The fields in the bean must match
+ * the csv's fields in type and order. {@link CellProcessor}s are created automatically for all known types. Additional
+ * processors can be added by annotating fields with their respective annotations. Annotation-order defines processor
+ * call-order.
  * 
  * @since 2.5
  * @author Dominik Schlosser
@@ -126,7 +127,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
 		List<Field> fields = FieldExtractor.getFields(clazz);
 		
 		return readIntoBean(ReflectionUtilsExt.instantiateBean(clazz), fields,
-			cellProcessorExtractor.getCellProcessors(clazz));
+			cellProcessorExtractor.getCellProcessors(clazz, StandardCsvContexts.READ));
 	}
 	
 	private <T> T populateBean(final T resultBean, List<Field> fields) {

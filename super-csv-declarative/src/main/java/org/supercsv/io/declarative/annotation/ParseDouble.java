@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.supercsv.io.declarative.ProcessorOrder;
+import org.supercsv.io.declarative.StandardCsvContexts;
 import org.supercsv.io.declarative.provider.ParseDoubleCellProcessorProvider;
 
 /**
@@ -30,7 +31,7 @@ import org.supercsv.io.declarative.provider.ParseDoubleCellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = ParseDoubleCellProcessorProvider.class)
+@CellProcessorAnnotationDescriptor(provider = ParseDoubleCellProcessorProvider.class, contexts = { StandardCsvContexts.READ })
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface ParseDouble {

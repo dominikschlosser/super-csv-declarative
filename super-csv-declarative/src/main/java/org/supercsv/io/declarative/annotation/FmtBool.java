@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 
 import org.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.supercsv.io.declarative.ProcessorOrder;
+import org.supercsv.io.declarative.StandardCsvContexts;
 import org.supercsv.io.declarative.provider.FmtBoolCellProcessorProvider;
 
 /**
@@ -30,7 +31,7 @@ import org.supercsv.io.declarative.provider.FmtBoolCellProcessorProvider;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtBoolCellProcessorProvider.class)
+@CellProcessorAnnotationDescriptor(provider = FmtBoolCellProcessorProvider.class, contexts = { StandardCsvContexts.WRITE })
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface FmtBool {
