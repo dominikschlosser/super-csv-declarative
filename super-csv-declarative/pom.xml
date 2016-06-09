@@ -22,7 +22,12 @@
 	
 	<name>Super CSV Declarative Extension</name>
 	<description>An extension for Super CSV that enables declarative/implicit configuration of POJO-CSV-Mappings</description>
+	<url>https://github.com/dkschlos/super-csv-declarative</url>
 	<packaging>jar</packaging>
+	
+	<scm>
+		<url>https://github.com/dkschlos/super-csv-declarative.git</url>
+	</scm>
 	
 	<licenses>
 	    <license>
