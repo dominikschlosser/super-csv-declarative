@@ -15,6 +15,8 @@
  */
 package org.supercsv.testbeans;
 
+import org.supercsv.io.declarative.CsvTransient;
+
 /**
  * Test class for declarative mapping
  * 
@@ -22,6 +24,11 @@ package org.supercsv.testbeans;
  * @author Dominik Schlosser
  */
 public class BeanWithoutAnnotations {
+	private static final String SHOULD_BE_IGNORED = "bla";
+	
+	@CsvTransient
+	private String shouldBeIgnored;
+	
 	private String name;
 	private String lastName;
 	private int age;

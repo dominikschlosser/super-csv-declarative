@@ -1,8 +1,8 @@
 package org.supercsv.io.declarative;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +90,10 @@ public final class FieldExtractor {
 			extractFields(clazz.getSuperclass(), fields);
 		}
 		
-		fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+		for( Field field : clazz.getDeclaredFields() ) {
+			if( field.getAnnotation(CsvTransient.class) == null && !Modifier.isStatic(field.getModifiers()) ) {
+				fields.add(field);
+			}
+		}
 	}
 }
