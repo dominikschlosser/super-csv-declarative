@@ -23,7 +23,7 @@ import com.github.dkschlos.io.declarative.CsvTransient;
  * @since 2.5
  * @author Dominik Schlosser
  */
-class BeanWithoutAnnotations {
+public class BeanWithoutAnnotations {
 	@SuppressWarnings("unused")
 	private static final String SHOULD_BE_IGNORED = "bla";
 	
@@ -36,29 +36,29 @@ class BeanWithoutAnnotations {
 	private int age;
 	private double weight;
 	
-	BeanWithoutAnnotations() {
+	public BeanWithoutAnnotations() {
 	}
 	
-	BeanWithoutAnnotations(String name, String lastName, int age, double weight) {
+	public BeanWithoutAnnotations(String name, String lastName, int age, double weight) {
 		this.name = name;
 		this.lastName = lastName;
 		this.age = age;
 		this.weight = weight;
 	}
-	
-	String getName() {
+
+	public String getName() {
 		return name;
 	}
-	
-	String getLastName() {
+
+	public String getLastName() {
 		return lastName;
 	}
-	
-	int getAge() {
+
+	public int getAge() {
 		return age;
 	}
-	
-	double getWeight() {
+
+	public double getWeight() {
 		return weight;
 	}
 	
