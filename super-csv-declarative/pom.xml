@@ -16,7 +16,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.dkschlos</groupId>
+	<groupId>com.github.dkschlos</groupId>
 	<artifactId>super-csv-declarative</artifactId>
 	<version>1.0</version>
 	
