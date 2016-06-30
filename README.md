@@ -129,3 +129,14 @@ public class OptionalCellProcessorProvider implements
 	
 }
 ```
+
+## Installation
+
+Get it from Maven Central:
+```Maven
+<dependency>
+    <groupId>com.github.dkschlos</groupId>
+    <artifactId>super-csv-declarative</artifactId>
+    <version>1.0</version>
+</dependency>
+```
