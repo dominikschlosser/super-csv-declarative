@@ -15,8 +15,6 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
-import java.util.Collection;
-
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,6 +22,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.reflections.Reflections;
+
+import java.util.Collection;
 
 /**
  * Tests all {@link CellProcessorAnnotationDescriptor}-annotations and their providers for consistency since the type system cannot do this
@@ -36,7 +36,7 @@ import org.reflections.Reflections;
 public class AnnotationAndProviderConsistencyCheck {
 	@Parameters
 	public static Collection<Class<?>> getCellProcessorAnnotations() {
-		Reflections reflections = new Reflections("org.supercsv");
+		Reflections reflections = new Reflections("com.github.dkschlos.supercsv");
 		return reflections.getTypesAnnotatedWith(CellProcessorAnnotationDescriptor.class);
 	}
 	
