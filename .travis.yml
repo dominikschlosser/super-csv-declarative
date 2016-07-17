@@ -6,3 +6,5 @@ env:
   - MVN_ARGS=
   - MVN_ARGS="-P germanLocale"
   - MVN_ARGS="-P englishLocale"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
