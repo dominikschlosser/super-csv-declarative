@@ -27,13 +27,14 @@ import com.github.dkschlos.supercsv.io.declarative.provider.ParseDoubleCellProce
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.ParseDouble}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = ParseDoubleCellProcessorProvider.class, contexts = { StandardCsvContexts.READ })
+@CellProcessorAnnotationDescriptor(provider = ParseDoubleCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ParseDouble {
-	int order() default ProcessorOrder.UNDEFINED;
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

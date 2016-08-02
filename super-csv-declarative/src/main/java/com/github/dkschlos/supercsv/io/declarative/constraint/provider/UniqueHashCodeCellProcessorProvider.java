@@ -22,33 +22,33 @@ import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProce
 
 /**
  * CellProcessorProvider for UniqueHashCode
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class UniqueHashCodeCellProcessorProvider implements DeclarativeCellProcessorProvider<UniqueHashCode> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final UniqueHashCode annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.UniqueHashCode(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<UniqueHashCode> getType() {
-		return UniqueHashCode.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final UniqueHashCode annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.UniqueHashCode(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<UniqueHashCode> getType() {
+        return UniqueHashCode.class;
+    }
+
 }

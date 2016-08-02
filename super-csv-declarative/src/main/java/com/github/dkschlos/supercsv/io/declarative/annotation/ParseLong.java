@@ -27,13 +27,14 @@ import com.github.dkschlos.supercsv.io.declarative.provider.ParseLongCellProcess
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.ParseLong}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = ParseLongCellProcessorProvider.class, contexts = { StandardCsvContexts.READ })
+@CellProcessorAnnotationDescriptor(provider = ParseLongCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ParseLong {
-	int order() default ProcessorOrder.UNDEFINED;
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

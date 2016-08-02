@@ -26,13 +26,14 @@ import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescri
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.constraint.NotNull}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = NotNullCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface NotNull {
-	int order() default ProcessorOrder.UNDEFINED;
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

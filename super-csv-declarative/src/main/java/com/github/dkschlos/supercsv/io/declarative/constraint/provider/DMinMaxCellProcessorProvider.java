@@ -23,34 +23,34 @@ import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory
 
 /**
  * CellProcessorProvider for DMinMax
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class DMinMaxCellProcessorProvider implements DeclarativeCellProcessorProvider<DMinMax> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final DMinMax annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.DMinMax(annotation.min(), annotation.max(),
-					(DoubleCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<DMinMax> getType() {
-		return DMinMax.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final DMinMax annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.DMinMax(annotation.min(), annotation.max(),
+                        (DoubleCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<DMinMax> getType() {
+        return DMinMax.class;
+    }
+
 }

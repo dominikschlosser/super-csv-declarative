@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for ForbidSubStr
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ForbidSubStrCellProcessorProvider implements DeclarativeCellProcessorProvider<ForbidSubStr> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ForbidSubStr annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.ForbidSubStr(annotation.forbiddenSubStrings(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ForbidSubStr> getType() {
-		return ForbidSubStr.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ForbidSubStr annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.ForbidSubStr(annotation.forbiddenSubStrings(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ForbidSubStr> getType() {
+        return ForbidSubStr.class;
+    }
+
 }

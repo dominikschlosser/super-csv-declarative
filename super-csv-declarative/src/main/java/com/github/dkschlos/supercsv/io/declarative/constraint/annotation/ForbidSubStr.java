@@ -26,15 +26,16 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.provider.ForbidSub
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.constraint.ForbidSubStr}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = ForbidSubStrCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ForbidSubStr {
-	String[] forbiddenSubStrings();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    String[] forbiddenSubStrings();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

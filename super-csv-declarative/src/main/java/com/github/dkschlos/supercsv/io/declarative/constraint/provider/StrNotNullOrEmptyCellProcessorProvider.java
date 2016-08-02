@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for StrNotNullOrEmpty
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class StrNotNullOrEmptyCellProcessorProvider implements DeclarativeCellProcessorProvider<StrNotNullOrEmpty> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final StrNotNullOrEmpty annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.StrNotNullOrEmpty(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<StrNotNullOrEmpty> getType() {
-		return StrNotNullOrEmpty.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final StrNotNullOrEmpty annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.StrNotNullOrEmpty(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<StrNotNullOrEmpty> getType() {
+        return StrNotNullOrEmpty.class;
+    }
+
 }

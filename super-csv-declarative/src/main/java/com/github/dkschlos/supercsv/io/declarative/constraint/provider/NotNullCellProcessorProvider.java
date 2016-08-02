@@ -22,33 +22,33 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.NotNull
 
 /**
  * CellProcessorProvider for NotNull
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class NotNullCellProcessorProvider implements DeclarativeCellProcessorProvider<NotNull> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final NotNull annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.NotNull(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<NotNull> getType() {
-		return NotNull.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final NotNull annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.NotNull(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<NotNull> getType() {
+        return NotNull.class;
+    }
+
 }

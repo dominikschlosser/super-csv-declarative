@@ -21,33 +21,33 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.FmtNumber;
 
 /**
  * CellProcessorProvider for FmtNumber
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class FmtNumberCellProcessorProvider implements DeclarativeCellProcessorProvider<FmtNumber> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final FmtNumber annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.FmtNumber(annotation.decimalFormat(), (StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<FmtNumber> getType() {
-		return FmtNumber.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final FmtNumber annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.FmtNumber(annotation.decimalFormat(), (StringCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<FmtNumber> getType() {
+        return FmtNumber.class;
+    }
+
 }

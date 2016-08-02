@@ -27,17 +27,18 @@ import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.ParseEnum}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = ParseEnumCellProcessorProvider.class, contexts = { StandardCsvContexts.READ })
+@CellProcessorAnnotationDescriptor(provider = ParseEnumCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ParseEnum {
-	Class<? extends Enum<?>> enumClass();
-	
-	boolean ignoreCase() default false;
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    Class<? extends Enum<?>> enumClass();
+
+    boolean ignoreCase() default false;
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

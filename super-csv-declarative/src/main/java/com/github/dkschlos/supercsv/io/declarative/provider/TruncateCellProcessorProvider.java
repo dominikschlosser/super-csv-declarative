@@ -21,34 +21,34 @@ import org.supercsv.cellprocessor.ift.StringCellProcessor;
 
 /**
  * CellProcessorProvider for Truncate
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class TruncateCellProcessorProvider implements DeclarativeCellProcessorProvider<Truncate> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final Truncate annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.Truncate(annotation.maxSize(), annotation.suffix(),
-					(StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<Truncate> getType() {
-		return Truncate.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final Truncate annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.Truncate(annotation.maxSize(), annotation.suffix(),
+                        (StringCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<Truncate> getType() {
+        return Truncate.class;
+    }
+
 }

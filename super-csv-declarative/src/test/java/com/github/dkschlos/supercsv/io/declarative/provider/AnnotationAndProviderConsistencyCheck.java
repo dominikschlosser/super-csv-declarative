@@ -26,34 +26,35 @@ import org.reflections.Reflections;
 import java.util.Collection;
 
 /**
- * Tests all {@link CellProcessorAnnotationDescriptor}-annotations and their providers for consistency since the type system cannot do this
- * for us
- * 
+ * Tests all {@link CellProcessorAnnotationDescriptor}-annotations and their providers for consistency since the type
+ * system cannot do this for us
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @RunWith(Parameterized.class)
 public class AnnotationAndProviderConsistencyCheck {
-	@Parameters
-	public static Collection<Class<?>> getCellProcessorAnnotations() {
-		Reflections reflections = new Reflections("com.github.dkschlos.supercsv");
-		return reflections.getTypesAnnotatedWith(CellProcessorAnnotationDescriptor.class);
-	}
-	
-	private Class<?> cellProcessorAnnotationType;
-	
-	public AnnotationAndProviderConsistencyCheck(Class<?> cellProcessorAnnotationType) {
-		this.cellProcessorAnnotationType = cellProcessorAnnotationType;
-	}
-	
-	@SuppressWarnings("rawtypes")
-	@Test
-	public void test() throws InstantiationException, IllegalAccessException {
-		CellProcessorAnnotationDescriptor cellProcessorAnnotation = cellProcessorAnnotationType.getAnnotation(CellProcessorAnnotationDescriptor.class);
-		Class<? extends DeclarativeCellProcessorProvider> providerType = cellProcessorAnnotation.provider();
-		
-		DeclarativeCellProcessorProvider provider = providerType.newInstance();
-		
-		Assert.assertEquals(cellProcessorAnnotationType, provider.getType());
-	}
+
+    @Parameters
+    public static Collection<Class<?>> getCellProcessorAnnotations() {
+        Reflections reflections = new Reflections("com.github.dkschlos.supercsv");
+        return reflections.getTypesAnnotatedWith(CellProcessorAnnotationDescriptor.class);
+    }
+
+    private Class<?> cellProcessorAnnotationType;
+
+    public AnnotationAndProviderConsistencyCheck(Class<?> cellProcessorAnnotationType) {
+        this.cellProcessorAnnotationType = cellProcessorAnnotationType;
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Test
+    public void test() throws InstantiationException, IllegalAccessException {
+        CellProcessorAnnotationDescriptor cellProcessorAnnotation = cellProcessorAnnotationType.getAnnotation(CellProcessorAnnotationDescriptor.class);
+        Class<? extends DeclarativeCellProcessorProvider> providerType = cellProcessorAnnotation.provider();
+
+        DeclarativeCellProcessorProvider provider = providerType.newInstance();
+
+        Assert.assertEquals(cellProcessorAnnotationType, provider.getType());
+    }
 }

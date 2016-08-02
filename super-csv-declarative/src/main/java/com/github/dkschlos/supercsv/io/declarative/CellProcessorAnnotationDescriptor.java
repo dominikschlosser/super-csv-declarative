@@ -24,21 +24,22 @@ import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProce
 
 /**
  * Marker-annotation for CellProcessor-Annotations
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.ANNOTATION_TYPE })
+@Target({ElementType.ANNOTATION_TYPE})
 public @interface CellProcessorAnnotationDescriptor {
-	/**
-	 * @return the provider responsible for CellProcessor-creation
-	 */
-	@SuppressWarnings("rawtypes")
-	Class<? extends DeclarativeCellProcessorProvider> provider();
-	
-	/**
-	 * @return contexts for which the cell processor is applicable
-	 */
-	String[] contexts() default { StandardCsvContexts.READ, StandardCsvContexts.WRITE };
+
+    /**
+     * @return the provider responsible for CellProcessor-creation
+     */
+    @SuppressWarnings("rawtypes")
+    Class<? extends DeclarativeCellProcessorProvider> provider();
+
+    /**
+     * @return contexts for which the cell processor is applicable
+     */
+    String[] contexts() default {StandardCsvContexts.READ, StandardCsvContexts.WRITE};
 }

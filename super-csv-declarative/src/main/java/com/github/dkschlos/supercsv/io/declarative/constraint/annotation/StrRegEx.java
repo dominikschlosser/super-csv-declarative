@@ -26,15 +26,16 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.provider.StrRegExC
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.constraint.StrRegEx}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = StrRegExCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface StrRegEx {
-	String regex();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    String regex();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

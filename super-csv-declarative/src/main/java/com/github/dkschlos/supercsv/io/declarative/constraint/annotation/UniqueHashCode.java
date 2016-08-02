@@ -26,13 +26,14 @@ import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescri
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.constraint.UniqueHashCode}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = UniqueHashCodeCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface UniqueHashCode {
-	int order() default ProcessorOrder.UNDEFINED;
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

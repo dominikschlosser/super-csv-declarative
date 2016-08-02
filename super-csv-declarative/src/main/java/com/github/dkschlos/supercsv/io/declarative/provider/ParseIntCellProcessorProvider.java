@@ -21,33 +21,33 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ParseInt;
 
 /**
  * CellProcessorProvider for {@link ParseInt}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ParseIntCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseInt> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ParseInt annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ParseInt((LongCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseInt> getType() {
-		return ParseInt.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ParseInt annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ParseInt((LongCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ParseInt> getType() {
+        return ParseInt.class;
+    }
+
 }

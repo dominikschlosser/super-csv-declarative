@@ -21,33 +21,33 @@ import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 
 /**
  * CellProcessorProvider for {@link ParseDouble}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ParseDoubleCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseDouble> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ParseDouble annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ParseDouble((DoubleCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseDouble> getType() {
-		return ParseDouble.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ParseDouble annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ParseDouble((DoubleCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ParseDouble> getType() {
+        return ParseDouble.class;
+    }
+
 }

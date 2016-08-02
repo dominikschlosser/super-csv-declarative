@@ -23,34 +23,34 @@ import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory
 
 /**
  * CellProcessorProvider for StrRegEx
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class StrRegExCellProcessorProvider implements DeclarativeCellProcessorProvider<StrRegEx> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final StrRegEx annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.StrRegEx(annotation.regex(),
-					(StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<StrRegEx> getType() {
-		return StrRegEx.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final StrRegEx annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.StrRegEx(annotation.regex(),
+                        (StringCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<StrRegEx> getType() {
+        return StrRegEx.class;
+    }
+
 }

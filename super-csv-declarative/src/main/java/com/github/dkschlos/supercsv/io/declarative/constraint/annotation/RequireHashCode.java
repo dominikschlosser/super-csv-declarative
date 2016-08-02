@@ -26,15 +26,16 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.provider.RequireHa
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.constraint.RequireHashCode}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = RequireHashCodeCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface RequireHashCode {
-	int[] requiredHashCodes();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    int[] requiredHashCodes();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

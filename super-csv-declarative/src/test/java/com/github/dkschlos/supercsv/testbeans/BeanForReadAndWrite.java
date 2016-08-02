@@ -20,44 +20,48 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBool;
 
 /**
  * Test class for declarative mapping
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class BeanForReadAndWrite {
-	@FmtBool(trueValue = "wahr", falseValue = "falsch")
-	@ParseBool(trueValue = "j", falseValue = "n")
-	private boolean boolField;
-	
-	public BeanForReadAndWrite() {
-	}
-	
-	public BeanForReadAndWrite(boolean boolField) {
-		this.boolField = boolField;
-	}
-	
-	public boolean isBoolField() {
-		return boolField;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (boolField ? 1231 : 1237);
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if( this == obj )
-			return true;
-		if( obj == null )
-			return false;
-		if( getClass() != obj.getClass() )
-			return false;
-		BeanForReadAndWrite other = (BeanForReadAndWrite) obj;
-		return boolField == other.boolField;
-	}
-	
+
+    @FmtBool(trueValue = "wahr", falseValue = "falsch")
+    @ParseBool(trueValue = "j", falseValue = "n")
+    private boolean boolField;
+
+    public BeanForReadAndWrite() {
+    }
+
+    public BeanForReadAndWrite(boolean boolField) {
+        this.boolField = boolField;
+    }
+
+    public boolean isBoolField() {
+        return boolField;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (boolField ? 1231 : 1237);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        BeanForReadAndWrite other = (BeanForReadAndWrite) obj;
+        return boolField == other.boolField;
+    }
+
 }

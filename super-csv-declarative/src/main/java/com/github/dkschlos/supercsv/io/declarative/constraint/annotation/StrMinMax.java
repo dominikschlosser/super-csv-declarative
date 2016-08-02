@@ -26,17 +26,18 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.provider.StrMinMax
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.constraint.StrMinMax}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = StrMinMaxCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface StrMinMax {
-	long min();
-	
-	long max();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    long min();
+
+    long max();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

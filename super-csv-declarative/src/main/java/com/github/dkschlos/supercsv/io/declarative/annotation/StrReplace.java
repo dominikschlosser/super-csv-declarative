@@ -26,17 +26,18 @@ import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescri
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.StrReplace}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = StrReplaceCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface StrReplace {
-	String pattern();
-	
-	String replacement();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    String pattern();
+
+    String replacement();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

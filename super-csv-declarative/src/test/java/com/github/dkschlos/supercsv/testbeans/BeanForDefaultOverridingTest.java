@@ -19,48 +19,52 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBool;
 
 /**
  * Test class for overriding default processors
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class BeanForDefaultOverridingTest {
-	@ParseBool(trueValue = "J", falseValue = "N")
-	private boolean myBoolProperty;
-	
-	public BeanForDefaultOverridingTest() {
-	}
-	
-	public BeanForDefaultOverridingTest(boolean myBoolProperty) {
-		this.myBoolProperty = myBoolProperty;
-	}
-	
-	public boolean isMyBoolProperty() {
-		return myBoolProperty;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (myBoolProperty ? 1231 : 1237);
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if( this == obj )
-			return true;
-		if( obj == null )
-			return false;
-		if( getClass() != obj.getClass() )
-			return false;
-		BeanForDefaultOverridingTest other = (BeanForDefaultOverridingTest) obj;
-		return myBoolProperty == other.myBoolProperty;
-	}
-	
-	@Override
-	public String toString() {
-		return "BeanForDefaultOverridingTest [myBoolProperty=" + myBoolProperty + "]";
-	}
-	
+
+    @ParseBool(trueValue = "J", falseValue = "N")
+    private boolean myBoolProperty;
+
+    public BeanForDefaultOverridingTest() {
+    }
+
+    public BeanForDefaultOverridingTest(boolean myBoolProperty) {
+        this.myBoolProperty = myBoolProperty;
+    }
+
+    public boolean isMyBoolProperty() {
+        return myBoolProperty;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (myBoolProperty ? 1231 : 1237);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        BeanForDefaultOverridingTest other = (BeanForDefaultOverridingTest) obj;
+        return myBoolProperty == other.myBoolProperty;
+    }
+
+    @Override
+    public String toString() {
+        return "BeanForDefaultOverridingTest [myBoolProperty=" + myBoolProperty + "]";
+    }
+
 }

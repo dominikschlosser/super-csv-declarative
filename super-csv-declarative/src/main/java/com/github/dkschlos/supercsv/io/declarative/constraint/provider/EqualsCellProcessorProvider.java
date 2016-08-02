@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for Equals
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class EqualsCellProcessorProvider implements DeclarativeCellProcessorProvider<Equals> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final Equals annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.Equals(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<Equals> getType() {
-		return Equals.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final Equals annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.Equals(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<Equals> getType() {
+        return Equals.class;
+    }
+
 }

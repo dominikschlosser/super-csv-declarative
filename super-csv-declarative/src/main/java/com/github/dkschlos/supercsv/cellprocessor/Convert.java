@@ -24,53 +24,47 @@ import org.supercsv.util.CsvContext;
  * Uses a {@link Convert} to map from one object to another, with the input as the key. Shouldn't be used directly since
  * it is designed for use with the {@link Convert}-annotation (you should just implement your own CellProcessor in
  * direct-use scenarios)
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class Convert extends CellProcessorAdaptor {
-	private Converter converter;
-	
-	/**
-	 * Constructs a new <tt>Convert</tt> processor, which maps from one object to another.
-	 * 
-	 * @param converter
-	 *            the converter used to do the actual mapping
-	 * @throws NullPointerException
-	 *             if mapping or next is null
-	 * @throws IllegalArgumentException
-	 *             if mapping is empty
-	 */
-	public Convert(Converter converter) {
-		this.converter = converter;
-	}
-	
-	/**
-	 * Constructs a new <tt>Mapper</tt> processor, which maps from one object to another.
-	 * 
-	 * @param converter
-	 *            the converter used to do the actual mapping
-	 * @param next
-	 *            the next processor in the chain
-	 * @throws NullPointerException
-	 *             if mapping or next is null
-	 * @throws IllegalArgumentException
-	 *             if mapping is empty
-	 */
-	public Convert(Converter converter, CellProcessor next) {
-		super(next);
-		this.converter = converter;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public <T> T execute(Object value, CsvContext context) {
-		validateInputNotNull(value, context);
-		
-		Object mappedValue = converter.convert(value);
-		
-		return next.execute(mappedValue, context);
-	}
-	
+
+    private Converter converter;
+
+    /**
+     * Constructs a new <tt>Convert</tt> processor, which maps from one object to another.
+     *
+     * @param converter the converter used to do the actual mapping
+     * @throws NullPointerException if mapping or next is null
+     * @throws IllegalArgumentException if mapping is empty
+     */
+    public Convert(Converter converter) {
+        this.converter = converter;
+    }
+
+    /**
+     * Constructs a new <tt>Mapper</tt> processor, which maps from one object to another.
+     *
+     * @param converter the converter used to do the actual mapping
+     * @param next the next processor in the chain
+     * @throws NullPointerException if mapping or next is null
+     * @throws IllegalArgumentException if mapping is empty
+     */
+    public Convert(Converter converter, CellProcessor next) {
+        super(next);
+        this.converter = converter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <T> T execute(Object value, CsvContext context) {
+        validateInputNotNull(value, context);
+
+        Object mappedValue = converter.convert(value);
+
+        return next.execute(mappedValue, context);
+    }
+
 }

@@ -17,7 +17,7 @@ package com.github.dkschlos.supercsv.io.declarative.provider;
 
 /**
  * CellProcessorProvider for ConvertToNull
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
@@ -25,28 +25,28 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ConvertNullTo;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 public class ConvertToNullCellProcessorProvider implements DeclarativeCellProcessorProvider<ConvertNullTo> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ConvertNullTo annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ConvertNullTo> getType() {
-		return ConvertNullTo.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ConvertNullTo annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ConvertNullTo> getType() {
+        return ConvertNullTo.class;
+    }
+
 }

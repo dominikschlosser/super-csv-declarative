@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 /**
- * Provides csv-readers and writers which get their <tt>CellProcessors</tt> via conventions (return types) and bean-field-annotations.
+ * Provides csv-readers and writers which get their <tt>CellProcessors</tt> via conventions (return types) and
+ * bean-field-annotations.
  */
 package com.github.dkschlos.supercsv.io.declarative;

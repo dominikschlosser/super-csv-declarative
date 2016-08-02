@@ -18,7 +18,8 @@ package com.github.dkschlos.supercsv.io.declarative.provider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 public interface CellProcessorFactory {
-	CellProcessor create(CellProcessor next);
-	
-	int getOrder();
+
+    CellProcessor create(CellProcessor next);
+
+    int getOrder();
 }

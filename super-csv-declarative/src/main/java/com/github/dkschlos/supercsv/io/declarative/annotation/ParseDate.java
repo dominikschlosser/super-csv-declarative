@@ -27,19 +27,20 @@ import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.ParseDate}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = ParseDateCellProcessorProvider.class, contexts = { StandardCsvContexts.READ })
+@CellProcessorAnnotationDescriptor(provider = ParseDateCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ParseDate {
-	String format();
-	
-	boolean lenient() default false;
-	
-	String locale() default "";
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    String format();
+
+    boolean lenient() default false;
+
+    String locale() default "";
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

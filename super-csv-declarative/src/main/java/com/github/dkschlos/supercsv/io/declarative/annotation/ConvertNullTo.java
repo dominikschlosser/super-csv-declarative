@@ -26,18 +26,19 @@ import com.github.dkschlos.supercsv.io.declarative.provider.ConvertToNullCellPro
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.ConvertNullTo}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = ConvertToNullCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ConvertNullTo {
-	/**
-	 * @return the String to use if the value is null
-	 */
-	String value();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    /**
+     * @return the String to use if the value is null
+     */
+    String value();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

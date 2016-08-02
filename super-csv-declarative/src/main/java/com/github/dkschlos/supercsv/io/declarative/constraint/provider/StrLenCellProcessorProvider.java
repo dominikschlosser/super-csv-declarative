@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for StrLen
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class StrLenCellProcessorProvider implements DeclarativeCellProcessorProvider<StrLen> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final StrLen annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.Strlen(annotation.requiredLengths(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<StrLen> getType() {
-		return StrLen.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final StrLen annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.Strlen(annotation.requiredLengths(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<StrLen> getType() {
+        return StrLen.class;
+    }
+
 }

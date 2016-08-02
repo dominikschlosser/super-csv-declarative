@@ -20,34 +20,34 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for {@link com.github.dkschlos.supercsv.io.declarative.annotation.Convert}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ConvertCellProcessorProvider implements DeclarativeCellProcessorProvider<com.github.dkschlos.supercsv.io.declarative.annotation.Convert> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Convert annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new com.github.dkschlos.supercsv.cellprocessor.Convert(ReflectionUtilsExt.instantiateBean(annotation.value()),
-					next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Convert> getType() {
-		return com.github.dkschlos.supercsv.io.declarative.annotation.Convert.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Convert annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new com.github.dkschlos.supercsv.cellprocessor.Convert(ReflectionUtilsExt.instantiateBean(annotation.value()),
+                        next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Convert> getType() {
+        return com.github.dkschlos.supercsv.io.declarative.annotation.Convert.class;
+    }
+
 }

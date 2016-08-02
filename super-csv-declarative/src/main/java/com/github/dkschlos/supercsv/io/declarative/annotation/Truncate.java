@@ -26,23 +26,24 @@ import com.github.dkschlos.supercsv.io.declarative.provider.TruncateCellProcesso
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.Truncate}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = TruncateCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface Truncate {
-	/**
-	 * @return the maximum size of the String
-	 */
-	int maxSize();
-	
-	/**
-	 * @return the String to append if the input is truncated (e.g. "...")
-	 */
-	String suffix() default "";
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    /**
+     * @return the maximum size of the String
+     */
+    int maxSize();
+
+    /**
+     * @return the String to append if the input is truncated (e.g. "...")
+     */
+    String suffix() default "";
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

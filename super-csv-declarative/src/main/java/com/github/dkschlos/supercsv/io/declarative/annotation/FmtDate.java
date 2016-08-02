@@ -28,18 +28,19 @@ import com.github.dkschlos.supercsv.io.declarative.provider.FmtDateCellProcessor
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.FmtDate}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtDateCellProcessorProvider.class, contexts = { StandardCsvContexts.WRITE })
+@CellProcessorAnnotationDescriptor(provider = FmtDateCellProcessorProvider.class, contexts = {StandardCsvContexts.WRITE})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface FmtDate {
-	/**
-	 * @return the date format String (see {@link SimpleDateFormat})
-	 */
-	String format() default "";
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    /**
+     * @return the date format String (see {@link SimpleDateFormat})
+     */
+    String format() default "";
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

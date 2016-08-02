@@ -27,23 +27,24 @@ import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.FmtBool}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtBoolCellProcessorProvider.class, contexts = { StandardCsvContexts.WRITE })
+@CellProcessorAnnotationDescriptor(provider = FmtBoolCellProcessorProvider.class, contexts = {StandardCsvContexts.WRITE})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface FmtBool {
-	/**
-	 * @return the String to use if the value is true
-	 */
-	String trueValue();
-	
-	/**
-	 * @return the String to use if the value is false
-	 */
-	String falseValue();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    /**
+     * @return the String to use if the value is true
+     */
+    String trueValue();
+
+    /**
+     * @return the String to use if the value is false
+     */
+    String falseValue();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

@@ -21,18 +21,19 @@ import org.slf4j.helpers.MessageFormatter;
 /**
  * Slf4j-formatting wrapper for usage outside of logging (without exceptions or crazy template-syntax like in
  * String.format)
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public abstract class Form {
-	private Form() {
-		
-	}
-	
-	public static String at(String template, Object... params) {
-		FormattingTuple formatted = MessageFormatter.arrayFormat(template, params);
-		
-		return formatted.getMessage();
-	}
+
+    private Form() {
+
+    }
+
+    public static String at(String template, Object... params) {
+        FormattingTuple formatted = MessageFormatter.arrayFormat(template, params);
+
+        return formatted.getMessage();
+    }
 }

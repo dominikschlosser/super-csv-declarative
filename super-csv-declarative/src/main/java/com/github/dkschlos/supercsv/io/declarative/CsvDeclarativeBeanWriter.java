@@ -30,87 +30,79 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CsvDeclarativeBeanWriter writes a CSV file via conventions and
- * {@link CellProcessorAnnotationDescriptor} -annotations.
- * 
+ * CsvDeclarativeBeanWriter writes a CSV file via conventions and {@link CellProcessorAnnotationDescriptor}
+ * -annotations.
+ *
  * @author Dominik Schlosser
  */
 public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
-	private final List<Object> processedColumns = new ArrayList<Object>();
-	
-	private BeanCellProcessorExtractor cellProcessorExtractor = new BeanCellProcessorExtractor();
-	
-	/**
-	 * Constructs a new <tt>CsvDeclarativeBeanWriter</tt> with the supplied Writer and CSV preferences. Note that the
-	 * <tt>writer</tt> will be wrapped in a <tt>BufferedWriter</tt> before accessed.
-	 * 
-	 * @param writer
-	 *            the writer
-	 * @param preference
-	 *            the CSV preferences
-	 * @throws NullPointerException
-	 *             if writer or preference are null
-	 */
-	public CsvDeclarativeBeanWriter(final Writer writer, final CsvPreference preference) {
-		super(writer, preference);
-	}
-	
-	/**
-	 * Writes a row of a CSV file, using the conventions and mappings provided
-	 * {@link CellProcessorAnnotationDescriptor}-annotations
-	 * 
-	 * @param source
-	 *            The bean-instance to write
-	 * @throws IOException
-	 *             if an I/O error occurred
-	 * @throws IllegalArgumentException
-	 *             if source is null
-	 * @throws SuperCsvException
-	 *             if there was a general exception while writing/processing
-	 * @throws SuperCsvReflectionException
-	 *             if there was an reflection exception
-	 * @since 2.5
-	 */
-	public void write(final Object source) throws IOException {
-		if( source == null ) {
-			throw new IllegalArgumentException("source must not be null");
-		}
-		
-		incrementRowAndLineNo();
-		
-		List<Field> fields = FieldExtractor.getFields(source.getClass());
-		List<Object> beanValues = extractBeanValues(source, fields);
-		
-		List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass(),
-			StandardCsvContexts.WRITE);
-		
-		Util.executeCellProcessors(processedColumns, beanValues,
-			processors.toArray(new CellProcessor[processors.size()]), getLineNumber(), getRowNumber());
-		
-		writeRow(processedColumns);
-		flush();
-	}
-	
-	private List<Object> extractBeanValues(final Object source, List<Field> fields) {
-		
-		if( source == null ) {
-			throw new IllegalArgumentException("the bean to write should not be null");
-		}
-		
-		List<Object> beanValues = new ArrayList<Object>();
-		
-		for( Field field : fields ) {
-			field.setAccessible(true);
-			try {
-				beanValues.add(field.get(source));
-			}
-			catch(IllegalAccessException e) {
-				throw new SuperCsvReflectionException(Form.at("error extracting bean value for field {}",
-					field.getName()), e);
-			}
-		}
-		
-		return beanValues;
-		
-	}
+
+    private final List<Object> processedColumns = new ArrayList<Object>();
+
+    private BeanCellProcessorExtractor cellProcessorExtractor = new BeanCellProcessorExtractor();
+
+    /**
+     * Constructs a new <tt>CsvDeclarativeBeanWriter</tt> with the supplied Writer and CSV preferences. Note that the
+     * <tt>writer</tt> will be wrapped in a <tt>BufferedWriter</tt> before accessed.
+     *
+     * @param writer the writer
+     * @param preference the CSV preferences
+     * @throws NullPointerException if writer or preference are null
+     */
+    public CsvDeclarativeBeanWriter(final Writer writer, final CsvPreference preference) {
+        super(writer, preference);
+    }
+
+    /**
+     * Writes a row of a CSV file, using the conventions and mappings provided
+     * {@link CellProcessorAnnotationDescriptor}-annotations
+     *
+     * @param source The bean-instance to write
+     * @throws IOException if an I/O error occurred
+     * @throws IllegalArgumentException if source is null
+     * @throws SuperCsvException if there was a general exception while writing/processing
+     * @throws SuperCsvReflectionException if there was an reflection exception
+     * @since 2.5
+     */
+    public void write(final Object source) throws IOException {
+        if (source == null) {
+            throw new IllegalArgumentException("source must not be null");
+        }
+
+        incrementRowAndLineNo();
+
+        List<Field> fields = FieldExtractor.getFields(source.getClass());
+        List<Object> beanValues = extractBeanValues(source, fields);
+
+        List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass(),
+                StandardCsvContexts.WRITE);
+
+        Util.executeCellProcessors(processedColumns, beanValues,
+                processors.toArray(new CellProcessor[processors.size()]), getLineNumber(), getRowNumber());
+
+        writeRow(processedColumns);
+        flush();
+    }
+
+    private List<Object> extractBeanValues(final Object source, List<Field> fields) {
+
+        if (source == null) {
+            throw new IllegalArgumentException("the bean to write should not be null");
+        }
+
+        List<Object> beanValues = new ArrayList<Object>();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                beanValues.add(field.get(source));
+            } catch (IllegalAccessException e) {
+                throw new SuperCsvReflectionException(Form.at("error extracting bean value for field {}",
+                        field.getName()), e);
+            }
+        }
+
+        return beanValues;
+
+    }
 }

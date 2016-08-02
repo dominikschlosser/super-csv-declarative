@@ -20,33 +20,33 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBigDecimal;
 
 /**
  * CellProcessorProvider for {@link ParseBigDecimal}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ParseBigDecimalCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseBigDecimal> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ParseBigDecimal annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ParseBigDecimal(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseBigDecimal> getType() {
-		return ParseBigDecimal.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ParseBigDecimal annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ParseBigDecimal(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ParseBigDecimal> getType() {
+        return ParseBigDecimal.class;
+    }
+
 }

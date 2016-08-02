@@ -26,15 +26,16 @@ import com.github.dkschlos.supercsv.io.declarative.provider.ConvertCellProcessor
 
 /**
  * Annotation for the {@link com.github.dkschlos.supercsv.cellprocessor.Convert}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 @CellProcessorAnnotationDescriptor(provider = ConvertCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface Convert {
-	Class<? extends Converter> value();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    Class<? extends Converter> value();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

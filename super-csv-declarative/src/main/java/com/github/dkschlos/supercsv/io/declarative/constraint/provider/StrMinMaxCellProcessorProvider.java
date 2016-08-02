@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for StrMinMax
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class StrMinMaxCellProcessorProvider implements DeclarativeCellProcessorProvider<StrMinMax> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final StrMinMax annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.StrMinMax(annotation.min(), annotation.max(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<StrMinMax> getType() {
-		return StrMinMax.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final StrMinMax annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.StrMinMax(annotation.min(), annotation.max(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<StrMinMax> getType() {
+        return StrMinMax.class;
+    }
+
 }

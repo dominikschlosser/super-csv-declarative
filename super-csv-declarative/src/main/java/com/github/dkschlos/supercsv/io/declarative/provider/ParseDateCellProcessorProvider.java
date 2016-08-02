@@ -23,35 +23,35 @@ import java.util.Locale;
 
 /**
  * CellProcessorProvider for {@link ParseDate}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ParseDateCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseDate> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ParseDate annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ParseDate(annotation.format(), annotation.lenient(),
-						annotation.locale() == null || "".equals(annotation.locale()) ? null : new Locale(annotation.locale()) != null ? annotation.locale() == null || annotation.locale() == "" ? null : new Locale(annotation.locale()) : null,
-					(DateCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseDate> getType() {
-		return ParseDate.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ParseDate annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ParseDate(annotation.format(), annotation.lenient(),
+                        annotation.locale() == null || "".equals(annotation.locale()) ? null : new Locale(annotation.locale()) != null ? annotation.locale() == null || annotation.locale() == "" ? null : new Locale(annotation.locale()) : null,
+                        (DateCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ParseDate> getType() {
+        return ParseDate.class;
+    }
+
 }

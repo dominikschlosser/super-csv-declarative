@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for RequireHashCode
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class RequireHashCodeCellProcessorProvider implements DeclarativeCellProcessorProvider<RequireHashCode> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final RequireHashCode annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.RequireHashCode(annotation.requiredHashCodes(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<RequireHashCode> getType() {
-		return RequireHashCode.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final RequireHashCode annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.RequireHashCode(annotation.requiredHashCodes(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<RequireHashCode> getType() {
+        return RequireHashCode.class;
+    }
+
 }

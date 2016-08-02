@@ -18,7 +18,8 @@ package com.github.dkschlos.supercsv.io.declarative.provider;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 
 public abstract class AbstractCellProcessorFactory implements CellProcessorFactory {
-	public int getOrder() {
-		return ProcessorOrder.UNDEFINED;
-	}
+
+    public int getOrder() {
+        return ProcessorOrder.UNDEFINED;
+    }
 }

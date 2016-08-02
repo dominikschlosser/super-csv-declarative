@@ -21,33 +21,33 @@ import org.supercsv.cellprocessor.ift.StringCellProcessor;
 
 /**
  * CellProcessorProvider for FmtDate
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class FmtDateCellProcessorProvider implements DeclarativeCellProcessorProvider<FmtDate> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final FmtDate annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.FmtDate(annotation.format(), (StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<FmtDate> getType() {
-		return FmtDate.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final FmtDate annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.FmtDate(annotation.format(), (StringCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<FmtDate> getType() {
+        return FmtDate.class;
+    }
+
 }

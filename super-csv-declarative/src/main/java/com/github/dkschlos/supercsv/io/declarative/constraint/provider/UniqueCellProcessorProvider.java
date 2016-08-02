@@ -22,33 +22,33 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.Unique;
 
 /**
  * CellProcessorProvider for Unique
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class UniqueCellProcessorProvider implements DeclarativeCellProcessorProvider<Unique> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final Unique annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.Unique(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<Unique> getType() {
-		return Unique.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final Unique annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.Unique(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<Unique> getType() {
+        return Unique.class;
+    }
+
 }

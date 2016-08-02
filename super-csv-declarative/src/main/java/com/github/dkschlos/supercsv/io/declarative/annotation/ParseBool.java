@@ -27,19 +27,20 @@ import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.ParseBool}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = ParseBoolCellProcessorProvider.class, contexts = { StandardCsvContexts.READ })
+@CellProcessorAnnotationDescriptor(provider = ParseBoolCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface ParseBool {
-	String trueValue() default "true";
-	
-	String falseValue() default "false";
-	
-	boolean ignoreCase() default true;
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    String trueValue() default "true";
+
+    String falseValue() default "false";
+
+    boolean ignoreCase() default true;
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

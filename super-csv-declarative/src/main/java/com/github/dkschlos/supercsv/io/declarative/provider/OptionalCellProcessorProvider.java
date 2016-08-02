@@ -20,34 +20,34 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for Optional
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class OptionalCellProcessorProvider implements
-	DeclarativeCellProcessorProvider<com.github.dkschlos.supercsv.io.declarative.annotation.Optional> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Optional annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new Optional(next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Optional> getType() {
-		return com.github.dkschlos.supercsv.io.declarative.annotation.Optional.class;
-	}
-	
+        DeclarativeCellProcessorProvider<com.github.dkschlos.supercsv.io.declarative.annotation.Optional> {
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Optional annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new Optional(next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Optional> getType() {
+        return com.github.dkschlos.supercsv.io.declarative.annotation.Optional.class;
+    }
+
 }

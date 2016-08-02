@@ -23,34 +23,34 @@ import org.supercsv.cellprocessor.ift.LongCellProcessor;
 
 /**
  * CellProcessorProvider for LMinMax
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class LMinMaxCellProcessorProvider implements DeclarativeCellProcessorProvider<LMinMax> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final LMinMax annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.LMinMax(annotation.min(), annotation.max(),
-					(LongCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<LMinMax> getType() {
-		return LMinMax.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final LMinMax annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.LMinMax(annotation.min(), annotation.max(),
+                        (LongCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<LMinMax> getType() {
+        return LMinMax.class;
+    }
+
 }

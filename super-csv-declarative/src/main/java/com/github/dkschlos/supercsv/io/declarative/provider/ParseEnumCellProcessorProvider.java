@@ -20,33 +20,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for {@link ParseEnum}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseEnum> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ParseEnum annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ParseEnum(annotation.enumClass(), annotation.ignoreCase(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseEnum> getType() {
-		return ParseEnum.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ParseEnum annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ParseEnum(annotation.enumClass(), annotation.ignoreCase(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ParseEnum> getType() {
+        return ParseEnum.class;
+    }
+
 }

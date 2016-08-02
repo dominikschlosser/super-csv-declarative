@@ -15,7 +15,7 @@
  */
 /**
  * This package contains annotations which are used by {@link com.github.dkschlos.supercsv.io.declarative.CsvDeclarativeBeanReader}
- * and {@link com.github.dkschlos.supercsv.io.declarative.CsvDeclarativeBeanWriter}
- * to create {@link org.supercsv.cellprocessor.ift.CellProcessor}-chains for all fields of a bean
+ * and {@link com.github.dkschlos.supercsv.io.declarative.CsvDeclarativeBeanWriter} to create
+ * {@link org.supercsv.cellprocessor.ift.CellProcessor}-chains for all fields of a bean
  */
 package com.github.dkschlos.supercsv.io.declarative.annotation;

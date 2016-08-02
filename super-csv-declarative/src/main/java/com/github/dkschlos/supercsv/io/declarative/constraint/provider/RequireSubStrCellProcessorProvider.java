@@ -22,33 +22,33 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * CellProcessorProvider for RequireSubStr
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class RequireSubStrCellProcessorProvider implements DeclarativeCellProcessorProvider<RequireSubStr> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final RequireSubStr annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.constraint.RequireSubStr(annotation.requiredSubStrings(), next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<RequireSubStr> getType() {
-		return RequireSubStr.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final RequireSubStr annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.constraint.RequireSubStr(annotation.requiredSubStrings(), next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<RequireSubStr> getType() {
+        return RequireSubStr.class;
+    }
+
 }

@@ -21,34 +21,34 @@ import org.supercsv.cellprocessor.ift.StringCellProcessor;
 
 /**
  * CellProcessorProvider for FmtBool
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class FmtBoolCellProcessorProvider implements DeclarativeCellProcessorProvider<FmtBool> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final FmtBool annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.FmtBool(annotation.trueValue(), annotation.falseValue(),
-					(StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<FmtBool> getType() {
-		return FmtBool.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final FmtBool annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.FmtBool(annotation.trueValue(), annotation.falseValue(),
+                        (StringCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<FmtBool> getType() {
+        return FmtBool.class;
+    }
+
 }

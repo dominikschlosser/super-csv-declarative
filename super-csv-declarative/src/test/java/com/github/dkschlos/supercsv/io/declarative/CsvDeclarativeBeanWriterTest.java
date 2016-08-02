@@ -34,86 +34,87 @@ import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
  * @author Dominik Schlosser
  */
 public class CsvDeclarativeBeanWriterTest {
-	private static final CsvPreference PREFS = CsvPreference.STANDARD_PREFERENCE;
-	
-	private StringWriter result = new StringWriter();
-	private CsvDeclarativeBeanWriter beanWriter = new CsvDeclarativeBeanWriter(result, PREFS);
-	
-	@After
-	public void tearDown() throws IOException {
-		if( beanWriter != null ) {
-			beanWriter.close();
-		}
-	}
-	
-	@Test
-	public void writeSimpleBeanWithoutAnnotations() throws IOException {
-		BeanWithoutAnnotations john = new BeanWithoutAnnotations("John", "Doe", 42, 100.5);
-		BeanWithoutAnnotations max = new BeanWithoutAnnotations("Max", "Mustermann", 22, 21.4);
-		
-		beanWriter.write(john);
-		beanWriter.write(max);
-		
-		assertEquals("John,Doe,42,100.5\r\nMax,Mustermann,22,21.4\r\n", result.toString());
-	}
-	
-	@Test
-	public void writeSimpleBeanWithSimpleAnnotations() throws IOException {
-		BeanWithSimpleAnnotations john = new BeanWithSimpleAnnotations(null, "Doe", 42, 100.5);
-		BeanWithSimpleAnnotations max = new BeanWithSimpleAnnotations("Max", "Mustermann ", 22, 21.4);
-		
-		beanWriter.write(john);
-		beanWriter.write(max);
-		
-		assertEquals(",Doe,42,100.5\r\nMax,Mustermann,22,21.4\r\n", result.toString());
-	}
-	
-	@Test
-	public void writeSimpleBeanWithChainedAnnotations() throws IOException {
-		BeanWithChainedAnnotations john = new BeanWithChainedAnnotations(null, "Doe", 42, 100.5);
-		BeanWithChainedAnnotations max = new BeanWithChainedAnnotations("Max", "Mustermann", 22, 21.4);
-		
-		beanWriter.write(john);
-		beanWriter.write(max);
-		
-		assertEquals(",Doe,42,100.5\r\nMax,Mus,22,21.4\r\n", result.toString());
-	}
-	
-	@Test
-	public void writeBeanWithInheritedProperties() throws IOException {
-		BeanWithInheritedProperties john = new BeanWithInheritedProperties("John", "Doe", 42, 100.5, "Note 1");
-		BeanWithInheritedProperties max = new BeanWithInheritedProperties("Max", "Mustermann", 22, 21.4, "Note 2");
-		
-		beanWriter.write(john);
-		beanWriter.write(max);
-		
-		assertEquals("John,Doe,42,100.5,Note 1\r\nMax,Mustermann,22,21.4,Note 2\r\n", result.toString());
-	}
-	
-	@Test
-	public void writeBeanWithReadAndWriteAnnotations() throws IOException {
-		BeanForReadAndWrite beanForReadAndWrite = new BeanForReadAndWrite(false);
-		beanWriter = new CsvDeclarativeBeanWriter(result, CsvPreference.STANDARD_PREFERENCE);
-		
-		beanWriter.write(beanForReadAndWrite);
-		
-		assertEquals("falsch\r\n", result.toString());
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void writeWithNullBeanClass() throws IOException {
-		beanWriter.write(null);
-	}
-	
-	@SuppressWarnings("resource")
-	@Test(expected = NullPointerException.class)
-	public void writerConstructorWithNullwriter() {
-		new CsvDeclarativeBeanWriter(null, PREFS);
-	}
-	
-	@SuppressWarnings("resource")
-	@Test(expected = NullPointerException.class)
-	public void writerConstructorWithNullPreferences() {
-		new CsvDeclarativeBeanWriter(new StringWriter(), null);
-	}
+
+    private static final CsvPreference PREFS = CsvPreference.STANDARD_PREFERENCE;
+
+    private StringWriter result = new StringWriter();
+    private CsvDeclarativeBeanWriter beanWriter = new CsvDeclarativeBeanWriter(result, PREFS);
+
+    @After
+    public void tearDown() throws IOException {
+        if (beanWriter != null) {
+            beanWriter.close();
+        }
+    }
+
+    @Test
+    public void writeSimpleBeanWithoutAnnotations() throws IOException {
+        BeanWithoutAnnotations john = new BeanWithoutAnnotations("John", "Doe", 42, 100.5);
+        BeanWithoutAnnotations max = new BeanWithoutAnnotations("Max", "Mustermann", 22, 21.4);
+
+        beanWriter.write(john);
+        beanWriter.write(max);
+
+        assertEquals("John,Doe,42,100.5\r\nMax,Mustermann,22,21.4\r\n", result.toString());
+    }
+
+    @Test
+    public void writeSimpleBeanWithSimpleAnnotations() throws IOException {
+        BeanWithSimpleAnnotations john = new BeanWithSimpleAnnotations(null, "Doe", 42, 100.5);
+        BeanWithSimpleAnnotations max = new BeanWithSimpleAnnotations("Max", "Mustermann ", 22, 21.4);
+
+        beanWriter.write(john);
+        beanWriter.write(max);
+
+        assertEquals(",Doe,42,100.5\r\nMax,Mustermann,22,21.4\r\n", result.toString());
+    }
+
+    @Test
+    public void writeSimpleBeanWithChainedAnnotations() throws IOException {
+        BeanWithChainedAnnotations john = new BeanWithChainedAnnotations(null, "Doe", 42, 100.5);
+        BeanWithChainedAnnotations max = new BeanWithChainedAnnotations("Max", "Mustermann", 22, 21.4);
+
+        beanWriter.write(john);
+        beanWriter.write(max);
+
+        assertEquals(",Doe,42,100.5\r\nMax,Mus,22,21.4\r\n", result.toString());
+    }
+
+    @Test
+    public void writeBeanWithInheritedProperties() throws IOException {
+        BeanWithInheritedProperties john = new BeanWithInheritedProperties("John", "Doe", 42, 100.5, "Note 1");
+        BeanWithInheritedProperties max = new BeanWithInheritedProperties("Max", "Mustermann", 22, 21.4, "Note 2");
+
+        beanWriter.write(john);
+        beanWriter.write(max);
+
+        assertEquals("John,Doe,42,100.5,Note 1\r\nMax,Mustermann,22,21.4,Note 2\r\n", result.toString());
+    }
+
+    @Test
+    public void writeBeanWithReadAndWriteAnnotations() throws IOException {
+        BeanForReadAndWrite beanForReadAndWrite = new BeanForReadAndWrite(false);
+        beanWriter = new CsvDeclarativeBeanWriter(result, CsvPreference.STANDARD_PREFERENCE);
+
+        beanWriter.write(beanForReadAndWrite);
+
+        assertEquals("falsch\r\n", result.toString());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void writeWithNullBeanClass() throws IOException {
+        beanWriter.write(null);
+    }
+
+    @SuppressWarnings("resource")
+    @Test(expected = NullPointerException.class)
+    public void writerConstructorWithNullwriter() {
+        new CsvDeclarativeBeanWriter(null, PREFS);
+    }
+
+    @SuppressWarnings("resource")
+    @Test(expected = NullPointerException.class)
+    public void writerConstructorWithNullPreferences() {
+        new CsvDeclarativeBeanWriter(new StringWriter(), null);
+    }
 }

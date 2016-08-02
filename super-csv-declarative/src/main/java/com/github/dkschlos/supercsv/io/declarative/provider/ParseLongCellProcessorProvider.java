@@ -21,33 +21,33 @@ import org.supercsv.cellprocessor.ift.LongCellProcessor;
 
 /**
  * CellProcessorProvider for {@link ParseLong}
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class ParseLongCellProcessorProvider implements DeclarativeCellProcessorProvider<ParseLong> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final ParseLong annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new org.supercsv.cellprocessor.ParseLong((LongCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<ParseLong> getType() {
-		return ParseLong.class;
-	}
-	
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final ParseLong annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new org.supercsv.cellprocessor.ParseLong((LongCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<ParseLong> getType() {
+        return ParseLong.class;
+    }
+
 }

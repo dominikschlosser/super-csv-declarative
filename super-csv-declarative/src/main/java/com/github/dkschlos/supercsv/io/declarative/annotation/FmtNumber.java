@@ -27,28 +27,29 @@ import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescri
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.FmtNumber}-cell processor
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtNumberCellProcessorProvider.class, contexts = { StandardCsvContexts.WRITE })
+@CellProcessorAnnotationDescriptor(provider = FmtNumberCellProcessorProvider.class, contexts = {StandardCsvContexts.WRITE})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 public @interface FmtNumber {
-	/**
-	 * In the format string, the following characters are defined as : <br>
-	 * 
-	 * <pre>
-	 * 0   - means Digit
-	 * #   - means Digit, zero shows as absent (works only as zero padding on the right hand side of the number)
-	 * .   - means Decimal separator or monetary decimal separator
-	 * -   - means Minus sign
-	 * ,   - means Grouping separator
-	 * </pre>
-	 * 
-	 * @return the format-string to use
-	 */
-	String decimalFormat();
-	
-	int order() default ProcessorOrder.UNDEFINED;
+
+    /**
+     * In the format string, the following characters are defined as : <br>
+     *
+     * <pre>
+     * 0   - means Digit
+     * #   - means Digit, zero shows as absent (works only as zero padding on the right hand side of the number)
+     * .   - means Decimal separator or monetary decimal separator
+     * -   - means Minus sign
+     * ,   - means Grouping separator
+     * </pre>
+     *
+     * @return the format-string to use
+     */
+    String decimalFormat();
+
+    int order() default ProcessorOrder.UNDEFINED;
 }

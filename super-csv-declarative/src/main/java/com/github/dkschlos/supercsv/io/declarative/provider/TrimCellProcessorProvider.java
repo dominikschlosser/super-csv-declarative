@@ -21,34 +21,34 @@ import org.supercsv.cellprocessor.ift.StringCellProcessor;
 
 /**
  * CellProcessorProvider for Trim
- * 
+ *
  * @since 2.5
  * @author Dominik Schlosser
  */
 public class TrimCellProcessorProvider implements
-	DeclarativeCellProcessorProvider<com.github.dkschlos.supercsv.io.declarative.annotation.Trim> {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Trim annotation) {
-		return new CellProcessorFactory() {
-			
-			public int getOrder() {
-				return annotation.order();
-			}
-			
-			public CellProcessor create(CellProcessor next) {
-				return new Trim((StringCellProcessor) next);
-			}
-		};
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Trim> getType() {
-		return com.github.dkschlos.supercsv.io.declarative.annotation.Trim.class;
-	}
-	
+        DeclarativeCellProcessorProvider<com.github.dkschlos.supercsv.io.declarative.annotation.Trim> {
+
+    /**
+     * {@inheritDoc}
+     */
+    public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Trim annotation) {
+        return new CellProcessorFactory() {
+
+            public int getOrder() {
+                return annotation.order();
+            }
+
+            public CellProcessor create(CellProcessor next) {
+                return new Trim((StringCellProcessor) next);
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Trim> getType() {
+        return com.github.dkschlos.supercsv.io.declarative.annotation.Trim.class;
+    }
+
 }
