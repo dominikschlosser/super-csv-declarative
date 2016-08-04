@@ -18,7 +18,7 @@
 
     <groupId>com.github.dkschlos</groupId>
     <artifactId>super-csv-declarative</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 	
     <name>Super CSV Declarative Extension</name>
     <description>An extension for Super CSV that enables declarative/implicit configuration of POJO-CSV-Mappings</description>
