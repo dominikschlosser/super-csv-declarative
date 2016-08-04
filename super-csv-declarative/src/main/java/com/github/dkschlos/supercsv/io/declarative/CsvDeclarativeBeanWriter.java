@@ -15,19 +15,19 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import com.github.dkschlos.supercsv.util.Form;
+import com.github.dkschlos.supercsv.internal.fields.Fields;
+import com.github.dkschlos.supercsv.internal.util.Form;
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.AbstractCsvWriter;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.Util;
-
-import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * CsvDeclarativeBeanWriter writes a CSV file via conventions and {@link CellProcessorAnnotationDescriptor}
@@ -71,7 +71,7 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
         incrementRowAndLineNo();
 
-        List<Field> fields = FieldExtractor.getFields(source.getClass());
+        List<Field> fields = Fields.getFields(source.getClass());
         List<Object> beanValues = extractBeanValues(source, fields);
 
         List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass(),

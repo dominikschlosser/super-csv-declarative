@@ -13,27 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.util;
-
-import org.slf4j.helpers.FormattingTuple;
-import org.slf4j.helpers.MessageFormatter;
-
 /**
- * Slf4j-formatting wrapper for usage outside of logging (without exceptions or crazy template-syntax like in
- * String.format)
- *
- * @since 2.5
- * @author Dominik Schlosser
+ * This package contains utility classes
  */
-public abstract class Form {
-
-    private Form() {
-
-    }
-
-    public static String at(String template, Object... params) {
-        FormattingTuple formatted = MessageFormatter.arrayFormat(template, params);
-
-        return formatted.getMessage();
-    }
-}
+package com.github.dkschlos.supercsv.internal.util;

@@ -137,7 +137,7 @@ public class CsvDeclarativeBeanReaderTest {
         assertNull(beanReader.read(BeanWithIllegalExplicitFieldOrder.class));
     }
 
-    @Test(expected = SuperCsvException.class)
+    @Test
     public void readBeanWithPartialExplicitFieldOrdering() throws IOException {
         setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
         BeanWithPartiallyExplicitlyOrderedFields john = new BeanWithPartiallyExplicitlyOrderedFields(null, "Doe", 42,

@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
-import com.github.dkschlos.supercsv.util.ReflectionUtilsExt;
+import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**

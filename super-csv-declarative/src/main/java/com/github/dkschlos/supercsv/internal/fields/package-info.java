@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains utility classes
+ * This package contains internal classes to extract fields for csv processing
  */
-package com.github.dkschlos.supercsv.util;
+package com.github.dkschlos.supercsv.internal.fields;
