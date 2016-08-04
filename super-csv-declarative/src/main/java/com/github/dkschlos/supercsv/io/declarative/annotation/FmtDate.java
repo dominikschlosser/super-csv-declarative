@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 import java.text.SimpleDateFormat;
 
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
-import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
+import com.github.dkschlos.supercsv.io.declarative.ProcessorIndex;
 import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 import com.github.dkschlos.supercsv.io.declarative.provider.FmtDateCellProcessorProvider;
 
@@ -42,5 +42,5 @@ public @interface FmtDate {
      */
     String format() default "";
 
-    int order() default ProcessorOrder.UNDEFINED;
+    int index() default ProcessorIndex.UNDEFINED;
 }

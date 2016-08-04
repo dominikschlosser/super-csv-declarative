@@ -35,7 +35,7 @@ public class TrimCellProcessorProvider implements
         return new CellProcessorFactory() {
 
             public int getIndex() {
-                return annotation.order();
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

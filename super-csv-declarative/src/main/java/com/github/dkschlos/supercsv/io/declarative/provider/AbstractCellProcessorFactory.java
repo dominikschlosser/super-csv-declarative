@@ -15,11 +15,11 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
-import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
+import com.github.dkschlos.supercsv.io.declarative.ProcessorIndex;
 
 public abstract class AbstractCellProcessorFactory implements CellProcessorFactory {
 
     public int getIndex() {
-        return ProcessorOrder.UNDEFINED;
+        return ProcessorIndex.UNDEFINED;
     }
 }

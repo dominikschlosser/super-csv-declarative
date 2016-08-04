@@ -15,15 +15,13 @@
  */
 package com.github.dkschlos.supercsv.internal.fields;
 
-import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.google.common.base.Function;
-import com.google.common.base.Joiner;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Ordering;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.supercsv.exception.SuperCsvException;
@@ -50,15 +48,12 @@ final class FieldSorter {
         final BiMap<Field, Integer> order = HashBiMap.create();
         BiMap<Integer, Field> inverse = order.inverse();
 
-        List<Field> fieldsWithoutCsvFieldAnnotation = new ArrayList<Field>();
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
             int orderVal = i;
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
             if (fieldAnnotation != null) {
                 orderVal = fieldAnnotation.index();
-            } else {
-                fieldsWithoutCsvFieldAnnotation.add(field);
             }
 
             if (inverse.containsKey(orderVal)) {
@@ -69,13 +64,6 @@ final class FieldSorter {
             order.put(field, orderVal);
         }
 
-        if (!fieldsWithoutCsvFieldAnnotation.isEmpty() && fieldsWithoutCsvFieldAnnotation.size() < fields.size()) {
-            String missingFields = Joiner.on(", ").join(fieldsWithoutCsvFieldAnnotation);
-            throw new SuperCsvException(
-                    Form.at(
-                            "If you use @CsvField to explicitly define field-order, you have to do it on all fields. Missing on: {}",
-                            missingFields));
-        }
         return order;
     }
 }
