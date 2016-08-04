@@ -34,7 +34,7 @@ public class StrMinMaxCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final StrMinMax annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

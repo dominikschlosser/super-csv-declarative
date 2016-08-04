@@ -34,7 +34,7 @@ public class UniqueCellProcessorProvider implements DeclarativeCellProcessorProv
     public CellProcessorFactory create(final Unique annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

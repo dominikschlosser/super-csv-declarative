@@ -37,10 +37,10 @@ public class BeanWithPartiallyExplicitlyOrderedFields {
     @Trim
     private String name;
 
-    @CsvField(order = 2)
+    @CsvField(index = 2)
     private int age;
 
-    @CsvField(order = 3)
+    @CsvField(index = 3)
     private double weight;
 
     public BeanWithPartiallyExplicitlyOrderedFields() {

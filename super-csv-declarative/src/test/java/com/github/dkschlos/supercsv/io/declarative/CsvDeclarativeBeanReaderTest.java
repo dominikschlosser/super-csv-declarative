@@ -15,31 +15,29 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import com.github.dkschlos.supercsv.testbeans.BeanForDefaultOverridingTest;
+import com.github.dkschlos.supercsv.testbeans.BeanForReadAndWrite;
+import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
+import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
+import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
+import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithPartiallyExplicitlyOrderedFields;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.Tokenizer;
 import org.supercsv.prefs.CsvPreference;
-import com.github.dkschlos.supercsv.testbeans.BeanForReadAndWrite;
-import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
-import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
-import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
-import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
 
 /**
  * Tests the {@link CsvDeclarativeBeanReader}

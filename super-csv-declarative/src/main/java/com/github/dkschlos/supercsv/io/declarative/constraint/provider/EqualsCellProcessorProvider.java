@@ -34,7 +34,7 @@ public class EqualsCellProcessorProvider implements DeclarativeCellProcessorProv
     public CellProcessorFactory create(final Equals annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

@@ -34,7 +34,7 @@ public class RequireSubStrCellProcessorProvider implements DeclarativeCellProces
     public CellProcessorFactory create(final RequireSubStr annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

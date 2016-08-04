@@ -33,7 +33,7 @@ public class FmtBoolCellProcessorProvider implements DeclarativeCellProcessorPro
     public CellProcessorFactory create(final FmtBool annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

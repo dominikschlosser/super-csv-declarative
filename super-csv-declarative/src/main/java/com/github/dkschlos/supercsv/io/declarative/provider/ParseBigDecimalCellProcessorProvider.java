@@ -32,7 +32,7 @@ public class ParseBigDecimalCellProcessorProvider implements DeclarativeCellProc
     public CellProcessorFactory create(final ParseBigDecimal annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

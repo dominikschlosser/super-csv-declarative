@@ -33,7 +33,7 @@ public class ParseCharCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final ParseChar annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

@@ -60,7 +60,7 @@ final class FieldExtractor {
             int orderVal = i;
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
             if (fieldAnnotation != null) {
-                orderVal = fieldAnnotation.order();
+                orderVal = fieldAnnotation.index();
             } else {
                 fieldsWithoutCsvFieldAnnotation.add(field);
             }

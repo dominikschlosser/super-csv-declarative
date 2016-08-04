@@ -148,7 +148,7 @@ class BeanCellProcessorExtractor {
     private static final class OrderComparator implements Comparator<CellProcessorFactory> {
 
         public int compare(CellProcessorFactory o1, CellProcessorFactory o2) {
-            return o2.getOrder() - o1.getOrder();
+            return o2.getIndex() - o1.getIndex();
         }
     }
 

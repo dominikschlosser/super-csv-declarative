@@ -33,7 +33,7 @@ public class FmtNumberCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final FmtNumber annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

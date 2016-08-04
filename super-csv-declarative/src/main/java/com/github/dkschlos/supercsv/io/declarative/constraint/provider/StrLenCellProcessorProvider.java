@@ -34,7 +34,7 @@ public class StrLenCellProcessorProvider implements DeclarativeCellProcessorProv
     public CellProcessorFactory create(final StrLen annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

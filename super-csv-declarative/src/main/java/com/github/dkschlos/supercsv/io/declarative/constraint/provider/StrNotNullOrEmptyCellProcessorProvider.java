@@ -34,7 +34,7 @@ public class StrNotNullOrEmptyCellProcessorProvider implements DeclarativeCellPr
     public CellProcessorFactory create(final StrNotNullOrEmpty annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

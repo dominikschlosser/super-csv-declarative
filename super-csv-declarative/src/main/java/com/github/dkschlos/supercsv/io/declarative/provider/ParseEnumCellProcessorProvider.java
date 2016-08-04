@@ -32,7 +32,7 @@ public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final ParseEnum annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

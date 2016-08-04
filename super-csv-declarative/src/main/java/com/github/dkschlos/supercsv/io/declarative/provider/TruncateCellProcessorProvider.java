@@ -33,7 +33,7 @@ public class TruncateCellProcessorProvider implements DeclarativeCellProcessorPr
     public CellProcessorFactory create(final Truncate annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

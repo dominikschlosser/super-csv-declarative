@@ -32,7 +32,7 @@ public class ConvertCellProcessorProvider implements DeclarativeCellProcessorPro
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Convert annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

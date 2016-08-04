@@ -33,7 +33,7 @@ public class ParseIntCellProcessorProvider implements DeclarativeCellProcessorPr
     public CellProcessorFactory create(final ParseInt annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 

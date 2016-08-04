@@ -33,7 +33,7 @@ public class ParseBoolCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final ParseBool annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
+            public int getIndex() {
                 return annotation.order();
             }
 
