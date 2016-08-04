@@ -15,6 +15,11 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
+import com.github.dkschlos.supercsv.internal.fields.Fields;
+import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
+import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -24,10 +29,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
-import com.github.dkschlos.supercsv.util.ReflectionUtilsExt;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseEnum;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
@@ -38,7 +39,6 @@ import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.util.CsvContext;
-import com.github.dkschlos.supercsv.util.Form;
 
 /**
  * Extracts all cellprocessor from all fields of the provided class
@@ -82,7 +82,7 @@ class BeanCellProcessorExtractor {
         }
 
         List<CellProcessor> cellProcessors = new ArrayList<CellProcessor>();
-        for (Field field : FieldExtractor.getFields(clazz)) {
+        for (Field field : Fields.getFields(clazz)) {
             cellProcessors.add(createCellProcessorFor(field, context));
         }
 
@@ -148,7 +148,7 @@ class BeanCellProcessorExtractor {
     private static final class OrderComparator implements Comparator<CellProcessorFactory> {
 
         public int compare(CellProcessorFactory o1, CellProcessorFactory o2) {
-            return o2.getOrder() - o1.getOrder();
+            return o2.getIndex() - o1.getIndex();
         }
     }
 

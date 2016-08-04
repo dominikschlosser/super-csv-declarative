@@ -21,5 +21,5 @@ public interface CellProcessorFactory {
 
     CellProcessor create(CellProcessor next);
 
-    int getOrder();
+    int getIndex();
 }

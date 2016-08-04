@@ -35,8 +35,8 @@ public class ParseDateCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final ParseDate annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

@@ -34,8 +34,8 @@ public class TrimCellProcessorProvider implements
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Trim annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

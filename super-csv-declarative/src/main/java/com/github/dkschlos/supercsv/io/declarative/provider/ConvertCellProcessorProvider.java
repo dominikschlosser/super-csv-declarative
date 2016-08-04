@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
-import com.github.dkschlos.supercsv.util.ReflectionUtilsExt;
+import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
@@ -32,8 +32,8 @@ public class ConvertCellProcessorProvider implements DeclarativeCellProcessorPro
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Convert annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

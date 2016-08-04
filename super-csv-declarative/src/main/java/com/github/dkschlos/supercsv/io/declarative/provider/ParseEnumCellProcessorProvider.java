@@ -32,8 +32,8 @@ public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorP
     public CellProcessorFactory create(final ParseEnum annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

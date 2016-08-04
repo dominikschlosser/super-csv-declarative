@@ -35,8 +35,8 @@ public class DMinMaxCellProcessorProvider implements DeclarativeCellProcessorPro
     public CellProcessorFactory create(final DMinMax annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

@@ -35,8 +35,8 @@ public class LMinMaxCellProcessorProvider implements DeclarativeCellProcessorPro
     public CellProcessorFactory create(final LMinMax annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

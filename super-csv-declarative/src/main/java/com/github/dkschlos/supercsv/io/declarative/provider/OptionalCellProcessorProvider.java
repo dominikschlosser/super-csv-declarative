@@ -33,8 +33,8 @@ public class OptionalCellProcessorProvider implements
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Optional annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

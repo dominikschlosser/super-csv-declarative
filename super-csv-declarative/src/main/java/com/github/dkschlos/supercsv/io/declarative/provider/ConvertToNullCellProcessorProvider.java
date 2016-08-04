@@ -32,8 +32,8 @@ public class ConvertToNullCellProcessorProvider implements DeclarativeCellProces
     public CellProcessorFactory create(final ConvertNullTo annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

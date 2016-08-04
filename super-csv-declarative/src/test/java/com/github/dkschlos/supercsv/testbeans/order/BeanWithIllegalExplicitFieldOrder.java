@@ -31,18 +31,18 @@ public class BeanWithIllegalExplicitFieldOrder {
     @Optional
     @Trim
     @Truncate(maxSize = 3)
-    @CsvField(order = 1)
+    @CsvField(index = 1)
     private String lastName;
 
     @Optional
     @Trim
-    @CsvField(order = 1)
+    @CsvField(index = 1)
     private String name;
 
-    @CsvField(order = 2)
+    @CsvField(index = 2)
     private int age;
 
-    @CsvField(order = 3)
+    @CsvField(index = 3)
     private double weight;
 
     public BeanWithIllegalExplicitFieldOrder() {

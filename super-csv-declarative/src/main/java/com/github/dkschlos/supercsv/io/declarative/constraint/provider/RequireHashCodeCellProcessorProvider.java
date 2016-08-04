@@ -34,8 +34,8 @@ public class RequireHashCodeCellProcessorProvider implements DeclarativeCellProc
     public CellProcessorFactory create(final RequireHashCode annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

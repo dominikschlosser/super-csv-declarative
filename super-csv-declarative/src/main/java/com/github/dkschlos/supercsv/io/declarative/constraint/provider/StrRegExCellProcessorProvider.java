@@ -35,8 +35,8 @@ public class StrRegExCellProcessorProvider implements DeclarativeCellProcessorPr
     public CellProcessorFactory create(final StrRegEx annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

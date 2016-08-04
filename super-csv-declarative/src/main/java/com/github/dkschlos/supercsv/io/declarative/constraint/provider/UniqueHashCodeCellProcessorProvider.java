@@ -34,8 +34,8 @@ public class UniqueHashCodeCellProcessorProvider implements DeclarativeCellProce
     public CellProcessorFactory create(final UniqueHashCode annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

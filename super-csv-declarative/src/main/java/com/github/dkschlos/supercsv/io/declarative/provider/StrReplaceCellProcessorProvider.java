@@ -33,8 +33,8 @@ public class StrReplaceCellProcessorProvider implements DeclarativeCellProcessor
     public CellProcessorFactory create(final StrReplace annotation) {
         return new CellProcessorFactory() {
 
-            public int getOrder() {
-                return annotation.order();
+            public int getIndex() {
+                return annotation.index();
             }
 
             public CellProcessor create(CellProcessor next) {

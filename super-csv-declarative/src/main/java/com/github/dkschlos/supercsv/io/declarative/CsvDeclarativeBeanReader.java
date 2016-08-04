@@ -15,16 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import com.github.dkschlos.supercsv.util.Form;
-import com.github.dkschlos.supercsv.util.ReflectionUtilsExt;
-import org.supercsv.cellprocessor.*;
-import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvException;
-import org.supercsv.exception.SuperCsvReflectionException;
-import org.supercsv.io.AbstractCsvReader;
-import org.supercsv.io.ITokenizer;
-import org.supercsv.prefs.CsvPreference;
-
+import com.github.dkschlos.supercsv.internal.fields.Fields;
+import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
@@ -33,6 +26,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.supercsv.cellprocessor.*;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.exception.SuperCsvException;
+import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.io.AbstractCsvReader;
+import org.supercsv.io.ITokenizer;
+import org.supercsv.prefs.CsvPreference;
 
 /**
  * This reader maps csv files to beans via conventions and {@link CellProcessorAnnotationDescriptor} -annotations. The
@@ -108,7 +108,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
             throw new IllegalArgumentException("clazz should not be null");
         }
 
-        List<Field> fields = FieldExtractor.getFields(clazz);
+        List<Field> fields = Fields.getFields(clazz);
 
         return readIntoBean(ReflectionUtilsExt.instantiateBean(clazz), fields,
                 cellProcessorExtractor.getCellProcessors(clazz, StandardCsvContexts.READ));

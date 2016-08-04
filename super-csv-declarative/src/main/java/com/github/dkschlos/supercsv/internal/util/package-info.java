@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.io.declarative;
-
-public final class ProcessorOrder {
-
-    public static final int UNDEFINED = -1;
-}
+/**
+ * This package contains utility classes
+ */
+package com.github.dkschlos.supercsv.internal.util;

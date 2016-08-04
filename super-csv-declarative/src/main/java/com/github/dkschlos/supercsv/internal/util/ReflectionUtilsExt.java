@@ -1,4 +1,4 @@
-package com.github.dkschlos.supercsv.util;
+package com.github.dkschlos.supercsv.internal.util;
 
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.util.BeanInterfaceProxy;
