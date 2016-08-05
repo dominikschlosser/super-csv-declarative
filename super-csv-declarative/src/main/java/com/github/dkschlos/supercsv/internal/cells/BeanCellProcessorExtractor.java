@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.internal.fields;
+package com.github.dkschlos.supercsv.internal.cells;
 
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;

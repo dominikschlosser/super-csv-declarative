@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.internal.fields;
+package com.github.dkschlos.supercsv.internal.cells;
 
 import com.github.dkschlos.supercsv.internal.util.Form;
 import java.lang.reflect.Field;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvReflectionException;
 
-class BeanFieldWrapper implements FieldWrapper {
+class ExistingBeanCell implements BeanCell {
 
     private final Field field;
-    private CellProcessor cellProcessor;
+    private final CellProcessor cellProcessor;
 
-    public BeanFieldWrapper(Field field, CellProcessor cellProcessor) {
+    public ExistingBeanCell(Field field, CellProcessor cellProcessor) {
         this.field = field;
         this.cellProcessor = cellProcessor;
     }
 
     @Override
-    public CellProcessor getCellProcessor() {
+    public CellProcessor getProcessor() {
         return cellProcessor;
     }
 

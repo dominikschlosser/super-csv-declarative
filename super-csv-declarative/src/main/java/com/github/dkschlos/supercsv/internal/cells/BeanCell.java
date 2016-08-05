@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.internal.fields;
+package com.github.dkschlos.supercsv.internal.cells;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
-public interface FieldWrapper {
+public interface BeanCell {
 
-    CellProcessor getCellProcessor();
+    CellProcessor getProcessor();
 
     Class<?> getType();
 

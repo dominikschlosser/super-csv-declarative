@@ -15,8 +15,8 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import com.github.dkschlos.supercsv.internal.fields.FieldWrapper;
-import com.github.dkschlos.supercsv.internal.fields.Fields;
+import com.github.dkschlos.supercsv.internal.cells.BeanCell;
+import com.github.dkschlos.supercsv.internal.cells.BeanCells;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import java.io.IOException;
 import java.io.Reader;
@@ -85,39 +85,39 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
             throw new IllegalArgumentException("clazz should not be null");
         }
 
-        Fields fields = Fields.getFields(clazz, StandardCsvContexts.READ);
+        BeanCells fields = BeanCells.getFields(clazz, StandardCsvContexts.READ);
 
         return readIntoBean(ReflectionUtilsExt.instantiateBean(clazz), fields);
     }
 
-    private <T> T populateBean(final T resultBean, List<Object> processedColumns, Fields fields) {
+    private <T> T populateBean(final T resultBean, List<Object> processedColumns, BeanCells cells) {
         for (int i = 0; i < processedColumns.size(); i++) {
             final Object fieldValue = processedColumns.get(i);
 
-            FieldWrapper field = fields.getField(i);
-            if (field == null || fieldValue == null) {
+            BeanCell cell = cells.getCell(i);
+            if (cell == null || fieldValue == null) {
                 continue;
             }
 
-            field.setValue(resultBean, fieldValue);
+            cell.setValue(resultBean, fieldValue);
         }
 
         return resultBean;
     }
 
-    private <T> T readIntoBean(final T bean, Fields fields)
+    private <T> T readIntoBean(final T bean, BeanCells cells)
             throws IOException {
 
         if (readRow()) {
             List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
             for (int i = 0; i < length(); i++) {
-                rowProcessors.add(fields.getField(i).getCellProcessor());
+                rowProcessors.add(cells.getCell(i).getProcessor());
             }
 
             List<Object> processedColumns = new ArrayList<Object>();
             executeProcessors(processedColumns, rowProcessors.toArray(new CellProcessor[rowProcessors.size()]));
 
-            return populateBean(bean, processedColumns, fields);
+            return populateBean(bean, processedColumns, cells);
         }
 
         return null; // EOF

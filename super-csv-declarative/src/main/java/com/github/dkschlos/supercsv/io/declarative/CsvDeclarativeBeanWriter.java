@@ -15,8 +15,8 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import com.github.dkschlos.supercsv.internal.fields.FieldWrapper;
-import com.github.dkschlos.supercsv.internal.fields.Fields;
+import com.github.dkschlos.supercsv.internal.cells.BeanCell;
+import com.github.dkschlos.supercsv.internal.cells.BeanCells;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -66,14 +66,14 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
         incrementRowAndLineNo();
 
-        Fields fields = Fields.getFields(source.getClass(), StandardCsvContexts.WRITE);
-        List<Object> beanValues = extractBeanValues(source, fields);
+        BeanCells cells = BeanCells.getFields(source.getClass(), StandardCsvContexts.WRITE);
+        List<Object> beanValues = extractBeanValues(source, cells);
 
         List<Object> processedColumns = new ArrayList<Object>();
 
         List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
-        for (FieldWrapper field : fields.getAll()) {
-            rowProcessors.add(field.getCellProcessor());
+        for (BeanCell cell : cells.getAll()) {
+            rowProcessors.add(cell.getProcessor());
         }
 
         Util.executeCellProcessors(processedColumns, beanValues,
@@ -83,7 +83,7 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
         flush();
     }
 
-    private List<Object> extractBeanValues(final Object source, Fields fields) {
+    private List<Object> extractBeanValues(final Object source, BeanCells cells) {
 
         if (source == null) {
             throw new IllegalArgumentException("the bean to write should not be null");
@@ -91,8 +91,8 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
         List<Object> beanValues = new ArrayList<Object>();
 
-        for (FieldWrapper field : fields.getAll()) {
-            beanValues.add(field.getValue(source));
+        for (BeanCell cell : cells.getAll()) {
+            beanValues.add(cell.getValue(source));
         }
 
         return beanValues;

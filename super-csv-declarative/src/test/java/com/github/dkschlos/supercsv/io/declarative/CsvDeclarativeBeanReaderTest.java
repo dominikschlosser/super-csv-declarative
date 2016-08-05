@@ -33,7 +33,6 @@ import java.io.StringReader;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
@@ -195,13 +194,6 @@ public class CsvDeclarativeBeanReaderTest {
     public void readWithNullBeanClass() throws IOException {
         setupBeanReader(BEAN_WITH_INHERITED_PROPERTIES);
         beanReader.read(null);
-    }
-
-    @Ignore("think about concept")
-    @Test(expected = IllegalArgumentException.class)
-    public void beanFieldCountAndCsvFieldCountDoNotMatch() throws IOException {
-        setupBeanReader(BEAN_WITH_INHERITED_PROPERTIES);
-        beanReader.read(BeanWithoutAnnotations.class);
     }
 
     @Test(expected = NullPointerException.class)

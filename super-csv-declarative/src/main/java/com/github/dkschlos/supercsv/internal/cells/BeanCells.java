@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.internal.fields;
+package com.github.dkschlos.supercsv.internal.cells;
 
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
@@ -25,12 +25,12 @@ import java.util.Map;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
 
-public final class Fields {
+public final class BeanCells {
 
-    private static final Map<CacheKey, Fields> FIELD_CACHE = new HashMap<CacheKey, Fields>();
-    private final Map<Integer, FieldWrapper> mappedFields;
+    private static final Map<CacheKey, BeanCells> FIELD_CACHE = new HashMap<CacheKey, BeanCells>();
+    private final Map<Integer, BeanCell> mappedFields;
 
-    private Fields(Map<Integer, FieldWrapper> mappedFields) {
+    private BeanCells(Map<Integer, BeanCell> mappedFields) {
         this.mappedFields = mappedFields;
     }
     /**
@@ -39,7 +39,7 @@ public final class Fields {
      * @param clazz the class to get the fields of
      * @return all fields of the class and its hierarchy
      */
-    public static Fields getFields(Class<?> clazz, String context) {
+    public static BeanCells getFields(Class<?> clazz, String context) {
         CacheKey cacheKey = new CacheKey(clazz, context);
         if (FIELD_CACHE.containsKey(cacheKey)) {
             return FIELD_CACHE.get(cacheKey);
@@ -47,36 +47,36 @@ public final class Fields {
         FieldExtractor fieldExtractor = new FieldExtractor(clazz);
         List<Field> fields = fieldExtractor.getFields();
 
-        Fields result = null;
-        Map<Integer, FieldWrapper> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, context);
+        BeanCells result = null;
+        Map<Integer, BeanCell> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, context);
         if (fieldsByExplicitIndex.isEmpty()) {
-            Map<Integer, FieldWrapper> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, context);
-            result = new Fields(fieldsByImplicitIndex);
+            Map<Integer, BeanCell> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, context);
+            result = new BeanCells(fieldsByImplicitIndex);
         } else {
-            result = new Fields(fieldsByExplicitIndex);
+            result = new BeanCells(fieldsByExplicitIndex);
         }
 
         FIELD_CACHE.put(cacheKey, result);
         return result;
     }
 
-    public FieldWrapper getField(int index) {
-        FieldWrapper mapped = mappedFields.get(index);
+    public BeanCell getCell(int index) {
+        BeanCell mapped = mappedFields.get(index);
         if (mapped != null) {
             return mapped;
         }
 
-        NullFieldWrapper nullFieldWrapper = new NullFieldWrapper();
+        NullBeanCell nullFieldWrapper = new NullBeanCell();
         mappedFields.put(index, nullFieldWrapper);
 
         return nullFieldWrapper;
     }
 
-    public List<FieldWrapper> getAll() {
-        return new ArrayList<FieldWrapper>(mappedFields.values());
+    public List<BeanCell> getAll() {
+        return new ArrayList<BeanCell>(mappedFields.values());
     }
-    private static Map<Integer, FieldWrapper> getFieldsByExplicitIndex(List<Field> fields, String context) {
-        Map<Integer, FieldWrapper> result = new HashMap<Integer, FieldWrapper>();
+    private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, String context) {
+        Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (Field field : fields) {
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
             if (fieldAnnotation != null) {
@@ -86,19 +86,19 @@ public final class Fields {
                 }
 
                 CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
-                result.put(fieldAnnotation.index(), new BeanFieldWrapper(field, cellProcessor));
+                result.put(fieldAnnotation.index(), new ExistingBeanCell(field, cellProcessor));
             }
         }
 
         return result;
     }
 
-    private static Map<Integer, FieldWrapper> getFieldsByImplicitIndex(List<Field> fields, String context) {
-        Map<Integer, FieldWrapper> result = new HashMap<Integer, FieldWrapper>();
+    private static Map<Integer, BeanCell> getFieldsByImplicitIndex(List<Field> fields, String context) {
+        Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
             CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
-            result.put(i, new BeanFieldWrapper(field, cellProcessor));
+            result.put(i, new ExistingBeanCell(field, cellProcessor));
         }
 
         return result;
