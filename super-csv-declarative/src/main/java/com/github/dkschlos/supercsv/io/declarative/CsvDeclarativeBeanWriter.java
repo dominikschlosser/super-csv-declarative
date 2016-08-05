@@ -15,11 +15,10 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
+import com.github.dkschlos.supercsv.internal.fields.FieldWrapper;
 import com.github.dkschlos.supercsv.internal.fields.Fields;
-import com.github.dkschlos.supercsv.internal.util.Form;
 import java.io.IOException;
 import java.io.Writer;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -36,10 +35,6 @@ import org.supercsv.util.Util;
  * @author Dominik Schlosser
  */
 public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
-
-    private final List<Object> processedColumns = new ArrayList<Object>();
-
-    private BeanCellProcessorExtractor cellProcessorExtractor = new BeanCellProcessorExtractor();
 
     /**
      * Constructs a new <tt>CsvDeclarativeBeanWriter</tt> with the supplied Writer and CSV preferences. Note that the
@@ -71,20 +66,24 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
         incrementRowAndLineNo();
 
-        List<Field> fields = Fields.getFields(source.getClass());
+        Fields fields = Fields.getFields(source.getClass(), StandardCsvContexts.WRITE);
         List<Object> beanValues = extractBeanValues(source, fields);
 
-        List<CellProcessor> processors = cellProcessorExtractor.getCellProcessors(source.getClass(),
-                StandardCsvContexts.WRITE);
+        List<Object> processedColumns = new ArrayList<Object>();
+
+        List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
+        for (FieldWrapper field : fields.getAll()) {
+            rowProcessors.add(field.getCellProcessor());
+        }
 
         Util.executeCellProcessors(processedColumns, beanValues,
-                processors.toArray(new CellProcessor[processors.size()]), getLineNumber(), getRowNumber());
+                rowProcessors.toArray(new CellProcessor[rowProcessors.size()]), getLineNumber(), getRowNumber());
 
         writeRow(processedColumns);
         flush();
     }
 
-    private List<Object> extractBeanValues(final Object source, List<Field> fields) {
+    private List<Object> extractBeanValues(final Object source, Fields fields) {
 
         if (source == null) {
             throw new IllegalArgumentException("the bean to write should not be null");
@@ -92,14 +91,8 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
         List<Object> beanValues = new ArrayList<Object>();
 
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                beanValues.add(field.get(source));
-            } catch (IllegalAccessException e) {
-                throw new SuperCsvReflectionException(Form.at("error extracting bean value for field {}",
-                        field.getName()), e);
-            }
+        for (FieldWrapper field : fields.getAll()) {
+            beanValues.add(field.getValue(source));
         }
 
         return beanValues;

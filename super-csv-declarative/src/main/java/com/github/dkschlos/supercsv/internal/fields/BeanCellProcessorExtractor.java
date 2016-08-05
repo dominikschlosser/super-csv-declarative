@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.io.declarative;
+package com.github.dkschlos.supercsv.internal.fields;
 
-import com.github.dkschlos.supercsv.internal.fields.Fields;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
+import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
+import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +31,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ParseBigDecimal;
+import org.supercsv.cellprocessor.ParseBool;
+import org.supercsv.cellprocessor.ParseChar;
+import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseEnum;
+import org.supercsv.cellprocessor.ParseInt;
+import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
@@ -46,53 +53,30 @@ import org.supercsv.util.CsvContext;
  * @since 2.5
  * @author Dominik Schlosser
  */
-class BeanCellProcessorExtractor {
+final class BeanCellProcessorExtractor {
 
-    private Map<CacheKey, List<CellProcessor>> CELL_PROCESSOR_CACHE = new HashMap<CacheKey, List<CellProcessor>>();
+    private static final Map<Class<?>, CellProcessor> DEFAULT_PROCESSORS = new HashMap<Class<?>, CellProcessor>();
 
-    private Map<Class<?>, CellProcessor> defaultProcessors;
-
-    /**
-     * Constructor without default processors
-     */
-    public BeanCellProcessorExtractor() {
-        this(new HashMap<Class<?>, CellProcessor>());
+    static {
+        DEFAULT_PROCESSORS.put(BigDecimal.class, new ParseBigDecimal());
+        DEFAULT_PROCESSORS.put(Boolean.class, new ParseBool());
+        DEFAULT_PROCESSORS.put(boolean.class, new ParseBool());
+        DEFAULT_PROCESSORS.put(Character.class, new ParseChar());
+        DEFAULT_PROCESSORS.put(char.class, new ParseChar());
+        DEFAULT_PROCESSORS.put(Double.class, new ParseDouble());
+        DEFAULT_PROCESSORS.put(double.class, new ParseDouble());
+        DEFAULT_PROCESSORS.put(Integer.class, new ParseInt());
+        DEFAULT_PROCESSORS.put(int.class, new ParseInt());
+        DEFAULT_PROCESSORS.put(Long.class, new ParseLong());
+        DEFAULT_PROCESSORS.put(long.class, new ParseLong());
     }
 
-    /**
-     * Constructor that gets a map with default processors
-     *
-     * @param defaultProcessors default processors which are used when no {@link CellProcessorAnnotationDescriptor}
-     * -annotations can be found on a field
-     */
-    public BeanCellProcessorExtractor(Map<Class<?>, CellProcessor> defaultProcessors) {
-        this.defaultProcessors = defaultProcessors;
-    }
-
-    /**
-     * Extracts all cell processors from all fields of the provided class, including all superclass-fields
-     *
-     * @param the class to extract processors from
-     * @return all found cell processors
-     */
-    public <T> List<CellProcessor> getCellProcessors(Class<T> clazz, String context) {
-        CacheKey cacheKey = new CacheKey(clazz, context);
-        if (CELL_PROCESSOR_CACHE.containsKey(cacheKey)) {
-            return CELL_PROCESSOR_CACHE.get(cacheKey);
-        }
-
-        List<CellProcessor> cellProcessors = new ArrayList<CellProcessor>();
-        for (Field field : Fields.getFields(clazz)) {
-            cellProcessors.add(createCellProcessorFor(field, context));
-        }
-
-        CELL_PROCESSOR_CACHE.put(cacheKey, cellProcessors);
-
-        return cellProcessors;
+    private BeanCellProcessorExtractor() {
+        // no instances allowed
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private CellProcessor createCellProcessorFor(Field field, String context) {
+    public static CellProcessor createCellProcessorFor(Field field, String context) {
         List<Annotation> annotations = Arrays.asList(field.getAnnotations());
         Collections.reverse(annotations);
 
@@ -132,12 +116,12 @@ class BeanCellProcessorExtractor {
     }
 
     @SuppressWarnings("unchecked")
-    private CellProcessor mapFieldToDefaultProcessor(Field field) {
+    private static CellProcessor mapFieldToDefaultProcessor(Field field) {
         if (field.getType().isEnum()) {
             return new ParseEnum((Class<? extends Enum<?>>) field.getType());
         }
 
-        CellProcessor cellProcessor = defaultProcessors.get(field.getType());
+        CellProcessor cellProcessor = DEFAULT_PROCESSORS.get(field.getType());
         if (cellProcessor == null) {
             return new Transient();
         }
@@ -157,64 +141,6 @@ class BeanCellProcessorExtractor {
 
         public <T> T execute(Object value, CsvContext context) {
             return next.execute(value, context);
-        }
-
-    }
-
-    private static class CacheKey {
-
-        private Class<?> fieldClass;
-        private String context;
-
-        public CacheKey(Class<?> fieldClass, String context) {
-            this.fieldClass = fieldClass;
-            this.context = context;
-        }
-
-        public Class<?> getFieldClass() {
-            return fieldClass;
-        }
-
-        public String getContext() {
-            return context;
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + ((context == null) ? 0 : context.hashCode());
-            result = prime * result + ((fieldClass == null) ? 0 : fieldClass.hashCode());
-            return result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            CacheKey other = (CacheKey) obj;
-            if (context == null) {
-                if (other.context != null) {
-                    return false;
-                }
-            } else if (!context.equals(other.context)) {
-                return false;
-            }
-            if (fieldClass == null) {
-                if (other.fieldClass != null) {
-                    return false;
-                }
-            } else if (!fieldClass.equals(other.fieldClass)) {
-                return false;
-            }
-            return true;
         }
 
     }
