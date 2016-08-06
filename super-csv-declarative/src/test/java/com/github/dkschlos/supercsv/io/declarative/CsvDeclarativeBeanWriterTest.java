@@ -87,7 +87,6 @@ public class CsvDeclarativeBeanWriterTest {
         BeanWithPartialColumnMapping max = new BeanWithPartialColumnMapping("Mustermann", 22);
 
         beanWriter.write(john);
-        
         beanWriter.write(max);
 
         assertEquals("Doe,42\r\nMustermann,22\r\n", result.toString());
