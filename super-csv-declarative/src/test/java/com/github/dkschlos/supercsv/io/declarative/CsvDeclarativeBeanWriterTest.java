@@ -28,6 +28,7 @@ import org.supercsv.prefs.CsvPreference;
 import com.github.dkschlos.supercsv.testbeans.BeanForReadAndWrite;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
+import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 
 /**
  * @since 2.5
@@ -80,6 +81,17 @@ public class CsvDeclarativeBeanWriterTest {
         assertEquals(",Doe,42,100.5\r\nMax,Mus,22,21.4\r\n", result.toString());
     }
 
+    @Test
+    public void writeSimpleBeanWithPartialMapping() throws IOException {
+        BeanWithPartialColumnMapping john = new BeanWithPartialColumnMapping("Doe", 42);
+        BeanWithPartialColumnMapping max = new BeanWithPartialColumnMapping("Mustermann", 22);
+
+        beanWriter.write(john);
+        beanWriter.write(max);
+
+        assertEquals("Doe,42\r\nMustermann,22\r\n", result.toString());
+    }
+    
     @Test
     public void writeBeanWithInheritedProperties() throws IOException {
         BeanWithInheritedProperties john = new BeanWithInheritedProperties("John", "Doe", 42, 100.5, "Note 1");
