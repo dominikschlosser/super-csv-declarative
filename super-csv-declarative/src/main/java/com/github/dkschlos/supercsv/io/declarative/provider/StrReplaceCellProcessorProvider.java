@@ -30,13 +30,16 @@ public class StrReplaceCellProcessorProvider implements DeclarativeCellProcessor
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final StrReplace annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.StrReplace(annotation.pattern(), annotation.replacement(),
                         (StringCellProcessor) next);
@@ -47,6 +50,7 @@ public class StrReplaceCellProcessorProvider implements DeclarativeCellProcessor
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<StrReplace> getType() {
         return StrReplace.class;
     }

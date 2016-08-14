@@ -29,13 +29,16 @@ public class ConvertCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Convert annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new com.github.dkschlos.supercsv.cellprocessor.Convert(ReflectionUtilsExt.instantiateBean(annotation.value()),
                         next);
@@ -46,6 +49,7 @@ public class ConvertCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Convert> getType() {
         return com.github.dkschlos.supercsv.io.declarative.annotation.Convert.class;
     }

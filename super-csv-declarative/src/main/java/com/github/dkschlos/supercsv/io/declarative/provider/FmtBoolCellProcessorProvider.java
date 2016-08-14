@@ -30,13 +30,16 @@ public class FmtBoolCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final FmtBool annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.FmtBool(annotation.trueValue(), annotation.falseValue(),
                         (StringCellProcessor) next);
@@ -47,6 +50,7 @@ public class FmtBoolCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<FmtBool> getType() {
         return FmtBool.class;
     }

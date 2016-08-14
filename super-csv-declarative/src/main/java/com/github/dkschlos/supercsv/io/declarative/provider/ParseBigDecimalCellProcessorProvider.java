@@ -29,13 +29,16 @@ public class ParseBigDecimalCellProcessorProvider implements DeclarativeCellProc
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final ParseBigDecimal annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.ParseBigDecimal(next);
             }
@@ -45,6 +48,7 @@ public class ParseBigDecimalCellProcessorProvider implements DeclarativeCellProc
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<ParseBigDecimal> getType() {
         return ParseBigDecimal.class;
     }

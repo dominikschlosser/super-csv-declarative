@@ -31,13 +31,16 @@ public class UniqueCellProcessorProvider implements DeclarativeCellProcessorProv
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final Unique annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.Unique(next);
             }
@@ -47,6 +50,7 @@ public class UniqueCellProcessorProvider implements DeclarativeCellProcessorProv
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<Unique> getType() {
         return Unique.class;
     }

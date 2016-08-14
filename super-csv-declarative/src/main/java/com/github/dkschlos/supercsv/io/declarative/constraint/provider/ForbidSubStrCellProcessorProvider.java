@@ -31,13 +31,16 @@ public class ForbidSubStrCellProcessorProvider implements DeclarativeCellProcess
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final ForbidSubStr annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.ForbidSubStr(annotation.forbiddenSubStrings(), next);
             }
@@ -47,6 +50,7 @@ public class ForbidSubStrCellProcessorProvider implements DeclarativeCellProcess
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<ForbidSubStr> getType() {
         return ForbidSubStr.class;
     }

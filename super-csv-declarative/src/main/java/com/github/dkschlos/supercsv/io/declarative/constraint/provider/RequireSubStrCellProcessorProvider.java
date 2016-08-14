@@ -31,13 +31,16 @@ public class RequireSubStrCellProcessorProvider implements DeclarativeCellProces
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final RequireSubStr annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.RequireSubStr(annotation.requiredSubStrings(), next);
             }
@@ -47,6 +50,7 @@ public class RequireSubStrCellProcessorProvider implements DeclarativeCellProces
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<RequireSubStr> getType() {
         return RequireSubStr.class;
     }

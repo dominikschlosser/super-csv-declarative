@@ -30,13 +30,16 @@ public class FmtDateCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final FmtDate annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.FmtDate(annotation.format(), (StringCellProcessor) next);
             }
@@ -46,6 +49,7 @@ public class FmtDateCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<FmtDate> getType() {
         return FmtDate.class;
     }

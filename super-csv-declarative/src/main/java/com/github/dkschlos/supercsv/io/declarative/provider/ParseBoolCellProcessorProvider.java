@@ -30,13 +30,16 @@ public class ParseBoolCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final ParseBool annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.ParseBool(annotation.trueValue(), annotation.falseValue(),
                         annotation.ignoreCase(), (BoolCellProcessor) next);
@@ -47,6 +50,7 @@ public class ParseBoolCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<ParseBool> getType() {
         return ParseBool.class;
     }

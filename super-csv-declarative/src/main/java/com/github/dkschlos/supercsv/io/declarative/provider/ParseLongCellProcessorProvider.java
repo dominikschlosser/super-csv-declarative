@@ -30,13 +30,16 @@ public class ParseLongCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final ParseLong annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.ParseLong((LongCellProcessor) next);
             }
@@ -46,6 +49,7 @@ public class ParseLongCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<ParseLong> getType() {
         return ParseLong.class;
     }

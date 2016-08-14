@@ -31,13 +31,16 @@ public class TrimCellProcessorProvider implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Trim annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new Trim((StringCellProcessor) next);
             }
@@ -47,6 +50,7 @@ public class TrimCellProcessorProvider implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Trim> getType() {
         return com.github.dkschlos.supercsv.io.declarative.annotation.Trim.class;
     }

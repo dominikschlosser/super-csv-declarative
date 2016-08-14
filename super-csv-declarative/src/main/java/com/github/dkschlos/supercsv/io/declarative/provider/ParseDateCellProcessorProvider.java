@@ -32,13 +32,16 @@ public class ParseDateCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final ParseDate annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.ParseDate(annotation.format(), annotation.lenient(),
                         annotation.locale() == null || "".equals(annotation.locale()) ? null : new Locale(annotation.locale()) != null ? annotation.locale() == null || annotation.locale() == "" ? null : new Locale(annotation.locale()) : null,
@@ -50,6 +53,7 @@ public class ParseDateCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<ParseDate> getType() {
         return ParseDate.class;
     }

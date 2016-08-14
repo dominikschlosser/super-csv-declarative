@@ -31,13 +31,16 @@ public class StrNotNullOrEmptyCellProcessorProvider implements DeclarativeCellPr
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final StrNotNullOrEmpty annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.StrNotNullOrEmpty(next);
             }
@@ -47,6 +50,7 @@ public class StrNotNullOrEmptyCellProcessorProvider implements DeclarativeCellPr
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<StrNotNullOrEmpty> getType() {
         return StrNotNullOrEmpty.class;
     }

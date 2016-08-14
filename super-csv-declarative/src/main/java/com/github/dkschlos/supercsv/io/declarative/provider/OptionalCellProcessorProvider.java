@@ -30,13 +30,16 @@ public class OptionalCellProcessorProvider implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Optional annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new Optional(next);
             }
@@ -46,6 +49,7 @@ public class OptionalCellProcessorProvider implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<com.github.dkschlos.supercsv.io.declarative.annotation.Optional> getType() {
         return com.github.dkschlos.supercsv.io.declarative.annotation.Optional.class;
     }

@@ -31,13 +31,16 @@ public class StrLenCellProcessorProvider implements DeclarativeCellProcessorProv
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final StrLen annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.Strlen(annotation.requiredLengths(), next);
             }
@@ -47,6 +50,7 @@ public class StrLenCellProcessorProvider implements DeclarativeCellProcessorProv
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<StrLen> getType() {
         return StrLen.class;
     }

@@ -19,6 +19,7 @@ import com.github.dkschlos.supercsv.io.declarative.ProcessorIndex;
 
 public abstract class AbstractCellProcessorFactory implements CellProcessorFactory {
 
+    @Override
     public int getIndex() {
         return ProcessorIndex.UNDEFINED;
     }

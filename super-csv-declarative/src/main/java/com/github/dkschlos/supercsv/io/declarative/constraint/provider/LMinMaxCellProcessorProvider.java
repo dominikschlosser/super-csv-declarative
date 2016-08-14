@@ -32,13 +32,16 @@ public class LMinMaxCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final LMinMax annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.LMinMax(annotation.min(), annotation.max(),
                         (LongCellProcessor) next);
@@ -49,6 +52,7 @@ public class LMinMaxCellProcessorProvider implements DeclarativeCellProcessorPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<LMinMax> getType() {
         return LMinMax.class;
     }

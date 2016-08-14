@@ -32,13 +32,16 @@ public class StrRegExCellProcessorProvider implements DeclarativeCellProcessorPr
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final StrRegEx annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.StrRegEx(annotation.regex(),
                         (StringCellProcessor) next);
@@ -49,6 +52,7 @@ public class StrRegExCellProcessorProvider implements DeclarativeCellProcessorPr
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<StrRegEx> getType() {
         return StrRegEx.class;
     }

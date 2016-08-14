@@ -30,13 +30,16 @@ public class TruncateCellProcessorProvider implements DeclarativeCellProcessorPr
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final Truncate annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.Truncate(annotation.maxSize(), annotation.suffix(),
                         (StringCellProcessor) next);
@@ -47,6 +50,7 @@ public class TruncateCellProcessorProvider implements DeclarativeCellProcessorPr
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<Truncate> getType() {
         return Truncate.class;
     }

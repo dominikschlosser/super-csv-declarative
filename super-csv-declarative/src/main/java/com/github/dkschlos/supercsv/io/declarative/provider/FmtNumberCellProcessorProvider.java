@@ -30,13 +30,16 @@ public class FmtNumberCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final FmtNumber annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.FmtNumber(annotation.decimalFormat(), (StringCellProcessor) next);
             }
@@ -46,6 +49,7 @@ public class FmtNumberCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<FmtNumber> getType() {
         return FmtNumber.class;
     }

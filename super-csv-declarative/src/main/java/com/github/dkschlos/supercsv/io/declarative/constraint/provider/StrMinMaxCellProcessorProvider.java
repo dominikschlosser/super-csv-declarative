@@ -31,13 +31,16 @@ public class StrMinMaxCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final StrMinMax annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.constraint.StrMinMax(annotation.min(), annotation.max(), next);
             }
@@ -47,6 +50,7 @@ public class StrMinMaxCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<StrMinMax> getType() {
         return StrMinMax.class;
     }

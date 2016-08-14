@@ -29,13 +29,16 @@ public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public CellProcessorFactory create(final ParseEnum annotation) {
         return new CellProcessorFactory() {
 
+            @Override
             public int getIndex() {
                 return annotation.index();
             }
 
+            @Override
             public CellProcessor create(CellProcessor next) {
                 return new org.supercsv.cellprocessor.ParseEnum(annotation.enumClass(), annotation.ignoreCase(), next);
             }
@@ -45,6 +48,7 @@ public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Class<ParseEnum> getType() {
         return ParseEnum.class;
     }
