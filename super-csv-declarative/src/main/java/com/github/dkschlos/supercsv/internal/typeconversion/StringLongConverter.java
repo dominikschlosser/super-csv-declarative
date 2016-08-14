@@ -26,9 +26,4 @@ public class StringLongConverter implements TypeConverter<String, Long> {
         return input == null ? null : Long.parseLong(input);
     }
 
-    @Override
-    public String convertBack(Long input) {
-        return input == null ? null : input.toString();
-    }
-
 }

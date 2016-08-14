@@ -26,9 +26,4 @@ public class StringDoubleConverter implements TypeConverter<String, Double> {
         return input == null ? null : Double.parseDouble(input);
     }
 
-    @Override
-    public String convertBack(Double input) {
-        return input == null ? null : input.toString();
-    }
-
 }

@@ -23,6 +23,4 @@ package com.github.dkschlos.supercsv.internal.typeconversion;
 public interface TypeConverter<I, O> {
 
     O convert(I input);
-
-    I convertBack(O input);
 }

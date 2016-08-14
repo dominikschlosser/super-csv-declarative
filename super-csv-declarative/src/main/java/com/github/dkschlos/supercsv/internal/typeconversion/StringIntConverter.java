@@ -26,9 +26,4 @@ public class StringIntConverter implements TypeConverter<String, Integer> {
         return input == null ? null : Integer.parseInt(input);
     }
 
-    @Override
-    public String convertBack(Integer input) {
-        return input == null ? null : input.toString();
-    }
-
 }

@@ -28,9 +28,4 @@ public class StringBigDecimalConverter implements TypeConverter<String, BigDecim
         return input == null ? null : new BigDecimal(input);
     }
 
-    @Override
-    public String convertBack(BigDecimal input) {
-        return input == null ? null : input.toEngineeringString();
-    }
-
 }

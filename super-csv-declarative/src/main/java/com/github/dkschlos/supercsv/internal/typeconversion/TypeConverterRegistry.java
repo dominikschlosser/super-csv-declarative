@@ -33,6 +33,7 @@ public class TypeConverterRegistry {
 
     public final void register(TypeConverter<?, ?> converter, Class<?> inputClass, Class<?> outputClass) {
         converters.put(new RegistryKey(inputClass, outputClass), converter);
+        converters.put(new RegistryKey(outputClass, inputClass), converter);
     }
 
     private static class RegistryKey {
