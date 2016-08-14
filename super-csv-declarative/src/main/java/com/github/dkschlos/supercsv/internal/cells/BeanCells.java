@@ -33,6 +33,7 @@ public final class BeanCells {
     private BeanCells(Map<Integer, BeanCell> mappedFields) {
         this.mappedFields = mappedFields;
     }
+
     /**
      * Returns all fields of the given class including those of superclasses.
      *
@@ -75,6 +76,7 @@ public final class BeanCells {
     public List<BeanCell> getAll() {
         return new ArrayList<BeanCell>(mappedFields.values());
     }
+
     private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, String context) {
         Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (Field field : fields) {
@@ -103,6 +105,7 @@ public final class BeanCells {
 
         return result;
     }
+
     private static class CacheKey {
 
         private final Class<?> fieldClass;

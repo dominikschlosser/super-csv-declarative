@@ -21,6 +21,10 @@ public interface BeanCell {
 
     CellProcessor getProcessor();
 
+    /**
+     *
+     * @return Cell's type or null if cell doesn't have one (maybe unmapped)
+     */
     Class<?> getType();
 
     void setValue(Object obj, Object value);

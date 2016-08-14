@@ -25,7 +25,6 @@ class NullBeanCell implements BeanCell {
         return new Optional();
     }
 
-
     @Override
     public void setValue(Object obj, Object value) {
         // do nothing
@@ -38,7 +37,7 @@ class NullBeanCell implements BeanCell {
 
     @Override
     public Class<?> getType() {
-        return void.class;
+        return null;
     }
 
 }

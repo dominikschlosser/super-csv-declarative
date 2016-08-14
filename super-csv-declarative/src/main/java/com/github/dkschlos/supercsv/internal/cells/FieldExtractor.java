@@ -17,7 +17,6 @@ package com.github.dkschlos.supercsv.internal.cells;
 
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.CsvTransient;
-import com.google.common.base.Joiner;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -48,8 +47,12 @@ final class FieldExtractor {
         }
 
         if (!withoutCsvFieldAnnotation.isEmpty()) {
+            List<String> ignoredFieldNames = new ArrayList<String>();
+            for (Field withoutAnnotation : withoutCsvFieldAnnotation) {
+                ignoredFieldNames.add(withoutAnnotation.getName());
+            }
             LOGGER.warn("You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
-                    + " Those fields will be ignored by SuperCSV: {}", clazz.getName(), Joiner.on(", ").join(withCsvFieldAnnotation));
+                    + " Those fields will be ignored by SuperCSV: {}", clazz.getName(), String.join(", ", ignoredFieldNames));
         }
 
         return withCsvFieldAnnotation;

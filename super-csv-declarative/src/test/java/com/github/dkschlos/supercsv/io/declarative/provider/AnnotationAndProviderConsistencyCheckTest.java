@@ -33,7 +33,7 @@ import java.util.Collection;
  * @author Dominik Schlosser
  */
 @RunWith(Parameterized.class)
-public class AnnotationAndProviderConsistencyCheck {
+public class AnnotationAndProviderConsistencyCheckTest {
 
     @Parameters
     public static Collection<Class<?>> getCellProcessorAnnotations() {
@@ -43,7 +43,7 @@ public class AnnotationAndProviderConsistencyCheck {
 
     private Class<?> cellProcessorAnnotationType;
 
-    public AnnotationAndProviderConsistencyCheck(Class<?> cellProcessorAnnotationType) {
+    public AnnotationAndProviderConsistencyCheckTest(Class<?> cellProcessorAnnotationType) {
         this.cellProcessorAnnotationType = cellProcessorAnnotationType;
     }
 

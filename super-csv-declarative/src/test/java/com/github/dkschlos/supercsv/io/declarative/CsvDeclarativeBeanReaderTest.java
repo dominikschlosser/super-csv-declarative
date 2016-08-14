@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 Kasper B. Graversen
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,7 @@ import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
+import com.github.dkschlos.supercsv.testbeans.BeanWithoutExplicitParseAnnotations;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
@@ -54,6 +55,7 @@ public class CsvDeclarativeBeanReaderTest {
     private static final String SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV = "/simpleBeanWithSimpleAnnotations.csv";
     private static final String BEAN_WITH_INHERITED_PROPERTIES = "/beanWithInheritedProperties.csv";
     private static final String BEAN_FOR_DEFAULT_OVERRIDING_TEST = "/beanForDefaultOverridingTest.csv";
+    private static final String BEAN_WITHOUT_EXPLICIT_PARSE_ANNOTATIONS_TEST = "/beanWithoutExplicitParseAnnotations.csv";
 
     private CsvDeclarativeBeanReader beanReader;
 
@@ -136,6 +138,17 @@ public class CsvDeclarativeBeanReaderTest {
         assertEquals(john, beanReader.read(BeanWithPartialColumnMapping.class));
         assertEquals(max, beanReader.read(BeanWithPartialColumnMapping.class));
         assertNull(beanReader.read(BeanWithPartialColumnMapping.class));
+    }
+
+    @Test
+    public void readBeanWithoutExplicitParseAnnotations() throws IOException {
+        setupBeanReader(BEAN_WITHOUT_EXPLICIT_PARSE_ANNOTATIONS_TEST);
+        BeanWithoutExplicitParseAnnotations john = new BeanWithoutExplicitParseAnnotations(0, 100.5);
+        BeanWithoutExplicitParseAnnotations max = new BeanWithoutExplicitParseAnnotations(22, 21.4);
+
+        assertEquals(john, beanReader.read(BeanWithoutExplicitParseAnnotations.class));
+        assertEquals(max, beanReader.read(BeanWithoutExplicitParseAnnotations.class));
+        assertNull(beanReader.read(BeanWithoutExplicitParseAnnotations.class));
     }
 
     @Test(expected = SuperCsvException.class)

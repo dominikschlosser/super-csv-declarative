@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 Kasper B. Graversen
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,11 +17,15 @@ package com.github.dkschlos.supercsv.io.declarative;
 
 import com.github.dkschlos.supercsv.internal.cells.BeanCell;
 import com.github.dkschlos.supercsv.internal.cells.BeanCells;
+import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverter;
+import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverterRegistry;
+import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang.ClassUtils;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
@@ -40,6 +44,7 @@ import org.supercsv.prefs.CsvPreference;
  */
 public class CsvDeclarativeBeanReader extends AbstractCsvReader {
 
+    private TypeConverterRegistry typeConverterRegistry = new DefaultTypeConverterRegistry();
 
     /**
      * Constructs a new <tt>CsvBeanReader</tt> with the supplied Reader and CSV preferences. Note that the
@@ -54,6 +59,20 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
     }
 
     /**
+     * Constructs a new <tt>CsvBeanReader</tt> with the supplied Reader and CSV preferences. Note that the
+     * <tt>reader</tt> will be wrapped in a <tt>BufferedReader</tt> before accessed.
+     *
+     * @param reader the reader
+     * @param typeConverterRegistry the TypeConverterRegistry to use
+     * @param preferences the CSV preferences
+     * @throws NullPointerException if reader or preferences are null
+     */
+    public CsvDeclarativeBeanReader(final Reader reader, TypeConverterRegistry typeConverterRegistry, final CsvPreference preferences) {
+        super(reader, preferences);
+        this.typeConverterRegistry = typeConverterRegistry;
+    }
+
+    /**
      * Constructs a new <tt>CsvBeanReader</tt> with the supplied (custom) Tokenizer and CSV preferences. The tokenizer
      * should be set up with the Reader (CSV input) and CsvPreference beforehand.
      *
@@ -63,6 +82,20 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
      */
     public CsvDeclarativeBeanReader(final ITokenizer tokenizer, final CsvPreference preferences) {
         super(tokenizer, preferences);
+    }
+
+    /**
+     * Constructs a new <tt>CsvBeanReader</tt> with the supplied (custom) Tokenizer and CSV preferences. The tokenizer
+     * should be set up with the Reader (CSV input) and CsvPreference beforehand.
+     *
+     * @param tokenizer the tokenizer
+     * @param typeConverterRegistry the TypeConverterRegistry to use
+     * @param preferences the CSV preferences
+     * @throws NullPointerException if tokenizer or preferences are null
+     */
+    public CsvDeclarativeBeanReader(final ITokenizer tokenizer, TypeConverterRegistry typeConverterRegistry, final CsvPreference preferences) {
+        super(tokenizer, preferences);
+        this.typeConverterRegistry = typeConverterRegistry;
     }
 
     /**
@@ -95,11 +128,22 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
             final Object fieldValue = processedColumns.get(i);
 
             BeanCell cell = cells.getCell(i);
-            if (cell == null || fieldValue == null) {
+            if (cell == null || cell.getType() == null || fieldValue == null) {
                 continue;
             }
 
-            cell.setValue(resultBean, fieldValue);
+            // ClassUtils handles boxed types
+            if (ClassUtils.isAssignable(fieldValue.getClass(), cell.getType(), true)) {
+                cell.setValue(resultBean, fieldValue);
+            } else {
+                TypeConverter<Object, Object> converter
+                        = (TypeConverter<Object, Object>) typeConverterRegistry.getConverter(fieldValue.getClass(), cell.getType());
+                if (converter == null) {
+                    throw new SuperCsvException(Form.at("No converter registered from type {} to type {}. Add one or fix your CellProcessor-annotations to return the field's type",
+                            fieldValue.getClass().getName(), cell.getType().getName()));
+                }
+                cell.setValue(resultBean, converter.convert(fieldValue));
+            }
         }
 
         return resultBean;

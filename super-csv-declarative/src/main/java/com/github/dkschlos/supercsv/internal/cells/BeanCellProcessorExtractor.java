@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 Kasper B. Graversen
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +18,7 @@ package com.github.dkschlos.supercsv.internal.cells;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
 import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 import java.lang.annotation.Annotation;
@@ -27,17 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
-import org.supercsv.cellprocessor.ParseBigDecimal;
-import org.supercsv.cellprocessor.ParseBool;
-import org.supercsv.cellprocessor.ParseChar;
-import org.supercsv.cellprocessor.ParseDouble;
-import org.supercsv.cellprocessor.ParseEnum;
-import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
@@ -55,22 +47,6 @@ import org.supercsv.util.CsvContext;
  */
 final class BeanCellProcessorExtractor {
 
-    private static final Map<Class<?>, CellProcessor> DEFAULT_PROCESSORS = new HashMap<Class<?>, CellProcessor>();
-
-    static {
-        DEFAULT_PROCESSORS.put(BigDecimal.class, new ParseBigDecimal());
-        DEFAULT_PROCESSORS.put(Boolean.class, new ParseBool());
-        DEFAULT_PROCESSORS.put(boolean.class, new ParseBool());
-        DEFAULT_PROCESSORS.put(Character.class, new ParseChar());
-        DEFAULT_PROCESSORS.put(char.class, new ParseChar());
-        DEFAULT_PROCESSORS.put(Double.class, new ParseDouble());
-        DEFAULT_PROCESSORS.put(double.class, new ParseDouble());
-        DEFAULT_PROCESSORS.put(Integer.class, new ParseInt());
-        DEFAULT_PROCESSORS.put(int.class, new ParseInt());
-        DEFAULT_PROCESSORS.put(Long.class, new ParseLong());
-        DEFAULT_PROCESSORS.put(long.class, new ParseLong());
-    }
-
     private BeanCellProcessorExtractor() {
         // no instances allowed
     }
@@ -80,9 +56,7 @@ final class BeanCellProcessorExtractor {
         List<Annotation> annotations = Arrays.asList(field.getAnnotations());
         Collections.reverse(annotations);
 
-        List<CellProcessorFactory> factories = new ArrayList<CellProcessorFactory>();
-        CellProcessor root = new Transient();
-        boolean foundCellProcessorAnnotation = false;
+        List<CellProcessorDefinition> factories = new ArrayList<CellProcessorDefinition>();
 
         for (Annotation annotation : annotations) {
             CellProcessorAnnotationDescriptor cellProcessorMarker = annotation
@@ -97,50 +71,58 @@ final class BeanCellProcessorExtractor {
                                     annotation.getClass().getName()));
                 }
 
-                factories.add(provider.create(annotation));
-                foundCellProcessorAnnotation = true;
+                factories.add(new CellProcessorDefinition(provider.create(annotation), cellProcessorMarker));
             }
-        }
-
-        if (!foundCellProcessorAnnotation) {
-            return mapFieldToDefaultProcessor(field);
         }
 
         Collections.sort(factories, new OrderComparator());
 
-        for (CellProcessorFactory factory : factories) {
-            root = factory.create(root);
-        }
+        return buildProcessorChain(factories);
+    }
 
+    private static CellProcessor buildProcessorChain(List<CellProcessorDefinition> definitions) {
+        CellProcessor root = new Transient();
+
+        for (CellProcessorDefinition definition : definitions) {
+            root = definition.getFactory().create(root);
+        }
         return root;
     }
 
-    @SuppressWarnings("unchecked")
-    private static CellProcessor mapFieldToDefaultProcessor(Field field) {
-        if (field.getType().isEnum()) {
-            return new ParseEnum((Class<? extends Enum<?>>) field.getType());
-        }
+    private static final class OrderComparator implements Comparator<CellProcessorDefinition> {
 
-        CellProcessor cellProcessor = DEFAULT_PROCESSORS.get(field.getType());
-        if (cellProcessor == null) {
-            return new Transient();
-        }
-
-        return cellProcessor;
-    }
-
-    private static final class OrderComparator implements Comparator<CellProcessorFactory> {
-
-        public int compare(CellProcessorFactory o1, CellProcessorFactory o2) {
-            return o2.getIndex() - o1.getIndex();
+        @Override
+        public int compare(CellProcessorDefinition o1, CellProcessorDefinition o2) {
+            return o2.getFactory().getIndex() - o1.getFactory().getIndex();
         }
     }
 
     private static class Transient extends CellProcessorAdaptor implements LongCellProcessor, DoubleCellProcessor,
             StringCellProcessor, DateCellProcessor, BoolCellProcessor {
 
+        @Override
         public <T> T execute(Object value, CsvContext context) {
             return next.execute(value, context);
+        }
+
+    }
+
+    private static class CellProcessorDefinition {
+
+        private final CellProcessorFactory factory;
+        private final CellProcessorAnnotationDescriptor descriptor;
+
+        public CellProcessorDefinition(CellProcessorFactory factory, CellProcessorAnnotationDescriptor descriptor) {
+            this.factory = factory;
+            this.descriptor = descriptor;
+        }
+
+        public CellProcessorFactory getFactory() {
+            return factory;
+        }
+
+        public CellProcessorAnnotationDescriptor getDescriptor() {
+            return descriptor;
         }
 
     }
