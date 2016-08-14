@@ -15,6 +15,8 @@
  */
 package com.github.dkschlos.supercsv.testbeans;
 
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;
 import com.github.dkschlos.supercsv.io.declarative.annotation.FmtBool;
 import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBool;
 
@@ -24,6 +26,7 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBool;
  * @since 2.5
  * @author Dominik Schlosser
  */
+@CsvAccessorType(CsvAccessType.PROPERTY)
 public class ReadAndWriteBeanWithPropertyAccess {
 
     @FmtBool(trueValue = "wahr", falseValue = "falsch")
