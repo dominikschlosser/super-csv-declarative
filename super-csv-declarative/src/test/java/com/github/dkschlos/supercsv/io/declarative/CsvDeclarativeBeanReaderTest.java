@@ -16,7 +16,7 @@
 package com.github.dkschlos.supercsv.io.declarative;
 
 import com.github.dkschlos.supercsv.testbeans.BeanForDefaultOverridingTest;
-import com.github.dkschlos.supercsv.testbeans.BeanForReadAndWrite;
+import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
@@ -40,6 +40,12 @@ import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.Tokenizer;
 import org.supercsv.prefs.CsvPreference;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the {@link CsvDeclarativeBeanReader}
@@ -101,10 +107,10 @@ public class CsvDeclarativeBeanReaderTest {
 
     @Test
     public void readBeanWithReadAndWriteAnnotations() throws IOException {
-        BeanForReadAndWrite beanForReadAndWrite = new BeanForReadAndWrite(true);
+        ReadAndWriteBeanWithPropertyAccess beanForReadAndWrite = new ReadAndWriteBeanWithPropertyAccess(true);
         beanReader = new CsvDeclarativeBeanReader(new StringReader("j"), CsvPreference.STANDARD_PREFERENCE);
 
-        assertEquals(beanForReadAndWrite, beanReader.read(BeanForReadAndWrite.class));
+        assertEquals(beanForReadAndWrite, beanReader.read(ReadAndWriteBeanWithPropertyAccess.class));
     }
 
     @Test

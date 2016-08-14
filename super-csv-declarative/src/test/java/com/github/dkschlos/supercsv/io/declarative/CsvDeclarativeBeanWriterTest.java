@@ -25,10 +25,13 @@ import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
 import org.junit.After;
 import org.junit.Test;
 import org.supercsv.prefs.CsvPreference;
-import com.github.dkschlos.supercsv.testbeans.BeanForReadAndWrite;
+import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @since 2.5
@@ -105,7 +108,7 @@ public class CsvDeclarativeBeanWriterTest {
 
     @Test
     public void writeBeanWithReadAndWriteAnnotations() throws IOException {
-        BeanForReadAndWrite beanForReadAndWrite = new BeanForReadAndWrite(false);
+        ReadAndWriteBeanWithPropertyAccess beanForReadAndWrite = new ReadAndWriteBeanWithPropertyAccess(false);
         beanWriter = new CsvDeclarativeBeanWriter(result, CsvPreference.STANDARD_PREFERENCE);
 
         beanWriter.write(beanForReadAndWrite);

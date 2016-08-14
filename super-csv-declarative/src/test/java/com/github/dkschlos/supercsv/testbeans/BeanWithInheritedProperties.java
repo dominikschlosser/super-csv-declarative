@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 Kasper B. Graversen
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +15,16 @@
  */
 package com.github.dkschlos.supercsv.testbeans;
 
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;
+
 /**
  * Test class for declarative mapping
  *
  * @since 2.5
  * @author Dominik Schlosser
  */
+@CsvAccessorType(CsvAccessType.FIELD)
 public class BeanWithInheritedProperties extends BeanWithoutAnnotations {
 
     private String note;

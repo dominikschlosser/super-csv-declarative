@@ -16,12 +16,15 @@
 package com.github.dkschlos.supercsv.testbeans;
 
 import com.github.dkschlos.supercsv.io.declarative.annotation.ConvertNullTo;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;
 import com.github.dkschlos.supercsv.io.declarative.annotation.Optional;
 
 /**
  *
  * @author Dominik Schlosser
  */
+@CsvAccessorType(CsvAccessType.FIELD)
 public class BeanWithoutExplicitParseAnnotations {
 
     @ConvertNullTo(value = "0")

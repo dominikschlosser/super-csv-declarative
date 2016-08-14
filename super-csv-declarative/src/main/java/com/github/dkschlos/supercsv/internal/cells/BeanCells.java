@@ -17,6 +17,8 @@ package com.github.dkschlos.supercsv.internal.cells;
 
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ import org.supercsv.exception.SuperCsvException;
 public final class BeanCells {
 
     private static final Map<CacheKey, BeanCells> FIELD_CACHE = new HashMap<CacheKey, BeanCells>();
+
     private final Map<Integer, BeanCell> mappedFields;
 
     private BeanCells(Map<Integer, BeanCell> mappedFields) {
@@ -48,10 +51,11 @@ public final class BeanCells {
         FieldExtractor fieldExtractor = new FieldExtractor(clazz);
         List<Field> fields = fieldExtractor.getFields();
 
+        CsvAccessType accessType = getAccessType(clazz);
         BeanCells result = null;
-        Map<Integer, BeanCell> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, context);
+        Map<Integer, BeanCell> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, accessType, context);
         if (fieldsByExplicitIndex.isEmpty()) {
-            Map<Integer, BeanCell> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, context);
+            Map<Integer, BeanCell> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, accessType, context);
             result = new BeanCells(fieldsByImplicitIndex);
         } else {
             result = new BeanCells(fieldsByExplicitIndex);
@@ -77,7 +81,7 @@ public final class BeanCells {
         return new ArrayList<BeanCell>(mappedFields.values());
     }
 
-    private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, String context) {
+    private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, CsvAccessType accessType, String context) {
         Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (Field field : fields) {
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
@@ -88,22 +92,37 @@ public final class BeanCells {
                 }
 
                 CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
-                result.put(fieldAnnotation.index(), new ExistingBeanCell(field, cellProcessor));
+                FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(accessType);
+                result.put(fieldAnnotation.index(), new ExistingBeanCell(field, cellProcessor, fieldAccessStrategy));
             }
         }
 
         return result;
     }
 
-    private static Map<Integer, BeanCell> getFieldsByImplicitIndex(List<Field> fields, String context) {
+    private static Map<Integer, BeanCell> getFieldsByImplicitIndex(List<Field> fields, CsvAccessType accessType, String context) {
         Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
             CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
-            result.put(i, new ExistingBeanCell(field, cellProcessor));
+            FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(accessType);
+            result.put(i, new ExistingBeanCell(field, cellProcessor, fieldAccessStrategy));
         }
 
         return result;
+    }
+
+    private static CsvAccessType getAccessType(Class<?> clazz) {
+        CsvAccessorType accessorTypeAnnotation = clazz.getAnnotation(CsvAccessorType.class);
+        if (accessorTypeAnnotation != null) {
+            return accessorTypeAnnotation.value();
+        }
+
+        return CsvAccessType.PROPERTY;
+    }
+
+    private static FieldAccessStrategy createFieldAccessStrategy(CsvAccessType type) {
+        return CsvAccessType.FIELD.equals(type) ? new DirectFieldAccessStrategy() : new PropertyFieldAccessStrategy();
     }
 
     private static class CacheKey {

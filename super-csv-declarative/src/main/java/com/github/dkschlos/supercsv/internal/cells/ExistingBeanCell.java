@@ -15,19 +15,19 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
 import java.lang.reflect.Field;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvReflectionException;
 
 class ExistingBeanCell implements BeanCell {
 
+    private FieldAccessStrategy fieldAccessStrategy;
     private final Field field;
     private final CellProcessor cellProcessor;
 
-    public ExistingBeanCell(Field field, CellProcessor cellProcessor) {
+    public ExistingBeanCell(Field field, CellProcessor cellProcessor, FieldAccessStrategy fieldAccessStrategy) {
         this.field = field;
         this.cellProcessor = cellProcessor;
+        this.fieldAccessStrategy = fieldAccessStrategy;
     }
 
     @Override
@@ -35,33 +35,19 @@ class ExistingBeanCell implements BeanCell {
         return cellProcessor;
     }
 
-
-
     @Override
     public void setValue(Object obj, Object value) {
-        try {
-            field.setAccessible(true);
-            field.set(obj, value);
-        } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value on field '{}'", field.getName()), e);
-        }
+        fieldAccessStrategy.setValue(field, obj, value);
     }
 
     @Override
     public Object getValue(Object obj) {
-        try {
-            field.setAccessible(true);
-            return field.get(obj);
-        } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value for field {}",
-                    field.getName()), e);
-        }
+        return fieldAccessStrategy.getValue(field, obj);
     }
 
     @Override
     public Class<?> getType() {
         return field.getType();
     }
-
 
 }

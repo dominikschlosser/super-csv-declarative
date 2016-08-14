@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 Kasper B. Graversen
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,21 +24,25 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBool;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public class BeanForReadAndWrite {
+public class ReadAndWriteBeanWithPropertyAccess {
 
     @FmtBool(trueValue = "wahr", falseValue = "falsch")
     @ParseBool(trueValue = "j", falseValue = "n")
     private boolean boolField;
 
-    public BeanForReadAndWrite() {
+    public ReadAndWriteBeanWithPropertyAccess() {
     }
 
-    public BeanForReadAndWrite(boolean boolField) {
+    public ReadAndWriteBeanWithPropertyAccess(boolean boolField) {
         this.boolField = boolField;
     }
 
     public boolean isBoolField() {
         return boolField;
+    }
+
+    public void setBoolField(boolean boolField) {
+        this.boolField = boolField;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class BeanForReadAndWrite {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        BeanForReadAndWrite other = (BeanForReadAndWrite) obj;
+        ReadAndWriteBeanWithPropertyAccess other = (ReadAndWriteBeanWithPropertyAccess) obj;
         return boolField == other.boolField;
     }
 
