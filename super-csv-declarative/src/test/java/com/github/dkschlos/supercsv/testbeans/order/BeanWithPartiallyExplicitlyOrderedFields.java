@@ -18,6 +18,8 @@ package com.github.dkschlos.supercsv.testbeans.order;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingMode;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingModeType;
 import com.github.dkschlos.supercsv.io.declarative.annotation.Optional;
 import com.github.dkschlos.supercsv.io.declarative.annotation.Trim;
 import com.github.dkschlos.supercsv.io.declarative.annotation.Truncate;
@@ -28,6 +30,7 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.Truncate;
  * @since 2.5
  * @author Dominik Schlosser
  */
+@CsvMappingMode(CsvMappingModeType.LOOSE)
 @CsvAccessorType(CsvAccessType.FIELD)
 public class BeanWithPartiallyExplicitlyOrderedFields {
 

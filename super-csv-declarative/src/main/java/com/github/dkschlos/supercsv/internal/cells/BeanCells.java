@@ -18,44 +18,46 @@ package com.github.dkschlos.supercsv.internal.cells;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
-import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
 
 public final class BeanCells {
 
-    private static final Map<CacheKey, BeanCells> FIELD_CACHE = new HashMap<CacheKey, BeanCells>();
+    private static final Map<CacheKey, BeanCells> FIELD_CACHE = new ConcurrentHashMap<CacheKey, BeanCells>();
 
+    private int correctlyMappedFieldCount;
     private final Map<Integer, BeanCell> mappedFields;
 
     private BeanCells(Map<Integer, BeanCell> mappedFields) {
         this.mappedFields = mappedFields;
+        this.correctlyMappedFieldCount = mappedFields.size();
     }
 
     /**
      * Returns all fields of the given class including those of superclasses.
      *
-     * @param clazz the class to get the fields of
+     * @param beanDescriptor the bean to get the fields of
+     * @param context the context to get the fields of
      * @return all fields of the class and its hierarchy
      */
-    public static BeanCells getFields(Class<?> clazz, String context) {
-        CacheKey cacheKey = new CacheKey(clazz, context);
+    public static BeanCells getFields(BeanDescriptor beanDescriptor, String context) {
+        CacheKey cacheKey = new CacheKey(beanDescriptor.getBeanType(), context);
         if (FIELD_CACHE.containsKey(cacheKey)) {
             return FIELD_CACHE.get(cacheKey);
         }
-        FieldExtractor fieldExtractor = new FieldExtractor(clazz);
+        FieldExtractor fieldExtractor = new FieldExtractor(beanDescriptor);
         List<Field> fields = fieldExtractor.getFields();
 
-        CsvAccessType accessType = getAccessType(clazz);
         BeanCells result = null;
-        Map<Integer, BeanCell> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, accessType, context);
+        Map<Integer, BeanCell> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, beanDescriptor, context);
         if (fieldsByExplicitIndex.isEmpty()) {
-            Map<Integer, BeanCell> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, accessType, context);
+            Map<Integer, BeanCell> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, beanDescriptor, context);
             result = new BeanCells(fieldsByImplicitIndex);
         } else {
             result = new BeanCells(fieldsByExplicitIndex);
@@ -81,7 +83,11 @@ public final class BeanCells {
         return new ArrayList<BeanCell>(mappedFields.values());
     }
 
-    private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, CsvAccessType accessType, String context) {
+    public int getCorrectlyMappedFieldCount() {
+        return correctlyMappedFieldCount;
+    }
+
+    private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, BeanDescriptor beanDescriptor, String context) {
         Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (Field field : fields) {
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
@@ -92,7 +98,7 @@ public final class BeanCells {
                 }
 
                 CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
-                FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(accessType);
+                FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(beanDescriptor.getAccessType());
                 result.put(fieldAnnotation.index(), new ExistingBeanCell(field, cellProcessor, fieldAccessStrategy));
             }
         }
@@ -100,25 +106,16 @@ public final class BeanCells {
         return result;
     }
 
-    private static Map<Integer, BeanCell> getFieldsByImplicitIndex(List<Field> fields, CsvAccessType accessType, String context) {
+    private static Map<Integer, BeanCell> getFieldsByImplicitIndex(List<Field> fields, BeanDescriptor beanDescriptor, String context) {
         Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
             CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
-            FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(accessType);
+            FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(beanDescriptor.getAccessType());
             result.put(i, new ExistingBeanCell(field, cellProcessor, fieldAccessStrategy));
         }
 
         return result;
-    }
-
-    private static CsvAccessType getAccessType(Class<?> clazz) {
-        CsvAccessorType accessorTypeAnnotation = clazz.getAnnotation(CsvAccessorType.class);
-        if (accessorTypeAnnotation != null) {
-            return accessorTypeAnnotation.value();
-        }
-
-        return CsvAccessType.PROPERTY;
     }
 
     private static FieldAccessStrategy createFieldAccessStrategy(CsvAccessType type) {

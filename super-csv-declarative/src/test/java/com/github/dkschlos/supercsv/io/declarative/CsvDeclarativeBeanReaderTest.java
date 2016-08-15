@@ -23,10 +23,12 @@ import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutExplicitParseAnnotations;
+import com.github.dkschlos.supercsv.testbeans.StrictBeanWithPartialColumnMapping;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithPartiallyExplicitlyOrderedFields;
+import com.github.dkschlos.supercsv.testbeans.order.StrictBeanWithPartiallyExplicitlyOrderedFields;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -146,6 +148,13 @@ public class CsvDeclarativeBeanReaderTest {
         assertNull(beanReader.read(BeanWithPartialColumnMapping.class));
     }
 
+    @Test(expected = SuperCsvException.class)
+    public void readStrictBeanWithPartialFieldMapping() throws IOException {
+        setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+
+        beanReader.read(StrictBeanWithPartialColumnMapping.class);
+    }
+
     @Test
     public void readBeanWithoutExplicitParseAnnotations() throws IOException {
         setupBeanReader(BEAN_WITHOUT_EXPLICIT_PARSE_ANNOTATIONS_TEST);
@@ -179,6 +188,13 @@ public class CsvDeclarativeBeanReaderTest {
         assertEquals(john, beanReader.read(BeanWithPartiallyExplicitlyOrderedFields.class));
         assertEquals(max, beanReader.read(BeanWithPartiallyExplicitlyOrderedFields.class));
         assertNull(beanReader.read(BeanWithPartiallyExplicitlyOrderedFields.class));
+    }
+
+    @Test(expected = SuperCsvException.class)
+    public void readStrictBeanWithPartialExplicitFieldOrdering() throws IOException {
+        setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+
+        beanReader.read(StrictBeanWithPartiallyExplicitlyOrderedFields.class);
     }
 
     @Test

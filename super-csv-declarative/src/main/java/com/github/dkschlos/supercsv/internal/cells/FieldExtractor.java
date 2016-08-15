@@ -15,32 +15,35 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
+import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.CsvTransient;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingModeType;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.supercsv.exception.SuperCsvException;
 
 final class FieldExtractor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FieldExtractor.class);
 
-    private final Class<?> clazz;
+    private final BeanDescriptor beanDescriptor;
     private final List<Field> withCsvFieldAnnotation = new ArrayList<Field>();
     private final List<Field> withoutCsvFieldAnnotation = new ArrayList<Field>();
 
-    public FieldExtractor(Class<?> clazz) {
-        this.clazz = clazz;
+    public FieldExtractor(BeanDescriptor beanDescriptor) {
+        this.beanDescriptor = beanDescriptor;
     }
 
     List<Field> getFields() {
         withCsvFieldAnnotation.clear();
         withoutCsvFieldAnnotation.clear();
 
-        extractFields(clazz);
+        extractFields(beanDescriptor.getBeanType());
 
         if (withCsvFieldAnnotation.isEmpty()) {
             return withoutCsvFieldAnnotation;
@@ -51,8 +54,14 @@ final class FieldExtractor {
             for (Field withoutAnnotation : withoutCsvFieldAnnotation) {
                 ignoredFieldNames.add(withoutAnnotation.getName());
             }
+
+            if (CsvMappingModeType.STRICT.equals(beanDescriptor.getMappingMode())) {
+                throw new SuperCsvException(Form.at("MappingMode.STRICT: You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
+                        + " Those fields are unmapped: {}", beanDescriptor.getBeanType().getName(), String.join(", ", ignoredFieldNames)));
+            }
+
             LOGGER.warn("You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
-                    + " Those fields will be ignored by SuperCSV: {}", clazz.getName(), String.join(", ", ignoredFieldNames));
+                    + " Those fields will be ignored by SuperCSV: {}", beanDescriptor.getBeanType().getName(), String.join(", ", ignoredFieldNames));
         }
 
         return withCsvFieldAnnotation;

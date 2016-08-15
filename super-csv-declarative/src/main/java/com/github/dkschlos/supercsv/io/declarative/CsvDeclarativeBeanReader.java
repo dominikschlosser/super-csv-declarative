@@ -17,10 +17,12 @@ package com.github.dkschlos.supercsv.io.declarative;
 
 import com.github.dkschlos.supercsv.internal.cells.BeanCell;
 import com.github.dkschlos.supercsv.internal.cells.BeanCells;
+import com.github.dkschlos.supercsv.internal.cells.BeanDescriptor;
 import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverter;
 import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverterRegistry;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
+import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingModeType;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -118,9 +120,10 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
             throw new IllegalArgumentException("clazz should not be null");
         }
 
-        BeanCells fields = BeanCells.getFields(clazz, StandardCsvContexts.READ);
+        BeanDescriptor beanDescriptor = BeanDescriptor.create(clazz);
+        BeanCells fields = BeanCells.getFields(beanDescriptor, StandardCsvContexts.READ);
 
-        return readIntoBean(ReflectionUtilsExt.instantiateBean(clazz), fields);
+        return readIntoBean(ReflectionUtilsExt.instantiateBean(clazz), beanDescriptor, fields);
     }
 
     private <T> T populateBean(final T resultBean, List<Object> processedColumns, BeanCells cells) {
@@ -149,10 +152,13 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
         return resultBean;
     }
 
-    private <T> T readIntoBean(final T bean, BeanCells cells)
+    private <T> T readIntoBean(final T bean, BeanDescriptor beanDescriptor, BeanCells cells)
             throws IOException {
 
         if (readRow()) {
+            if (CsvMappingModeType.STRICT.equals(beanDescriptor.getMappingMode()) && cells.getCorrectlyMappedFieldCount() != length()) {
+                throw new SuperCsvException(Form.at("MappingMode.STRICT: Number of mapped bean-fields ({}] and csv-cells ({}) does not match.", cells.getCorrectlyMappedFieldCount(), length()));
+            }
             List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
             for (int i = 0; i < length(); i++) {
                 rowProcessors.add(cells.getCell(i).getProcessor());
