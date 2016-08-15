@@ -15,8 +15,7 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import static org.junit.Assert.assertEquals;
-
+import com.github.dkschlos.supercsv.testbeans.BeanForWriteTypeConversion;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -30,8 +29,6 @@ import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @since 2.5
@@ -41,7 +38,7 @@ public class CsvDeclarativeBeanWriterTest {
 
     private static final CsvPreference PREFS = CsvPreference.STANDARD_PREFERENCE;
 
-    private StringWriter result = new StringWriter();
+    private final StringWriter result = new StringWriter();
     private CsvDeclarativeBeanWriter beanWriter = new CsvDeclarativeBeanWriter(result, PREFS);
 
     @After
@@ -114,6 +111,16 @@ public class CsvDeclarativeBeanWriterTest {
         beanWriter.write(beanForReadAndWrite);
 
         assertEquals("falsch\r\n", result.toString());
+    }
+
+    @Test
+    public void writeBeanWithAutomaticTypeConversion() throws IOException {
+        BeanForWriteTypeConversion bean = new BeanForWriteTypeConversion(42);
+        beanWriter = new CsvDeclarativeBeanWriter(result, CsvPreference.STANDARD_PREFERENCE);
+
+        beanWriter.write(bean);
+
+        assertEquals("42\r\n", result.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)

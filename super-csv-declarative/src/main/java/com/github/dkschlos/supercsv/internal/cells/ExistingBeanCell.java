@@ -20,7 +20,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 class ExistingBeanCell implements BeanCell {
 
-    private FieldAccessStrategy fieldAccessStrategy;
+    private final FieldAccessStrategy fieldAccessStrategy;
     private final Field field;
     private final CellProcessor cellProcessor;
 

@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class TypeConverterRegistry {
 
-    private Map<RegistryKey, TypeConverter<?, ?>> converters = new HashMap<RegistryKey, TypeConverter<?, ?>>();
+    private final Map<RegistryKey, TypeConverter<?, ?>> converters = new HashMap<RegistryKey, TypeConverter<?, ?>>();
 
     public final <I, O> TypeConverter<I, O> getConverter(Class<I> inputClass, Class<O> outputClass) {
         return (TypeConverter<I, O>) converters.get(new RegistryKey(inputClass, outputClass));
