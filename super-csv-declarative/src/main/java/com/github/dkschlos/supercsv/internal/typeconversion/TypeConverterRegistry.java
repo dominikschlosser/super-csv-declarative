@@ -28,6 +28,9 @@ public class TypeConverterRegistry {
     private final Map<RegistryKey, TypeConverter<?, ?>> converters = new HashMap<RegistryKey, TypeConverter<?, ?>>();
 
     public final <I, O> TypeConverter<I, O> getConverter(Class<I> inputClass, Class<O> outputClass) {
+        if (String.class.equals(inputClass) && outputClass.isEnum()) {
+            return (TypeConverter<I, O>) new StringEnumConverter(outputClass);
+        }
         return (TypeConverter<I, O>) converters.get(new RegistryKey(inputClass, outputClass));
     }
 

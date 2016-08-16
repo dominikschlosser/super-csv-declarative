@@ -26,8 +26,10 @@ import org.junit.Test;
 import org.supercsv.prefs.CsvPreference;
 import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
+import com.github.dkschlos.supercsv.testbeans.BeanWithEnum;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
+import com.github.dkschlos.supercsv.testbeans.TestEnum;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -121,6 +123,16 @@ public class CsvDeclarativeBeanWriterTest {
         beanWriter.write(bean);
 
         assertEquals("42\r\n", result.toString());
+    }
+
+    @Test
+    public void writeBeanWithAutomaticEnumTypeConversion() throws IOException {
+        BeanWithEnum bean = new BeanWithEnum(TestEnum.Blubb);
+        beanWriter = new CsvDeclarativeBeanWriter(result, CsvPreference.STANDARD_PREFERENCE);
+
+        beanWriter.write(bean);
+
+        assertEquals("Blubb\r\n", result.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)

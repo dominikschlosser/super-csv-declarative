@@ -31,7 +31,7 @@ public final class BeanCells {
 
     private static final Map<CacheKey, BeanCells> FIELD_CACHE = new ConcurrentHashMap<CacheKey, BeanCells>();
 
-    private int correctlyMappedFieldCount;
+    private final int correctlyMappedFieldCount;
     private final Map<Integer, BeanCell> mappedFields;
 
     private BeanCells(Map<Integer, BeanCell> mappedFields) {

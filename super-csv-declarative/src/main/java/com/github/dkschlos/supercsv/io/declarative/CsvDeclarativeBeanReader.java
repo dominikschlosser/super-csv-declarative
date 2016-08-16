@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.apache.commons.lang.ClassUtils;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvException;
@@ -71,7 +72,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
      */
     public CsvDeclarativeBeanReader(final Reader reader, TypeConverterRegistry typeConverterRegistry, final CsvPreference preferences) {
         super(reader, preferences);
-        this.typeConverterRegistry = typeConverterRegistry;
+        this.typeConverterRegistry = Objects.requireNonNull(typeConverterRegistry, "typeConverterRegistry");
     }
 
     /**
@@ -97,7 +98,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
      */
     public CsvDeclarativeBeanReader(final ITokenizer tokenizer, TypeConverterRegistry typeConverterRegistry, final CsvPreference preferences) {
         super(tokenizer, preferences);
-        this.typeConverterRegistry = typeConverterRegistry;
+        this.typeConverterRegistry = Objects.requireNonNull(typeConverterRegistry, "typeConverterRegistry");
     }
 
     /**

@@ -15,15 +15,18 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
+import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverterRegistry;
 import com.github.dkschlos.supercsv.testbeans.BeanForDefaultOverridingTest;
 import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
+import com.github.dkschlos.supercsv.testbeans.BeanWithEnum;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutExplicitParseAnnotations;
 import com.github.dkschlos.supercsv.testbeans.StrictBeanWithPartialColumnMapping;
+import com.github.dkschlos.supercsv.testbeans.TestEnum;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
 import com.github.dkschlos.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
@@ -36,18 +39,13 @@ import java.io.StringReader;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+
 import org.junit.Test;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.Tokenizer;
 import org.supercsv.prefs.CsvPreference;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * Tests the {@link CsvDeclarativeBeanReader}
@@ -64,6 +62,7 @@ public class CsvDeclarativeBeanReaderTest {
     private static final String BEAN_WITH_INHERITED_PROPERTIES = "/beanWithInheritedProperties.csv";
     private static final String BEAN_FOR_DEFAULT_OVERRIDING_TEST = "/beanForDefaultOverridingTest.csv";
     private static final String BEAN_WITHOUT_EXPLICIT_PARSE_ANNOTATIONS_TEST = "/beanWithoutExplicitParseAnnotations.csv";
+    private static final String BEAN_WITH_ENUM = "/beanWithEnumTest.csv";
 
     private CsvDeclarativeBeanReader beanReader;
 
@@ -219,6 +218,16 @@ public class CsvDeclarativeBeanReaderTest {
         assertNull(beanReader.read(BeanWithInheritedProperties.class));
     }
 
+    @Test
+    public void automaticEnumConversion() throws IOException {
+        setupBeanReader(BEAN_WITH_ENUM);
+        BeanWithEnum bla = new BeanWithEnum(TestEnum.Bla);
+        BeanWithEnum blubb = new BeanWithEnum(TestEnum.Blubb);
+
+        assertEquals(bla, beanReader.read(BeanWithEnum.class));
+        assertEquals(blubb, beanReader.read(BeanWithEnum.class));
+    }
+
     @Test(expected = SuperCsvReflectionException.class)
     public void readWithNonJavabean() throws IOException {
         setupBeanReader(BEAN_WITH_INHERITED_PROPERTIES);
@@ -239,25 +248,37 @@ public class CsvDeclarativeBeanReaderTest {
     @SuppressWarnings("resource")
     @Test(expected = NullPointerException.class)
     public void readerConstructorWithNullReader() {
-        new CsvBeanReader((Reader) null, PREFS);
+        new CsvDeclarativeBeanReader((Reader) null, PREFS);
     }
 
     @SuppressWarnings("resource")
     @Test(expected = NullPointerException.class)
     public void readerConstructorWithNullPreferences() {
-        new CsvBeanReader(new StringReader(""), null);
+        new CsvDeclarativeBeanReader(new StringReader(""), null);
+    }
+
+    @SuppressWarnings("resource")
+    @Test(expected = NullPointerException.class)
+    public void readerConstructorWithNullTypeConverterRegistry() {
+        new CsvDeclarativeBeanReader(new StringReader(""), null, PREFS);
     }
 
     @SuppressWarnings("resource")
     @Test(expected = NullPointerException.class)
     public void tokenizerConstructorWithNullReader() {
-        new CsvBeanReader((Tokenizer) null, PREFS);
+        new CsvDeclarativeBeanReader((Tokenizer) null, PREFS);
     }
 
     @SuppressWarnings("resource")
     @Test(expected = NullPointerException.class)
     public void tokenizerConstructorWithNullPreferences() {
-        new CsvBeanReader(new Tokenizer(new StringReader(""), PREFS), null);
+        new CsvDeclarativeBeanReader(new Tokenizer(new StringReader(""), PREFS), null);
+    }
+
+    @SuppressWarnings("resource")
+    @Test(expected = NullPointerException.class)
+    public void tokenizerConstructorWithNullTypeConverterRegistry() {
+        new CsvDeclarativeBeanReader(new Tokenizer(new StringReader(""), PREFS), null, PREFS);
     }
 
     @Test(expected = SuperCsvReflectionException.class)
