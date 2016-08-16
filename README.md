@@ -23,7 +23,7 @@ public class Person {
 	private int age;
 	private double weight;
 
-	// getters omitted
+	// getters and setters omitted
 }
 ```
 
@@ -39,6 +39,18 @@ CellProcessor[] processors = new CellProcessor[] {
 			new ParseInt(),
 			new ParseDouble()	
 		};
+```
+
+## Field access strategies
+
+By default, super-csv-declarative uses getters and setters to access bean-fields.
+To force super-csv-declarative to bypass getters and setters and use the fields directly (for example to build immutable classes), one can annotate a bean with *@CsvAccessorType*:
+
+```Java
+@CsvAccessorType(CsvAccessType.FIELD)
+public class MyBean {
+	// content omitted
+}
 ```
 
 ## Ignoring fields
@@ -58,34 +70,50 @@ Static fields are ignored as well as all fields annotated with *@CsvTransient*.
 
 **Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
-If your application needs to support such environments you should use the *@CsvField*-annotation for fields and the *order*-fields which is defined in all standard CellProcessor-annotations and can be added to custom ones as well:
+If your application needs to support such environments you should use the *@CsvField*-annotation for fields and the *index*-fields which is defined in all standard CellProcessor-annotations and can be added to custom ones as well:
 
 ```Java
 public class Person {
 	@Trim
-	@CsvField(order = 0)
+	@CsvField(index = 0)
 	private String name;
 	
-	@Optional(order = 0)
-	@Trim(order = 1)
-	@CsvField(order = 1)
+	@Optional(index = 0)
+	@Trim(index = 1)
+	@CsvField(index = 1)
 	private String middleName;
 	
 	@Trim
-	@CsvField(order = 2)
+	@CsvField(index = 2)
 	private String lastName;
 	
-	@CsvField(order = 3)
+	@CsvField(index = 3)
 	private int age;
 	
-	@CsvField(order = 4)
+	@CsvField(index = 4)
 	private double weight;
 
 	// getters omitted
 }
 ```
 
-**Note**: Using the *@CsvField*-annotation is all or nothing. You don't use it at all or you need to use it on each field.
+## Mapping modes
+
+The default mapping mode is *STRICT* which means that you have to use *@CsvField* on all fields or on no field at all.
+It also means that you have to have a bean-field for each field in the CSV-file when reading.
+
+There is another mapping mode, *LOOSE*, which allows you to partially map fields in a bean by using *@CsvField* only on some fields.
+It also allows you to ignore fields in a source CSV-file.
+
+You can change the mapping mode by applying the *@CsvMappingMode*-annotation to beans:
+
+```Java
+@CsvMappingMode(CsvMappingModeType.LOOSE)
+public class MyBean {
+	// content omitted
+}
+```
+
 
 ## Implementing new Processors
 
@@ -100,7 +128,7 @@ The following example shows how to implement all those necessary parts:
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface Optional {
-	int order() default ProcessorOrder.UNDEFINED;
+	int index() default ProcessorOrder.UNDEFINED;
 }
 ```
 
@@ -113,8 +141,8 @@ public class OptionalCellProcessorProvider implements
 	public CellProcessorFactory create(final org.supercsv.io.declarative.annotation.Optional annotation) {
 		return new CellProcessorFactory() {
 			
-			public int getOrder() {
-				return annotation.order();
+			public int getIndex() {
+				return annotation.index();
 			}
 			
 			public CellProcessor create(CellProcessor next) {
@@ -137,6 +165,6 @@ Get it from Maven Central:
 <dependency>
     <groupId>com.github.dkschlos</groupId>
     <artifactId>super-csv-declarative</artifactId>
-    <version>1.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
