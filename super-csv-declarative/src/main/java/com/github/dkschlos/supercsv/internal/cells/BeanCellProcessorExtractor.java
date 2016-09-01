@@ -91,7 +91,7 @@ final class BeanCellProcessorExtractor {
 
         @Override
         public int compare(CellProcessorDefinition o1, CellProcessorDefinition o2) {
-            return o2.getFactory().getIndex() - o1.getFactory().getIndex();
+            return o2.getFactory().getOrder() - o1.getFactory().getOrder();
         }
     }
 

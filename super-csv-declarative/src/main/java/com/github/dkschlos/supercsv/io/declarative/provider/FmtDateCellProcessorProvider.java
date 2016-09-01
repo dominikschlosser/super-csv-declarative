@@ -35,8 +35,8 @@ public class FmtDateCellProcessorProvider implements DeclarativeCellProcessorPro
         return new CellProcessorFactory() {
 
             @Override
-            public int getIndex() {
-                return annotation.index();
+            public int getOrder() {
+                return annotation.order();
             }
 
             @Override

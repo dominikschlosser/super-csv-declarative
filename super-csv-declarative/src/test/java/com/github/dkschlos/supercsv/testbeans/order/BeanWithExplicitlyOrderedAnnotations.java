@@ -30,12 +30,12 @@ import com.github.dkschlos.supercsv.io.declarative.annotation.Truncate;
 @CsvAccessorType(CsvAccessType.FIELD)
 public class BeanWithExplicitlyOrderedAnnotations {
 
-    @Trim(index = 1)
-    @Optional(index = 0)
+    @Trim(order = 1)
+    @Optional(order = 0)
     private String name;
 
-    @Trim(index = 0)
-    @Truncate(index = 1, maxSize = 3)
+    @Trim(order = 0)
+    @Truncate(order = 1, maxSize = 3)
     private String lastName;
     private int age;
     private double weight;

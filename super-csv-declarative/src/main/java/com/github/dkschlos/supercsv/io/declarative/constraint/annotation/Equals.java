@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.github.dkschlos.supercsv.io.declarative.ProcessorIndex;
+import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import com.github.dkschlos.supercsv.io.declarative.constraint.provider.EqualsCellProcessorProvider;
 
@@ -35,5 +35,5 @@ import com.github.dkschlos.supercsv.io.declarative.constraint.provider.EqualsCel
 @Target({ElementType.FIELD})
 public @interface Equals {
 
-    int index() default ProcessorIndex.UNDEFINED;
+    int order() default ProcessorOrder.UNDEFINED;
 }

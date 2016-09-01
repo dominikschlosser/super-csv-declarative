@@ -34,8 +34,8 @@ public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorP
         return new CellProcessorFactory() {
 
             @Override
-            public int getIndex() {
-                return annotation.index();
+            public int getOrder() {
+                return annotation.order();
             }
 
             @Override
