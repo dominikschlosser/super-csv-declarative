@@ -46,7 +46,7 @@ final class FieldExtractor {
         extractFields(beanDescriptor.getBeanType());
 
         if (withCsvFieldAnnotation.isEmpty()) {
-            return withoutCsvFieldAnnotation;
+            return new ArrayList(withoutCsvFieldAnnotation);
         }
 
         if (!withoutCsvFieldAnnotation.isEmpty()) {
@@ -64,7 +64,7 @@ final class FieldExtractor {
                     + " Those fields will be ignored by SuperCSV: {}", beanDescriptor.getBeanType().getName(), String.join(", ", ignoredFieldNames));
         }
 
-        return withCsvFieldAnnotation;
+        return new ArrayList(withCsvFieldAnnotation);
     }
 
     private void extractFields(Class<?> clazz) {
