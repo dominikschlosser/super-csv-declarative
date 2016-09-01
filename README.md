@@ -12,14 +12,14 @@ Those can be used to read/write CSV-files from/to java beans via conventions and
 public class Person {
 	@Trim
 	private String name;
-	
+
 	@Optional
 	@Trim
 	private String middleName;
-	
+
 	@Trim
 	private String lastName;
-	
+
 	private int age;
 	private double weight;
 
@@ -37,7 +37,7 @@ CellProcessor[] processors = new CellProcessor[] {
 			new Optional(new Trim()),
 			new Trim(),
 			new ParseInt(),
-			new ParseDouble()	
+			new ParseDouble()
 		};
 ```
 
@@ -58,7 +58,7 @@ public class MyBean {
 ```Java
 public class Person {
 	private static final int THE_ANSWER = 42;
-	
+
 	@CsvTransient
 	private String toIgnore;
 }
@@ -66,34 +66,46 @@ public class Person {
 
 Static fields are ignored as well as all fields annotated with *@CsvTransient*.
 
-## Explicit field/annotation-index/order
+## Explicit field index
 
 **Note**: The Java Language Specification doesn't specify the order in which fields of a class or annotations are returned when using reflection. The Oracle JVM does return them in the declared order but others like Dalvik may sort them alphabetically or in any other way.
 
-If your application needs to support such environments, or you want to map your bean partially (using *CsvMappingModeType.LOOSE*, see next section), you should use the *@CsvField*-annotation for fields and the *index*-fields which is defined in all standard CellProcessor-annotations and can be added to custom ones as well:
+You can define the target column index of a field manually by using the `index` attribute:
 
 ```Java
 public class Person {
-	@Trim
 	@CsvField(index = 0)
 	private String name;
-	
-	@Optional(index = 0)
-	@Trim(index = 1)
+
 	@CsvField(index = 1)
 	private String middleName;
-	
-	@Trim
+
 	@CsvField(index = 2)
 	private String lastName;
-	
-	@CsvField(index = 3)
-	private int age;
-	
-	@CsvField(index = 4)
-	private double weight;
 
-	// getters omitted
+	// ...
+}
+```
+## Explicit annotation order
+
+Due to the inability to get the annotation order via reflection you can define the order of the processor annotations manually too:
+
+```Java
+public class Person {
+	@CsvField(index = 0)
+	@Trim
+	private String name;
+
+	@CsvField(index = 1)
+	@Optional(order = 0)
+	@Trim(order = 1)
+	private String middleName;
+
+	@CsvField(index = 2)
+	@Trim
+	private String lastName;
+
+	// ...
 }
 ```
 
@@ -128,7 +140,7 @@ The following example shows how to implement all those necessary parts:
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface Optional {
-	int index() default ProcessorOrder.UNDEFINED;
+	int order() default ProcessorOrder.UNDEFINED;
 }
 ```
 
@@ -137,24 +149,24 @@ public @interface Optional {
 ```Java
 public class OptionalCellProcessorProvider implements
 	DeclarativeCellProcessorProvider<org.supercsv.io.declarative.annotation.Optional> {
-	
+
 	public CellProcessorFactory create(final org.supercsv.io.declarative.annotation.Optional annotation) {
 		return new CellProcessorFactory() {
-			
+
 			public int getIndex() {
 				return annotation.index();
 			}
-			
+
 			public CellProcessor create(CellProcessor next) {
 				return new Optional(next);
 			}
 		};
 	}
-	
+
 	public Class<org.supercsv.io.declarative.annotation.Optional> getType() {
 		return org.supercsv.io.declarative.annotation.Optional.class;
 	}
-	
+
 }
 ```
 
