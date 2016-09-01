@@ -54,15 +54,12 @@ public final class BeanCells {
         FieldExtractor fieldExtractor = new FieldExtractor(beanDescriptor);
         List<Field> fields = fieldExtractor.getFields();
 
-        BeanCells result = null;
         Map<Integer, BeanCell> fieldsByExplicitIndex = getFieldsByExplicitIndex(fields, beanDescriptor, context);
         if (fieldsByExplicitIndex.isEmpty()) {
             Map<Integer, BeanCell> fieldsByImplicitIndex = getFieldsByImplicitIndex(fields, beanDescriptor, context);
-            result = new BeanCells(fieldsByImplicitIndex);
-        } else {
-            result = new BeanCells(fieldsByExplicitIndex);
         }
 
+        BeanCells result = new BeanCells(fieldsByExplicitIndex);
         FIELD_CACHE.put(cacheKey, result);
         return result;
     }
