@@ -20,7 +20,7 @@ import com.github.dkschlos.supercsv.internal.cells.BeanCells;
 import com.github.dkschlos.supercsv.internal.cells.BeanDescriptor;
 import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverter;
 import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverterRegistry;
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingModeType;
 import java.io.IOException;
@@ -143,7 +143,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
                 TypeConverter<Object, Object> converter
                         = (TypeConverter<Object, Object>) typeConverterRegistry.getConverter(fieldValue.getClass(), cell.getType());
                 if (converter == null) {
-                    throw new SuperCsvException(Form.at("No converter registered from type {} to type {}. Add one or fix your CellProcessor-annotations to return the field's type",
+                    throw new SuperCsvException(AbstractForm.at("No converter registered from type {} to type {}. Add one or fix your CellProcessor-annotations to return the field's type",
                             fieldValue.getClass().getName(), cell.getType().getName()));
                 }
                 cell.setValue(resultBean, converter.convert(fieldValue));
@@ -158,7 +158,7 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
 
         if (readRow()) {
             if (CsvMappingModeType.STRICT.equals(beanDescriptor.getMappingMode()) && cells.getCorrectlyMappedFieldCount() != length()) {
-                throw new SuperCsvException(Form.at("MappingMode.STRICT: Number of mapped bean-fields ({}] and csv-cells ({}) does not match.", cells.getCorrectlyMappedFieldCount(), length()));
+                throw new SuperCsvException(AbstractForm.at("MappingMode.STRICT: Number of mapped bean-fields ({}] and csv-cells ({}) does not match.", cells.getCorrectlyMappedFieldCount(), length()));
             }
             List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
             for (int i = 0; i < length(); i++) {

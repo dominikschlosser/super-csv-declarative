@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.CsvTransient;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingModeType;
@@ -56,7 +56,7 @@ final class FieldExtractor {
             }
 
             if (CsvMappingModeType.STRICT.equals(beanDescriptor.getMappingMode())) {
-                throw new SuperCsvException(Form.at("MappingMode.STRICT: You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
+                throw new SuperCsvException(AbstractForm.at("MappingMode.STRICT: You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
                         + " Those fields are unmapped: {}", beanDescriptor.getBeanType().getName(), String.join(", ", ignoredFieldNames)));
             }
 

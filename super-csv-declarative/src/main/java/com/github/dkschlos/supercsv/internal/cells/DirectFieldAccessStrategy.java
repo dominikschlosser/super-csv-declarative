@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import java.lang.reflect.Field;
 import org.supercsv.exception.SuperCsvReflectionException;
 
@@ -31,7 +31,7 @@ public class DirectFieldAccessStrategy implements FieldAccessStrategy {
             field.setAccessible(true);
             field.set(obj, value);
         } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value on field '{}'", field.getName()), e);
+            throw new SuperCsvReflectionException(AbstractForm.at("Cannot set value on field '{}'", field.getName()), e);
         }
     }
 
@@ -41,7 +41,7 @@ public class DirectFieldAccessStrategy implements FieldAccessStrategy {
             field.setAccessible(true);
             return field.get(obj);
         } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value for field {}",
+            throw new SuperCsvReflectionException(AbstractForm.at("Error extracting bean value for field {}",
                     field.getName()), e);
         }
     }
