@@ -1,7 +1,8 @@
 package com.github.dkschlos.supercsv.internal.typeconversion;
 
-import static org.testng.Assert.*;
-import org.testng.annotations.Test;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
 
 public class StringCharConverterNGTest {
 
