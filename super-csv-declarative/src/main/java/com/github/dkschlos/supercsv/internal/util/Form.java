@@ -25,9 +25,9 @@ import org.slf4j.helpers.MessageFormatter;
  * @since 2.5
  * @author Dominik Schlosser
  */
-public abstract class AbstractForm {
+public final class Form {
 
-    private AbstractForm() {
+    private Form() {
     }
 
     public static String at(String template, Object... params) {

@@ -3,8 +3,7 @@ package com.github.dkschlos.supercsv.internal.typeconversion;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-
-public class StringCharConverterNGTest {
+public class StringCharConverterTest {
 
     private final StringCharConverter instance = new StringCharConverter();
 
