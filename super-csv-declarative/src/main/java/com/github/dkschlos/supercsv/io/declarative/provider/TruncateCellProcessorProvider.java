@@ -35,8 +35,8 @@ public class TruncateCellProcessorProvider implements DeclarativeCellProcessorPr
         return new CellProcessorFactory() {
 
             @Override
-            public int getIndex() {
-                return annotation.index();
+            public int getOrder() {
+                return annotation.order();
             }
 
             @Override

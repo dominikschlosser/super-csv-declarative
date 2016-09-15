@@ -87,10 +87,6 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
     private List<Object> extractBeanValues(final Object source, BeanCells cells) {
 
-        if (source == null) {
-            throw new IllegalArgumentException("the bean to write should not be null");
-        }
-
         List<Object> beanValues = new ArrayList<Object>();
 
         for (BeanCell cell : cells.getAll()) {
@@ -98,6 +94,5 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
         }
 
         return beanValues;
-
     }
 }

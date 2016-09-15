@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -38,13 +38,13 @@ public class PropertyFieldAccessStrategy implements FieldAccessStrategy {
             Method method = getReadMethod(field, obj);
             return method.invoke(obj);
         } catch (IntrospectionException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
+            throw new SuperCsvReflectionException(AbstractForm.at("Error extracting bean value via getter for field {}",
                     field.getName()), e);
         } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
+            throw new SuperCsvReflectionException(AbstractForm.at("Error extracting bean value via getter for field {}",
                     field.getName()), e);
         } catch (InvocationTargetException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
+            throw new SuperCsvReflectionException(AbstractForm.at("Error extracting bean value via getter for field {}",
                     field.getName()), e);
         }
     }
@@ -55,11 +55,11 @@ public class PropertyFieldAccessStrategy implements FieldAccessStrategy {
             Method method = getWriteMethod(field, obj);
             method.invoke(obj, value);
         } catch (IntrospectionException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value via setter on field '{}'", field.getName()), e);
+            throw new SuperCsvReflectionException(AbstractForm.at("Cannot set value via setter on field '{}'", field.getName()), e);
         } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value via setter on field '{}'", field.getName()), e);
+            throw new SuperCsvReflectionException(AbstractForm.at("Cannot set value via setter on field '{}'", field.getName()), e);
         } catch (InvocationTargetException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value via setter on field '{}'", field.getName()), e);
+            throw new SuperCsvReflectionException(AbstractForm.at("Cannot set value via setter on field '{}'", field.getName()), e);
         }
     }
 

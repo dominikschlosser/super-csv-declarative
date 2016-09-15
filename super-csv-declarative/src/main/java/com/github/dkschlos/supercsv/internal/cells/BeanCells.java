@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
 import java.lang.reflect.Field;
@@ -93,7 +93,7 @@ public final class BeanCells {
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
             if (fieldAnnotation != null) {
                 if (result.containsKey(fieldAnnotation.index())) {
-                    throw new SuperCsvException(Form.at("Explicit order-index {} was declared twice (Field: {}", fieldAnnotation.index(),
+                    throw new SuperCsvException(AbstractForm.at("Explicit order-index {} was declared twice (Field: {}", fieldAnnotation.index(),
                             field.getName()));
                 }
 

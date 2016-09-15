@@ -9,5 +9,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface CsvField {
 
+    /**
+     * Defines the zero based index number of the csv column.
+     *
+     * @return column number
+     */
     int index();
 }

@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.github.dkschlos.supercsv.io.declarative.ProcessorIndex;
+import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
 import com.github.dkschlos.supercsv.io.declarative.provider.FmtNumberCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
@@ -51,5 +51,5 @@ public @interface FmtNumber {
      */
     String decimalFormat();
 
-    int index() default ProcessorIndex.UNDEFINED;
+    int order() default ProcessorOrder.UNDEFINED;
 }

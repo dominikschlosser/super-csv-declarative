@@ -36,8 +36,8 @@ public class StrNotNullOrEmptyCellProcessorProvider implements DeclarativeCellPr
         return new CellProcessorFactory() {
 
             @Override
-            public int getIndex() {
-                return annotation.index();
+            public int getOrder() {
+                return annotation.order();
             }
 
             @Override

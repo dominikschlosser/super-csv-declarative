@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-public final class ProcessorIndex {
+public final class ProcessorOrder {
 
     public static final int UNDEFINED = -1;
 }

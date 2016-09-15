@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.CsvTransient;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvMappingModeType;
@@ -46,7 +46,7 @@ final class FieldExtractor {
         extractFields(beanDescriptor.getBeanType());
 
         if (withCsvFieldAnnotation.isEmpty()) {
-            return withoutCsvFieldAnnotation;
+            return new ArrayList(withoutCsvFieldAnnotation);
         }
 
         if (!withoutCsvFieldAnnotation.isEmpty()) {
@@ -56,7 +56,7 @@ final class FieldExtractor {
             }
 
             if (CsvMappingModeType.STRICT.equals(beanDescriptor.getMappingMode())) {
-                throw new SuperCsvException(Form.at("MappingMode.STRICT: You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
+                throw new SuperCsvException(AbstractForm.at("MappingMode.STRICT: You used @CsvField somewhere in the type hierarchy of {} but there are fields without it."
                         + " Those fields are unmapped: {}", beanDescriptor.getBeanType().getName(), String.join(", ", ignoredFieldNames)));
             }
 
@@ -64,7 +64,7 @@ final class FieldExtractor {
                     + " Those fields will be ignored by SuperCSV: {}", beanDescriptor.getBeanType().getName(), String.join(", ", ignoredFieldNames));
         }
 
-        return withCsvFieldAnnotation;
+        return new ArrayList(withCsvFieldAnnotation);
     }
 
     private void extractFields(Class<?> clazz) {

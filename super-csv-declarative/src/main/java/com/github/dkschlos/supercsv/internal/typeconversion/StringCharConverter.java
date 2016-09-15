@@ -23,6 +23,6 @@ public class StringCharConverter implements TypeConverter<String, Character> {
 
     @Override
     public Character convert(String input) {
-        return input == null ? null : input.toCharArray()[0];
+        return input == null ? null : input.charAt(0);
     }
 }

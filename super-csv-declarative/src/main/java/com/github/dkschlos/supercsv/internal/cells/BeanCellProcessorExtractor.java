@@ -15,7 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
-import com.github.dkschlos.supercsv.internal.util.Form;
+import com.github.dkschlos.supercsv.internal.util.AbstractForm;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
@@ -64,7 +64,7 @@ final class BeanCellProcessorExtractor {
                         .provider());
                 if (!provider.getType().isAssignableFrom(annotation.getClass())) {
                     throw new SuperCsvReflectionException(
-                            Form.at(
+                            AbstractForm.at(
                                     "Provider declared in annotation of type '{}' cannot be used since accepted annotation-type is not compatible",
                                     annotation.getClass().getName()));
                 }
@@ -91,7 +91,7 @@ final class BeanCellProcessorExtractor {
 
         @Override
         public int compare(CellProcessorDefinition o1, CellProcessorDefinition o2) {
-            return o2.getFactory().getIndex() - o1.getFactory().getIndex();
+            return o2.getFactory().getOrder() - o1.getFactory().getOrder();
         }
     }
 

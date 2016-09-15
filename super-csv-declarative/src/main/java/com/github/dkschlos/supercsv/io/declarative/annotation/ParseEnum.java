@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.github.dkschlos.supercsv.io.declarative.ProcessorIndex;
+import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.provider.ParseEnumCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
@@ -40,5 +40,5 @@ public @interface ParseEnum {
 
     boolean ignoreCase() default false;
 
-    int index() default ProcessorIndex.UNDEFINED;
+    int order() default ProcessorOrder.UNDEFINED;
 }
