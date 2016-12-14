@@ -22,11 +22,16 @@ import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory
 import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -44,17 +49,18 @@ import org.supercsv.util.CsvContext;
  * @author Dominik Schlosser
  */
 final class BeanCellProcessorExtractor {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(BeanCellProcessorExtractor.class);
+    
     private BeanCellProcessorExtractor() {
         // no instances allowed
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static CellProcessor createCellProcessorFor(Field field, String context) {
-        List<Annotation> annotations = Arrays.asList(field.getAnnotations());
+        List<Annotation> annotations = extractAnnotations(field);
         Collections.reverse(annotations);
 
-        List<CellProcessorDefinition> factories = new ArrayList<CellProcessorDefinition>();
+        List<CellProcessorDefinition> factories = new ArrayList<>();
 
         for (Annotation annotation : annotations) {
             CellProcessorAnnotationDescriptor cellProcessorMarker = annotation
@@ -78,6 +84,32 @@ final class BeanCellProcessorExtractor {
         return buildProcessorChain(factories);
     }
 
+    private static List<Annotation> extractAnnotations(Field field){
+        List<Annotation> result = new ArrayList<>();
+        for(Annotation annotation : field.getAnnotations()){
+            Class<? extends Annotation> annotationType = annotation.annotationType();
+            CellProcessorAnnotationDescriptor cellProcessorMarker = annotationType.getAnnotation(CellProcessorAnnotationDescriptor.class);
+            if(cellProcessorMarker == null){
+                Optional<Method> valueMethod = Arrays.asList(annotationType.getMethods()).stream()
+                        .filter(m -> m.getName().equals("value"))
+                        .filter(m -> Annotation[].class.isAssignableFrom(m.getReturnType()))
+                        .findFirst();
+                
+                if(valueMethod.isPresent()){
+                    try {
+                        Annotation[] repeatedAnnotations = (Annotation[]) valueMethod.get().invoke(annotation);
+                        result.addAll(Arrays.asList(repeatedAnnotations));
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                        LOGGER.warn("Exception while trying to read repeatable annotations from {}: {}", annotationType.getClass().getName(), ex.getMessage());
+                    }
+                }
+            } else {
+                result.add(annotation);
+            }
+        }
+        
+        return result;
+    }
     private static CellProcessor buildProcessorChain(List<CellProcessorDefinition> definitions) {
         CellProcessor root = new Transient();
 

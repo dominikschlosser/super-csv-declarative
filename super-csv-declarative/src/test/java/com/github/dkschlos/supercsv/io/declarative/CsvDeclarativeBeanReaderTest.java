@@ -22,6 +22,7 @@ import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithEnum;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
+import com.github.dkschlos.supercsv.testbeans.BeanWithRepeatableAnnotation;
 import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithoutExplicitParseAnnotations;
@@ -43,7 +44,6 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
-import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.Tokenizer;
 import org.supercsv.prefs.CsvPreference;
 
@@ -95,6 +95,17 @@ public class CsvDeclarativeBeanReaderTest {
         assertNull(beanReader.read(BeanWithSimpleAnnotations.class));
     }
 
+    @Test
+    public void readBeanWithRepeatableAnnotations() throws IOException {
+        setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+        BeanWithRepeatableAnnotation john = new BeanWithRepeatableAnnotation(null, "Doe", 42, 100.5);
+        BeanWithRepeatableAnnotation max = new BeanWithRepeatableAnnotation("Max", "Mustermcnn", 22, 21.4);
+
+        assertEquals(john, beanReader.read(BeanWithRepeatableAnnotation.class));
+        assertEquals(max, beanReader.read(BeanWithRepeatableAnnotation.class));
+        assertNull(beanReader.read(BeanWithRepeatableAnnotation.class));
+    }
+    
     @Test
     public void readSimpleBeanWithChainedAnnotations() throws IOException {
         setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);

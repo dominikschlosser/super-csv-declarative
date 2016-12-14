@@ -23,6 +23,8 @@ import java.lang.annotation.Target;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.provider.StrReplaceCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import com.github.dkschlos.supercsv.io.declarative.annotation.containers.StrReplaceContainer;
+import java.lang.annotation.Repeatable;
 
 /**
  * Annotation for the {@link org.supercsv.cellprocessor.StrReplace}-cell processor
@@ -30,6 +32,7 @@ import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescri
  * @since 2.5
  * @author Dominik Schlosser
  */
+@Repeatable(StrReplaceContainer.class)
 @CellProcessorAnnotationDescriptor(provider = StrReplaceCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
