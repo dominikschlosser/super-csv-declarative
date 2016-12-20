@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import com.github.dkschlos.supercsv.io.declarative.annotation.FmtDate;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -31,17 +34,17 @@ public class FmtDateCellProcessorProvider implements DeclarativeCellProcessorPro
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final FmtDate annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<FmtDate> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.FmtDate(annotation.format(), (StringCellProcessor) next);
+                return new org.supercsv.cellprocessor.FmtDate(metadata.getAnnotation().format(), (StringCellProcessor) next);
             }
         };
     }

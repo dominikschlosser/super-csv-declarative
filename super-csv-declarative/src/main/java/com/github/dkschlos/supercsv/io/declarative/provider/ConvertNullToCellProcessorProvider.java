@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import com.github.dkschlos.supercsv.io.declarative.annotation.ConvertNullTo;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
@@ -30,17 +33,17 @@ public class ConvertNullToCellProcessorProvider implements DeclarativeCellProces
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final ConvertNullTo annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<ConvertNullTo> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.ConvertNullTo(annotation.value(), next);
+                return new org.supercsv.cellprocessor.ConvertNullTo(metadata.getAnnotation(), next);
             }
         };
     }

@@ -16,8 +16,9 @@
 package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.StrNotNullOrEmpty;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
@@ -32,12 +33,12 @@ public class StrNotNullOrEmptyCellProcessorProvider implements DeclarativeCellPr
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final StrNotNullOrEmpty annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<StrNotNullOrEmpty> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

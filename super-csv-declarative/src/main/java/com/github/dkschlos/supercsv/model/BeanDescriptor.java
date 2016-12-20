@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.internal.cells;
+package com.github.dkschlos.supercsv.model;
 
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessorType;

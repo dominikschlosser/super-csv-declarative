@@ -16,10 +16,11 @@
 package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.StrRegEx;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 
 /**
  * CellProcessorProvider for StrRegEx
@@ -33,17 +34,17 @@ public class StrRegExCellProcessorProvider implements DeclarativeCellProcessorPr
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final StrRegEx annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<StrRegEx> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.constraint.StrRegEx(annotation.regex(),
+                return new org.supercsv.cellprocessor.constraint.StrRegEx(metadata.getAnnotation().regex(),
                         (StringCellProcessor) next);
             }
         };

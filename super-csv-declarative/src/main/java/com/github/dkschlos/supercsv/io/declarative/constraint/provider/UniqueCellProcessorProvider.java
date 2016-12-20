@@ -15,10 +15,11 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.Unique;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 
 /**
  * CellProcessorProvider for Unique
@@ -32,12 +33,12 @@ public class UniqueCellProcessorProvider implements DeclarativeCellProcessorProv
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final Unique annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<Unique> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

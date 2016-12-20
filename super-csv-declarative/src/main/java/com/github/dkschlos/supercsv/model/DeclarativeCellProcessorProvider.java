@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.io.declarative.provider;
+package com.github.dkschlos.supercsv.model;
 
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import java.lang.annotation.Annotation;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -30,10 +31,10 @@ public interface DeclarativeCellProcessorProvider<T extends Annotation> {
     /**
      * Creates the cell processor from the given annotation
      *
-     * @param annotation the given annotation
+     * @param metadata the metadata for this processing-step
      * @return a CellProcessor based on the information in the given annotation
      */
-    CellProcessorFactory create(T annotation);
+    CellProcessorFactory create(ProcessingMetadata<T> metadata);
 
     /**
      * @return the annotation-type (necessary because of Java type-erasure)

@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import org.supercsv.cellprocessor.Trim;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -32,12 +35,12 @@ public class TrimCellProcessorProvider implements
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Trim annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<com.github.dkschlos.supercsv.io.declarative.annotation.Trim> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

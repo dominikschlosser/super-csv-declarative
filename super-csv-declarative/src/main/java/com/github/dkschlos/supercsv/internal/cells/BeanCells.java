@@ -15,6 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
+import com.github.dkschlos.supercsv.model.BeanDescriptor;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.annotation.CsvAccessType;
@@ -80,7 +81,7 @@ public final class BeanCells {
     }
 
     public List<BeanCell> getAll() {
-        return new ArrayList<BeanCell>(mappedFields.values());
+        return new ArrayList<>(mappedFields.values());
     }
 
     public int getCorrectlyMappedFieldCount() {
@@ -88,7 +89,7 @@ public final class BeanCells {
     }
 
     private static Map<Integer, BeanCell> getFieldsByExplicitIndex(List<Field> fields, BeanDescriptor beanDescriptor, String context) {
-        Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
+        Map<Integer, BeanCell> result = new HashMap<>();
         for (Field field : fields) {
             CsvField fieldAnnotation = field.getAnnotation(CsvField.class);
             if (fieldAnnotation != null) {
@@ -97,7 +98,7 @@ public final class BeanCells {
                             field.getName()));
                 }
 
-                CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
+                CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(beanDescriptor, field, context);
                 FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(beanDescriptor.getAccessType());
                 result.put(fieldAnnotation.index(), new ExistingBeanCell(field, cellProcessor, fieldAccessStrategy));
             }
@@ -107,10 +108,10 @@ public final class BeanCells {
     }
 
     private static Map<Integer, BeanCell> getFieldsByImplicitIndex(List<Field> fields, BeanDescriptor beanDescriptor, String context) {
-        Map<Integer, BeanCell> result = new HashMap<Integer, BeanCell>();
+        Map<Integer, BeanCell> result = new HashMap<>();
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
-            CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(field, context);
+            CellProcessor cellProcessor = BeanCellProcessorExtractor.createCellProcessorFor(beanDescriptor, field, context);
             FieldAccessStrategy fieldAccessStrategy = createFieldAccessStrategy(beanDescriptor.getAccessType());
             result.put(i, new ExistingBeanCell(field, cellProcessor, fieldAccessStrategy));
         }

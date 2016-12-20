@@ -15,11 +15,12 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.DMinMax;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 
 /**
  * CellProcessorProvider for DMinMax
@@ -33,16 +34,17 @@ public class DMinMaxCellProcessorProvider implements DeclarativeCellProcessorPro
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final DMinMax annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<DMinMax> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
+                DMinMax annotation = metadata.getAnnotation();
                 return new org.supercsv.cellprocessor.constraint.DMinMax(annotation.min(), annotation.max(),
                         (DoubleCellProcessor) next);
             }

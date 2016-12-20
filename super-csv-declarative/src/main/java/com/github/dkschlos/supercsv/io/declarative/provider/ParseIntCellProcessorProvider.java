@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.annotation.ParseInt;
@@ -31,12 +34,12 @@ public class ParseIntCellProcessorProvider implements DeclarativeCellProcessorPr
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final ParseInt annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<ParseInt> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

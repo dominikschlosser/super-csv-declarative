@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import com.github.dkschlos.supercsv.io.declarative.annotation.ParseDate;
 import java.util.Locale;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -32,17 +35,18 @@ public class ParseDateCellProcessorProvider implements DeclarativeCellProcessorP
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final ParseDate annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<ParseDate> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                final Locale locale = annotation.locale() == null || "".equals(annotation.locale())
+                ParseDate annotation = metadata.getAnnotation();
+                Locale locale = annotation.locale() == null || "".equals(annotation.locale())
                         ? null
                         : new Locale(annotation.locale());
                 return new org.supercsv.cellprocessor.ParseDate(annotation.format(), annotation.lenient(), locale,

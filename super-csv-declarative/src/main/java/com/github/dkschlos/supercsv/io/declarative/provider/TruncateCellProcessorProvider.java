@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import com.github.dkschlos.supercsv.io.declarative.annotation.Truncate;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -31,17 +34,17 @@ public class TruncateCellProcessorProvider implements DeclarativeCellProcessorPr
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final Truncate annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<Truncate> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.Truncate(annotation.maxSize(), annotation.suffix(),
+                return new org.supercsv.cellprocessor.Truncate(metadata.getAnnotation().maxSize(), metadata.getAnnotation().suffix(),
                         (StringCellProcessor) next);
             }
         };

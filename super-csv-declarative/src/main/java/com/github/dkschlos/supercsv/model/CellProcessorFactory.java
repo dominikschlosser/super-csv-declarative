@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.dkschlos.supercsv.io.declarative.provider;
+package com.github.dkschlos.supercsv.model;
 
-import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 
-public abstract class AbstractCellProcessorFactory implements CellProcessorFactory {
+public interface CellProcessorFactory {
 
-    @Override
-    public int getOrder() {
-        return ProcessorOrder.UNDEFINED;
-    }
+    CellProcessor create(CellProcessor next);
+
+    int getOrder();
 }

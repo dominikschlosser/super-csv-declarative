@@ -17,7 +17,7 @@ package com.github.dkschlos.supercsv.io.declarative;
 
 import com.github.dkschlos.supercsv.internal.cells.BeanCell;
 import com.github.dkschlos.supercsv.internal.cells.BeanCells;
-import com.github.dkschlos.supercsv.internal.cells.BeanDescriptor;
+import com.github.dkschlos.supercsv.model.BeanDescriptor;
 import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverter;
 import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverterRegistry;
 import com.github.dkschlos.supercsv.internal.util.Form;

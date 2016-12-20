@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.annotation.FmtNumber;
@@ -31,17 +34,17 @@ public class FmtNumberCellProcessorProvider implements DeclarativeCellProcessorP
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final FmtNumber annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<FmtNumber> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.FmtNumber(annotation.decimalFormat(), (StringCellProcessor) next);
+                return new org.supercsv.cellprocessor.FmtNumber(metadata.getAnnotation().decimalFormat(), (StringCellProcessor) next);
             }
         };
     }

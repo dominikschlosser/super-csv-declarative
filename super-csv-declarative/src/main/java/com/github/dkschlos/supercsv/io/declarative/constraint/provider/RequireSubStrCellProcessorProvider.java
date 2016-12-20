@@ -16,8 +16,9 @@
 package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.RequireSubStr;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
@@ -32,17 +33,17 @@ public class RequireSubStrCellProcessorProvider implements DeclarativeCellProces
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final RequireSubStr annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<RequireSubStr> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.constraint.RequireSubStr(annotation.requiredSubStrings(), next);
+                return new org.supercsv.cellprocessor.constraint.RequireSubStr(metadata.getAnnotation().requiredSubStrings(), next);
             }
         };
     }

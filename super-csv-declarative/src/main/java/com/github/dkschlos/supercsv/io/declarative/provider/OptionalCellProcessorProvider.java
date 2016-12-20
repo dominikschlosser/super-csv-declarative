@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
@@ -31,12 +34,12 @@ public class OptionalCellProcessorProvider implements
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final com.github.dkschlos.supercsv.io.declarative.annotation.Optional annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<com.github.dkschlos.supercsv.io.declarative.annotation.Optional> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

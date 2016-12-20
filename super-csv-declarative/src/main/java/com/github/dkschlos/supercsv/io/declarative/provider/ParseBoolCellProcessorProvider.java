@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.annotation.ParseBool;
@@ -31,18 +34,18 @@ public class ParseBoolCellProcessorProvider implements DeclarativeCellProcessorP
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final ParseBool annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<ParseBool> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.ParseBool(annotation.trueValue(), annotation.falseValue(),
-                        annotation.ignoreCase(), (BoolCellProcessor) next);
+                return new org.supercsv.cellprocessor.ParseBool(metadata.getAnnotation().trueValue(), metadata.getAnnotation().falseValue(),
+                        metadata.getAnnotation().ignoreCase(), (BoolCellProcessor) next);
             }
         };
     }

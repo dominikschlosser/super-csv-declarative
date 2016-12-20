@@ -16,8 +16,9 @@
 package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.Equals;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
@@ -32,12 +33,12 @@ public class EqualsCellProcessorProvider implements DeclarativeCellProcessorProv
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final Equals annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<Equals> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

@@ -17,8 +17,9 @@ package com.github.dkschlos.supercsv.io.declarative.constraint.provider;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.constraint.annotation.UniqueHashCode;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 
 /**
  * CellProcessorProvider for UniqueHashCode
@@ -32,12 +33,12 @@ public class UniqueHashCodeCellProcessorProvider implements DeclarativeCellProce
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final UniqueHashCode annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<UniqueHashCode> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override

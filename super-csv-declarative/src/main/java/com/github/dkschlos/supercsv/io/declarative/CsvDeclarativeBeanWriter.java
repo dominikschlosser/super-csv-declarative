@@ -17,7 +17,7 @@ package com.github.dkschlos.supercsv.io.declarative;
 
 import com.github.dkschlos.supercsv.internal.cells.BeanCell;
 import com.github.dkschlos.supercsv.internal.cells.BeanCells;
-import com.github.dkschlos.supercsv.internal.cells.BeanDescriptor;
+import com.github.dkschlos.supercsv.model.BeanDescriptor;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;

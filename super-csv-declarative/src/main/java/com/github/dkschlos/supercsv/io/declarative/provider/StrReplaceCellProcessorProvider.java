@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import com.github.dkschlos.supercsv.io.declarative.annotation.StrReplace;
@@ -31,17 +34,17 @@ public class StrReplaceCellProcessorProvider implements DeclarativeCellProcessor
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final StrReplace annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<StrReplace> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.StrReplace(annotation.pattern(), annotation.replacement(),
+                return new org.supercsv.cellprocessor.StrReplace(metadata.getAnnotation().pattern(), metadata.getAnnotation().replacement(),
                         (StringCellProcessor) next);
             }
         };

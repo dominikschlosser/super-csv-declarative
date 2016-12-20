@@ -15,6 +15,9 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import com.github.dkschlos.supercsv.io.declarative.annotation.ParseEnum;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
@@ -30,17 +33,17 @@ public class ParseEnumCellProcessorProvider implements DeclarativeCellProcessorP
      * {@inheritDoc}
      */
     @Override
-    public CellProcessorFactory create(final ParseEnum annotation) {
+    public CellProcessorFactory create(ProcessingMetadata<ParseEnum> metadata) {
         return new CellProcessorFactory() {
 
             @Override
             public int getOrder() {
-                return annotation.order();
+                return metadata.getAnnotation().order();
             }
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.ParseEnum(annotation.enumClass(), annotation.ignoreCase(), next);
+                return new org.supercsv.cellprocessor.ParseEnum(metadata.getAnnotation().enumClass(), metadata.getAnnotation().ignoreCase(), next);
             }
         };
     }

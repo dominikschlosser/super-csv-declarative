@@ -15,6 +15,7 @@
  */
 package com.github.dkschlos.supercsv.io.declarative.provider;
 
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import org.junit.Assert;
 import org.junit.Test;

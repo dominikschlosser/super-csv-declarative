@@ -15,6 +15,7 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
+import com.github.dkschlos.supercsv.model.BeanDescriptor;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.io.declarative.CsvField;
 import com.github.dkschlos.supercsv.io.declarative.CsvTransient;

@@ -15,11 +15,13 @@
  */
 package com.github.dkschlos.supercsv.internal.cells;
 
+import com.github.dkschlos.supercsv.model.BeanDescriptor;
 import com.github.dkschlos.supercsv.internal.util.Form;
 import com.github.dkschlos.supercsv.internal.util.ReflectionUtilsExt;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactory;
-import com.github.dkschlos.supercsv.io.declarative.provider.DeclarativeCellProcessorProvider;
+import com.github.dkschlos.supercsv.model.CellProcessorFactory;
+import com.github.dkschlos.supercsv.model.ProcessingMetadata;
+import com.github.dkschlos.supercsv.model.DeclarativeCellProcessorProvider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -56,7 +58,7 @@ final class BeanCellProcessorExtractor {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static CellProcessor createCellProcessorFor(Field field, String context) {
+    public static CellProcessor createCellProcessorFor(BeanDescriptor beanDescriptor, Field field, String context) {
         List<Annotation> annotations = extractAnnotations(field);
         Collections.reverse(annotations);
 
@@ -75,7 +77,7 @@ final class BeanCellProcessorExtractor {
                                     annotation.getClass().getName()));
                 }
 
-                factories.add(new CellProcessorDefinition(provider.create(annotation), cellProcessorMarker));
+                factories.add(new CellProcessorDefinition(provider.create(new ProcessingMetadata(annotation, field, beanDescriptor)), cellProcessorMarker));
             }
         }
 
