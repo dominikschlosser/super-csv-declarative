@@ -160,12 +160,12 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
             if (CsvMappingModeType.STRICT.equals(beanDescriptor.getMappingMode()) && cells.getCorrectlyMappedFieldCount() != length()) {
                 throw new SuperCsvException(Form.at("MappingMode.STRICT: Number of mapped bean-fields ({}] and csv-cells ({}) does not match.", cells.getCorrectlyMappedFieldCount(), length()));
             }
-            List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
+            List<CellProcessor> rowProcessors = new ArrayList<>();
             for (int i = 0; i < length(); i++) {
                 rowProcessors.add(cells.getCell(i).getProcessor());
             }
 
-            List<Object> processedColumns = new ArrayList<Object>();
+            List<Object> processedColumns = new ArrayList<>();
             executeProcessors(processedColumns, rowProcessors.toArray(new CellProcessor[rowProcessors.size()]));
 
             return populateBean(bean, processedColumns, cells);

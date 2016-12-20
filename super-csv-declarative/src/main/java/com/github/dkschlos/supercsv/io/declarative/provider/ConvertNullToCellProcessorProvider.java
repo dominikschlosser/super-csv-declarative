@@ -43,7 +43,7 @@ public class ConvertNullToCellProcessorProvider implements DeclarativeCellProces
 
             @Override
             public CellProcessor create(CellProcessor next) {
-                return new org.supercsv.cellprocessor.ConvertNullTo(metadata.getAnnotation(), next);
+                return new org.supercsv.cellprocessor.ConvertNullTo(metadata.getAnnotation().value(), next);
             }
         };
     }

@@ -51,7 +51,7 @@ final class FieldExtractor {
         }
 
         if (!withoutCsvFieldAnnotation.isEmpty()) {
-            List<String> ignoredFieldNames = new ArrayList<String>();
+            List<String> ignoredFieldNames = new ArrayList<>();
             for (Field withoutAnnotation : withoutCsvFieldAnnotation) {
                 ignoredFieldNames.add(withoutAnnotation.getName());
             }

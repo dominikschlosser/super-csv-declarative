@@ -37,13 +37,7 @@ public class PropertyFieldAccessStrategy implements FieldAccessStrategy {
         try {
             Method method = getReadMethod(field, obj);
             return method.invoke(obj);
-        } catch (IntrospectionException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
-                    field.getName()), e);
-        } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
-                    field.getName()), e);
-        } catch (InvocationTargetException e) {
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
             throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
                     field.getName()), e);
         }
@@ -54,11 +48,7 @@ public class PropertyFieldAccessStrategy implements FieldAccessStrategy {
         try {
             Method method = getWriteMethod(field, obj);
             method.invoke(obj, value);
-        } catch (IntrospectionException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value via setter on field '{}'", field.getName()), e);
-        } catch (IllegalAccessException e) {
-            throw new SuperCsvReflectionException(Form.at("Cannot set value via setter on field '{}'", field.getName()), e);
-        } catch (InvocationTargetException e) {
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
             throw new SuperCsvReflectionException(Form.at("Cannot set value via setter on field '{}'", field.getName()), e);
         }
     }
