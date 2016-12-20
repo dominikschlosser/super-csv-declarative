@@ -37,9 +37,11 @@ import org.supercsv.io.ITokenizer;
 import org.supercsv.prefs.CsvPreference;
 
 /**
- * This reader maps csv files to beans via conventions and {@link CellProcessorAnnotationDescriptor} -annotations. The
- * fields in the bean must match the csv's fields in type and order. {@link CellProcessor}s are created automatically
- * for all known types. Additional processors can be added by annotating fields with their respective annotations.
+ * This reader maps csv files to beans via conventions and
+ * {@link CellProcessorAnnotationDescriptor} -annotations. The fields in the
+ * bean must match the csv's fields in type and order. {@link CellProcessor}s
+ * are created automatically for all known types. Additional processors can be
+ * added by annotating fields with their respective annotations.
  * Annotation-order defines processor call-order.
  *
  * @since 2.5
@@ -50,8 +52,10 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
     private TypeConverterRegistry typeConverterRegistry = new DefaultTypeConverterRegistry();
 
     /**
-     * Constructs a new <tt>CsvBeanReader</tt> with the supplied Reader and CSV preferences. Note that the
-     * <tt>reader</tt> will be wrapped in a <tt>BufferedReader</tt> before accessed.
+     * Constructs a new <tt>CsvBeanReader</tt> with the supplied Reader and CSV
+     * preferences. Note that the
+     * <tt>reader</tt> will be wrapped in a <tt>BufferedReader</tt> before
+     * accessed.
      *
      * @param reader the reader
      * @param preferences the CSV preferences
@@ -62,8 +66,10 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
     }
 
     /**
-     * Constructs a new <tt>CsvBeanReader</tt> with the supplied Reader and CSV preferences. Note that the
-     * <tt>reader</tt> will be wrapped in a <tt>BufferedReader</tt> before accessed.
+     * Constructs a new <tt>CsvBeanReader</tt> with the supplied Reader and CSV
+     * preferences. Note that the
+     * <tt>reader</tt> will be wrapped in a <tt>BufferedReader</tt> before
+     * accessed.
      *
      * @param reader the reader
      * @param typeConverterRegistry the TypeConverterRegistry to use
@@ -76,8 +82,9 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
     }
 
     /**
-     * Constructs a new <tt>CsvBeanReader</tt> with the supplied (custom) Tokenizer and CSV preferences. The tokenizer
-     * should be set up with the Reader (CSV input) and CsvPreference beforehand.
+     * Constructs a new <tt>CsvBeanReader</tt> with the supplied (custom)
+     * Tokenizer and CSV preferences. The tokenizer should be set up with the
+     * Reader (CSV input) and CsvPreference beforehand.
      *
      * @param tokenizer the tokenizer
      * @param preferences the CSV preferences
@@ -88,8 +95,9 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
     }
 
     /**
-     * Constructs a new <tt>CsvBeanReader</tt> with the supplied (custom) Tokenizer and CSV preferences. The tokenizer
-     * should be set up with the Reader (CSV input) and CsvPreference beforehand.
+     * Constructs a new <tt>CsvBeanReader</tt> with the supplied (custom)
+     * Tokenizer and CSV preferences. The tokenizer should be set up with the
+     * Reader (CSV input) and CsvPreference beforehand.
      *
      * @param tokenizer the tokenizer
      * @param typeConverterRegistry the TypeConverterRegistry to use
@@ -102,18 +110,23 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
     }
 
     /**
-     * Reads a row of a CSV file and populates an instance of the specified class, using the conventional mappings and
-     * provided {@link CellProcessorAnnotationDescriptor}-annotations
+     * Reads a row of a CSV file and populates an instance of the specified
+     * class, using the conventional mappings and provided
+     * {@link CellProcessorAnnotationDescriptor}-annotations
      *
-     * @param clazz the type to instantiate. If the type is a class then a new instance will be created using the
-     * default no-args constructor. If the type is an interface, a proxy object which implements the interface will be
-     * created instead.
+     * @param clazz the type to instantiate. If the type is a class then a new
+     * instance will be created using the default no-args constructor. If the
+     * type is an interface, a proxy object which implements the interface will
+     * be created instead.
      * @param <T> the bean type
      * @return a populated bean or null if EOF
      * @throws IOException if an I/O error occurred
-     * @throws IllegalArgumentException if nameMapping.length != number of columns read or clazz is null
-     * @throws SuperCsvException if there was a general exception while reading/processing
-     * @throws SuperCsvReflectionException if there was an reflection exception while mapping the values to the bean
+     * @throws IllegalArgumentException if nameMapping.length != number of
+     * columns read or clazz is null
+     * @throws SuperCsvException if there was a general exception while
+     * reading/processing
+     * @throws SuperCsvReflectionException if there was an reflection exception
+     * while mapping the values to the bean
      * @since 2.5
      */
     public <T> T read(final Class<T> clazz) throws IOException {
@@ -132,19 +145,20 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
             final Object fieldValue = processedColumns.get(i);
 
             BeanCell cell = cells.getCell(i);
-            if (cell == null || cell.getType() == null || fieldValue == null) {
+            if (cell == null || cell.getType() == null) {
                 continue;
             }
 
             // ClassUtils handles boxed types
-            if (ClassUtils.isAssignable(fieldValue.getClass(), cell.getType(), true)) {
+            if (fieldValue != null && ClassUtils.isAssignable(fieldValue.getClass(), cell.getType(), true)) {
                 cell.setValue(resultBean, fieldValue);
             } else {
+                Class<?> fieldValueClass = fieldValue == null ? Object.class : fieldValue.getClass();
                 TypeConverter<Object, Object> converter
-                        = (TypeConverter<Object, Object>) typeConverterRegistry.getConverter(fieldValue.getClass(), cell.getType());
+                        = (TypeConverter<Object, Object>) typeConverterRegistry.getConverter(fieldValueClass, cell.getType());
                 if (converter == null) {
                     throw new SuperCsvException(Form.at("No converter registered from type {} to type {}. Add one or fix your CellProcessor-annotations to return the field's type",
-                            fieldValue.getClass().getName(), cell.getType().getName()));
+                            fieldValueClass.getName(), cell.getType().getName()));
                 }
                 cell.setValue(resultBean, converter.convert(fieldValue));
             }

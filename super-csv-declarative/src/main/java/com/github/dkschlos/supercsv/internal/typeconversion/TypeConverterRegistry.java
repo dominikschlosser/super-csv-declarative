@@ -31,7 +31,17 @@ public class TypeConverterRegistry {
         if (String.class.equals(inputClass) && outputClass.isEnum()) {
             return (TypeConverter<I, O>) new StringEnumConverter(outputClass);
         }
-        return (TypeConverter<I, O>) converters.get(new RegistryKey(inputClass, outputClass));
+        TypeConverter<I, O> converter = (TypeConverter<I, O>) converters.get(new RegistryKey(inputClass, outputClass));
+        if(converter != null){
+            return converter;
+        }
+        
+        TypeConverter<I, O> semiGenericConverter = (TypeConverter<I, O>) converters.get(new RegistryKey(Object.class, outputClass));
+        if(semiGenericConverter != null){
+            return semiGenericConverter;
+        }
+        
+        return (TypeConverter<I, O>) converters.get(new RegistryKey(Object.class, Object.class));
     }
 
     public final void register(TypeConverter<?, ?> converter, Class<?> inputClass, Class<?> outputClass) {

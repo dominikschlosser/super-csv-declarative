@@ -15,6 +15,8 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
+import com.github.dkschlos.supercsv.internal.typeconversion.IdentityConverter;
+import com.github.dkschlos.supercsv.internal.typeconversion.OptionalConverter;
 import com.github.dkschlos.supercsv.internal.typeconversion.StringBigDecimalConverter;
 import com.github.dkschlos.supercsv.internal.typeconversion.StringCharConverter;
 import com.github.dkschlos.supercsv.internal.typeconversion.StringDoubleConverter;
@@ -31,6 +33,8 @@ import java.math.BigDecimal;
 public class DefaultTypeConverterRegistry extends TypeConverterRegistry {
 
     public DefaultTypeConverterRegistry() {
+        register(new IdentityConverter(), Object.class, Object.class);
+        register(new OptionalConverter(), Object.class, java.util.Optional.class);
         register(new StringIntConverter(), String.class, Integer.class);
         register(new StringIntConverter(), String.class, int.class);
         register(new StringDoubleConverter(), String.class, Double.class);

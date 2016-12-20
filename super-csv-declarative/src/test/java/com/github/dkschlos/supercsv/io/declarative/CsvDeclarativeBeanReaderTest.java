@@ -20,6 +20,8 @@ import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithEnum;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
+import com.github.dkschlos.supercsv.testbeans.BeanWithOptionalFieldAndFieldAccess;
+import com.github.dkschlos.supercsv.testbeans.BeanWithOptionalFieldAndPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 import com.github.dkschlos.supercsv.testbeans.BeanWithRepeatableAnnotation;
 import com.github.dkschlos.supercsv.testbeans.BeanWithSimpleAnnotations;
@@ -38,6 +40,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
@@ -57,6 +60,7 @@ public class CsvDeclarativeBeanReaderTest {
     private static final CsvPreference PREFS = CsvPreference.STANDARD_PREFERENCE;
 
     private static final String SIMPLE_BEAN_CSV = "/simpleBean.csv";
+    private static final String BEAN_WITH_OPTIONAL_FIELD_CSV = "/beanWithOptionalField.csv";
     private static final String SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV = "/simpleBeanWithSimpleAnnotations.csv";
     private static final String BEAN_WITH_INHERITED_PROPERTIES = "/beanWithInheritedProperties.csv";
     private static final String BEAN_FOR_DEFAULT_OVERRIDING_TEST = "/beanForDefaultOverridingTest.csv";
@@ -83,6 +87,26 @@ public class CsvDeclarativeBeanReaderTest {
         assertNull(beanReader.read(BeanWithoutAnnotations.class));
     }
 
+    @Test
+    public void readBeanWithOptionalFieldAndFieldAccess() throws IOException {
+        setupBeanReader(BEAN_WITH_OPTIONAL_FIELD_CSV);
+        BeanWithOptionalFieldAndFieldAccess bean = new BeanWithOptionalFieldAndFieldAccess();
+
+        assertFalse(beanReader.read(BeanWithOptionalFieldAndFieldAccess.class).getField().isPresent());
+        assertEquals("a", beanReader.read(BeanWithOptionalFieldAndFieldAccess.class).getField().get());
+        assertNull(beanReader.read(BeanWithOptionalFieldAndFieldAccess.class));
+    }
+    
+    @Test
+    public void readBeanWithOptionalFieldAndPropertyAccess() throws IOException {
+        setupBeanReader(BEAN_WITH_OPTIONAL_FIELD_CSV);
+        BeanWithOptionalFieldAndPropertyAccess bean = new BeanWithOptionalFieldAndPropertyAccess();
+
+        assertFalse(beanReader.read(BeanWithOptionalFieldAndPropertyAccess.class).getField().isPresent());
+        assertEquals("a", beanReader.read(BeanWithOptionalFieldAndPropertyAccess.class).getField().get());
+        assertNull(beanReader.read(BeanWithOptionalFieldAndPropertyAccess.class));
+    }
+    
     @Test
     public void readSimpleBeanWithSimpleAnnotations() throws IOException {
         setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
