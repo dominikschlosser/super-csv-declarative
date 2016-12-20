@@ -17,6 +17,7 @@ package com.github.dkschlos.supercsv.internal.cells;
 
 import com.github.dkschlos.supercsv.internal.util.Form;
 import java.lang.reflect.Field;
+import java.util.Optional;
 import org.supercsv.exception.SuperCsvReflectionException;
 
 /**
@@ -39,7 +40,13 @@ public class DirectFieldAccessStrategy implements FieldAccessStrategy {
     public Object getValue(Field field, Object obj) {
         try {
             field.setAccessible(true);
-            return field.get(obj);
+            Object result = field.get(obj);
+            if(result != null && java.util.Optional.class.isAssignableFrom(result.getClass())){
+                Optional optionalResult = (java.util.Optional) result;
+                return optionalResult.orElse(null);
+            }
+            
+            return result;
         } catch (IllegalAccessException e) {
             throw new SuperCsvReflectionException(Form.at("Error extracting bean value for field {}",
                     field.getName()), e);

@@ -28,8 +28,11 @@ import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithEnum;
 import com.github.dkschlos.supercsv.testbeans.BeanWithInheritedProperties;
+import com.github.dkschlos.supercsv.testbeans.BeanWithOptionalFieldAndFieldAccess;
+import com.github.dkschlos.supercsv.testbeans.BeanWithOptionalFieldAndPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithPartialColumnMapping;
 import com.github.dkschlos.supercsv.testbeans.TestEnum;
+import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -50,6 +53,28 @@ public class CsvDeclarativeBeanWriterTest {
         }
     }
 
+    @Test
+    public void writeBeanWithOptionalFieldAndFieldAccess() throws IOException {
+        BeanWithOptionalFieldAndFieldAccess bean1 = new BeanWithOptionalFieldAndFieldAccess(Optional.empty(), "b");
+        BeanWithOptionalFieldAndFieldAccess bean2 = new BeanWithOptionalFieldAndFieldAccess(Optional.of("a"), "b");
+
+        beanWriter.write(bean1);
+        beanWriter.write(bean2);
+
+        assertEquals(",b\r\na,b\r\n", result.toString());
+    }
+    
+    @Test
+    public void writeBeanWithOptionalFieldAndPropertyAccess() throws IOException {
+        BeanWithOptionalFieldAndPropertyAccess bean1 = new BeanWithOptionalFieldAndPropertyAccess(Optional.empty(), "b");
+        BeanWithOptionalFieldAndPropertyAccess bean2 = new BeanWithOptionalFieldAndPropertyAccess(Optional.of("a"), "b");
+
+        beanWriter.write(bean1);
+        beanWriter.write(bean2);
+
+        assertEquals(",b\r\na,b\r\n", result.toString());
+    }
+    
     @Test
     public void writeSimpleBeanWithoutAnnotations() throws IOException {
         BeanWithoutAnnotations john = new BeanWithoutAnnotations("John", "Doe", 42, 100.5);

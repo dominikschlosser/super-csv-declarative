@@ -71,9 +71,9 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
         BeanCells cells = BeanCells.getFields(beanDescriptor, StandardCsvContexts.WRITE);
         List<Object> beanValues = extractBeanValues(source, cells);
 
-        List<Object> processedColumns = new ArrayList<Object>();
+        List<Object> processedColumns = new ArrayList<>();
 
-        List<CellProcessor> rowProcessors = new ArrayList<CellProcessor>();
+        List<CellProcessor> rowProcessors = new ArrayList<>();
         for (BeanCell cell : cells.getAll()) {
             rowProcessors.add(cell.getProcessor());
         }
@@ -87,7 +87,7 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
     private List<Object> extractBeanValues(final Object source, BeanCells cells) {
 
-        List<Object> beanValues = new ArrayList<Object>();
+        List<Object> beanValues = new ArrayList<>();
 
         for (BeanCell cell : cells.getAll()) {
             beanValues.add(cell.getValue(source));

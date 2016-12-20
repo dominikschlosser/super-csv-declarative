@@ -29,6 +29,16 @@ public class BeanWithOptionalFieldAndFieldAccess {
     private java.util.Optional<String> field;
 
     private String otherField;
+
+    public BeanWithOptionalFieldAndFieldAccess() {
+    }
+
+    
+    public BeanWithOptionalFieldAndFieldAccess(java.util.Optional<String> field, String otherField) {
+        this.field = field;
+        this.otherField = otherField;
+    }
+    
     
     public java.util.Optional<String> getField() {
         return field;

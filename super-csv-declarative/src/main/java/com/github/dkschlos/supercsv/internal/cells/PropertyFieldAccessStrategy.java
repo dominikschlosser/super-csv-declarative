@@ -21,6 +21,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Optional;
 import org.supercsv.exception.SuperCsvReflectionException;
 
 /**
@@ -36,7 +37,12 @@ public class PropertyFieldAccessStrategy implements FieldAccessStrategy {
     public Object getValue(Field field, Object obj) {
         try {
             Method method = getReadMethod(field, obj);
-            return method.invoke(obj);
+            Object result = method.invoke(obj);
+            if(result != null && java.util.Optional.class.isAssignableFrom(result.getClass())){
+                Optional optionalResult = (java.util.Optional) result;
+                return optionalResult.orElse(null);
+            }
+            return result;
         } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
             throw new SuperCsvReflectionException(Form.at("Error extracting bean value via getter for field {}",
                     field.getName()), e);
