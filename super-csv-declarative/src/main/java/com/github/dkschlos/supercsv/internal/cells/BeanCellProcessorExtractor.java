@@ -110,6 +110,7 @@ final class BeanCellProcessorExtractor {
         
         return result;
     }
+    
     private static CellProcessor buildProcessorChain(List<CellProcessorDefinition> definitions) {
         CellProcessor root = new Transient();
 

@@ -34,6 +34,7 @@ public class BeanWithRepeatableAnnotation {
     @Optional
     private String name;
     
+    @StrReplace(pattern = "^", replacement = " ")
     @Trim
     @StrReplace(pattern = "a", replacement = "b")
     @StrReplace(pattern = "b", replacement = "c")

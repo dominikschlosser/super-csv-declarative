@@ -15,7 +15,6 @@
  */
 package com.github.dkschlos.supercsv.io.declarative;
 
-import com.github.dkschlos.supercsv.internal.typeconversion.TypeConverterRegistry;
 import com.github.dkschlos.supercsv.testbeans.BeanForDefaultOverridingTest;
 import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
