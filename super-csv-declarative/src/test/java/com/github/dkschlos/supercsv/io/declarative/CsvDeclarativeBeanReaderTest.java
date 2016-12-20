@@ -16,6 +16,7 @@
 package com.github.dkschlos.supercsv.io.declarative;
 
 import com.github.dkschlos.supercsv.testbeans.BeanForDefaultOverridingTest;
+import com.github.dkschlos.supercsv.testbeans.BeanWithCellProcessorFactoryMethod;
 import com.github.dkschlos.supercsv.testbeans.ReadAndWriteBeanWithPropertyAccess;
 import com.github.dkschlos.supercsv.testbeans.BeanWithChainedAnnotations;
 import com.github.dkschlos.supercsv.testbeans.BeanWithEnum;
@@ -127,6 +128,17 @@ public class CsvDeclarativeBeanReaderTest {
         assertEquals(john, beanReader.read(BeanWithRepeatableAnnotation.class));
         assertEquals(max, beanReader.read(BeanWithRepeatableAnnotation.class));
         assertNull(beanReader.read(BeanWithRepeatableAnnotation.class));
+    }
+    
+    @Test
+    public void readBeanWithCellProcessorFactoryMethod() throws IOException {
+        setupBeanReader(SIMPLE_BEAN_SIMPLE_ANNOTATIONS_CSV);
+        BeanWithCellProcessorFactoryMethod john = new BeanWithCellProcessorFactoryMethod(null, "Doe", 42, 100.5);
+        BeanWithCellProcessorFactoryMethod max = new BeanWithCellProcessorFactoryMethod("Max", "Mustermcnn", 22, 21.4);
+
+        assertEquals(john, beanReader.read(BeanWithCellProcessorFactoryMethod.class));
+        assertEquals(max, beanReader.read(BeanWithCellProcessorFactoryMethod.class));
+        assertNull(beanReader.read(BeanWithCellProcessorFactoryMethod.class));
     }
     
     @Test
