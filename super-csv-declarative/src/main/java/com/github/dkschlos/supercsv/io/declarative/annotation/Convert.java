@@ -22,7 +22,9 @@ import java.lang.annotation.Target;
 
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
+import com.github.dkschlos.supercsv.io.declarative.annotation.containers.ConvertContainer;
 import com.github.dkschlos.supercsv.io.declarative.provider.ConvertCellProcessorProvider;
+import java.lang.annotation.Repeatable;
 
 /**
  * Annotation for the {@link com.github.dkschlos.supercsv.cellprocessor.Convert}-cell processor
@@ -30,6 +32,7 @@ import com.github.dkschlos.supercsv.io.declarative.provider.ConvertCellProcessor
  * @since 2.5
  * @author Dominik Schlosser
  */
+@Repeatable(ConvertContainer.class)
 @CellProcessorAnnotationDescriptor(provider = ConvertCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
