@@ -23,7 +23,6 @@ import java.lang.annotation.Target;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.provider.TrimCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
-import com.github.dkschlos.supercsv.io.declarative.annotation.containers.TrimContainer;
 import java.lang.annotation.Repeatable;
 
 /**
@@ -32,11 +31,17 @@ import java.lang.annotation.Repeatable;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@Repeatable(TrimContainer.class)
+@Repeatable(Trim.Container.class)
 @CellProcessorAnnotationDescriptor(provider = TrimCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface Trim {
 
     int order() default ProcessorOrder.UNDEFINED;
+    
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD})
+    @interface Container {
+        Trim[] value();
+    }
 }

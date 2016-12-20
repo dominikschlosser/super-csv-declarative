@@ -23,7 +23,6 @@ import java.lang.annotation.Target;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.provider.OptionalCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
-import com.github.dkschlos.supercsv.io.declarative.annotation.containers.OptionalContainer;
 import java.lang.annotation.Repeatable;
 
 /**
@@ -32,11 +31,17 @@ import java.lang.annotation.Repeatable;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@Repeatable(OptionalContainer.class)
+@Repeatable(Optional.Container.class)
 @CellProcessorAnnotationDescriptor(provider = OptionalCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface Optional {
 
     int order() default ProcessorOrder.UNDEFINED;
+    
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD})
+    @interface Container {
+        Optional[] value();
+    }
 }

@@ -22,7 +22,6 @@ import java.lang.annotation.Target;
 
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
-import com.github.dkschlos.supercsv.io.declarative.annotation.containers.TruncateContainer;
 import com.github.dkschlos.supercsv.io.declarative.provider.TruncateCellProcessorProvider;
 import java.lang.annotation.Repeatable;
 
@@ -32,7 +31,7 @@ import java.lang.annotation.Repeatable;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@Repeatable(TruncateContainer.class)
+@Repeatable(Truncate.Container.class)
 @CellProcessorAnnotationDescriptor(provider = TruncateCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
@@ -49,4 +48,10 @@ public @interface Truncate {
     String suffix() default "";
 
     int order() default ProcessorOrder.UNDEFINED;
+    
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD})
+    @interface Container {
+        Truncate[] value();
+    }
 }

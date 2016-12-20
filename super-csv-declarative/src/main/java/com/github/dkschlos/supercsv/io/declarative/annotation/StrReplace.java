@@ -23,7 +23,6 @@ import java.lang.annotation.Target;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.provider.StrReplaceCellProcessorProvider;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
-import com.github.dkschlos.supercsv.io.declarative.annotation.containers.StrReplaceContainer;
 import java.lang.annotation.Repeatable;
 
 /**
@@ -32,7 +31,7 @@ import java.lang.annotation.Repeatable;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@Repeatable(StrReplaceContainer.class)
+@Repeatable(StrReplace.Container.class)
 @CellProcessorAnnotationDescriptor(provider = StrReplaceCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
@@ -43,4 +42,10 @@ public @interface StrReplace {
     String replacement();
 
     int order() default ProcessorOrder.UNDEFINED;
+    
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD})
+    @interface Container {
+        StrReplace[] value();
+    }
 }

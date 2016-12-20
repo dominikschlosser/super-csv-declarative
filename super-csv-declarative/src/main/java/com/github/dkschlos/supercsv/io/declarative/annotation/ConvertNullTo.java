@@ -22,7 +22,6 @@ import java.lang.annotation.Target;
 
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
 import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
-import com.github.dkschlos.supercsv.io.declarative.annotation.containers.ConvertNullToContainer;
 import com.github.dkschlos.supercsv.io.declarative.provider.ConvertNullToCellProcessorProvider;
 import java.lang.annotation.Repeatable;
 
@@ -32,7 +31,7 @@ import java.lang.annotation.Repeatable;
  * @since 2.5
  * @author Dominik Schlosser
  */
-@Repeatable(ConvertNullToContainer.class)
+@Repeatable(ConvertNullTo.Container.class)
 @CellProcessorAnnotationDescriptor(provider = ConvertNullToCellProcessorProvider.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
@@ -44,4 +43,10 @@ public @interface ConvertNullTo {
     String value();
 
     int order() default ProcessorOrder.UNDEFINED;
+    
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD})
+    @interface Container {
+        ConvertNullTo[] value();
+    }
 }
