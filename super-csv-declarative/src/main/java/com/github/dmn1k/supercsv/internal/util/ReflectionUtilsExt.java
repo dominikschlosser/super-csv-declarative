@@ -8,6 +8,7 @@ public class ReflectionUtilsExt {
     /**
      * Instantiates the bean (or creates a proxy if it's an interface).
      *
+     * @param <T> bean type
      * @param clazz the bean class to instantiate (a proxy will be created if an interface is supplied), using the
      * default (no argument) constructor
      * @return the instantiated bean

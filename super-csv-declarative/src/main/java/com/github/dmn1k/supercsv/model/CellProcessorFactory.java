@@ -31,14 +31,14 @@ public interface CellProcessorFactory {
      * Creates a concrete {@link CellProcessor}-instance
      * @param next The next processor in the chain
      * 
-     * @return 
+     * @return created CellProcessor
      */
     CellProcessor create(CellProcessor next);
 
     /**
      * Where in the chain should this processor be? Is normally defined via an annotation 
      * or implicitly via annotation-order
-     * @return 
+     * @return defined order
      */
     int getOrder();
 }
