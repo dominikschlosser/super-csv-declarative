@@ -26,7 +26,7 @@ import com.github.dmn1k.supercsv.io.declarative.provider.ConvertCellProcessorPro
 import java.lang.annotation.Repeatable;
 
 /**
- * Annotation for the {@link com.github.dkschlos.supercsv.cellprocessor.Convert}-cell processor
+ * Annotation for the {@link com.github.dmn1k.supercsv.cellprocessor.Convert}-cell processor
  *
  * @since 2.5
  * @author Dominik Schlosser

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
- * This package contains annotations which are used by {@link com.github.dkschlos.supercsv.io.declarative.CsvDeclarativeBeanReader}
- * and {@link com.github.dkschlos.supercsv.io.declarative.CsvDeclarativeBeanWriter} to create
+ * This package contains annotations which are used by {@link com.github.dmn1k.supercsv.io.declarative.CsvDeclarativeBeanReader}
+ * and {@link com.github.dmn1k.supercsv.io.declarative.CsvDeclarativeBeanWriter} to create
  * {@link org.supercsv.cellprocessor.ift.CellProcessor}-chains for all fields of a bean
  */
 package com.github.dmn1k.supercsv.io.declarative.constraint.annotation;
