@@ -1,5 +1,19 @@
 # super-csv-declarative [![Build Status](https://travis-ci.org/dmn1k/super-csv-declarative.svg?branch=master)](https://travis-ci.org/dmn1k/super-csv-declarative) [![codecov](https://codecov.io/gh/dmn1k/super-csv-declarative/branch/master/graph/badge.svg)](https://codecov.io/gh/dkschlos/super-csv-declarative)
 
+*New since 3.0.0:*
+- *Java 8* is required!
+- *repeatable annotations* are supported and many annotations that come with the
+  framework are now repeatable!
+- you can now mix annotations and programmatic creation of CellProcessors with
+  *@CellProcessorFactoryMethod*
+- *java.time-types* (LocalDateTime and the like) are supported now
+- *java.util.Optional* is supported without use of an annotation (you still might have
+  to use com.github.dmn1k.supercsv.io.declarative.annotation.Optional to skip
+following processors though)
+- the base-namespace and groupId changed from 'com.github.dkschlos' to
+  'com.github.dmn1k'
+
+
 Unofficial declarative extension to super-csv, currently supporting version 2.4.0.
 
 It mainly provides two new classes:
@@ -175,8 +189,8 @@ public class OptionalCellProcessorProvider implements
 Get it from Maven Central:
 ```Maven
 <dependency>
-    <groupId>com.github.dkschlos</groupId>
+    <groupId>com.github.dmn1k</groupId>
     <artifactId>super-csv-declarative</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```

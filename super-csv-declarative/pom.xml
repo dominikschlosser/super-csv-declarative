@@ -16,13 +16,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.dkschlos</groupId>
+    <groupId>com.github.dmn1k</groupId>
     <artifactId>super-csv-declarative</artifactId>
     <version>3.0.0-SNAPSHOT</version>
 
     <name>Super CSV Declarative Extension</name>
     <description>An extension for Super CSV that enables declarative/implicit configuration of POJO-CSV-Mappings</description>
-    <url>https://github.com/dkschlos/super-csv-declarative</url>
+    <url>https://github.com/dmn1k/super-csv-declarative</url>
     <packaging>jar</packaging>
 
     <developers>
@@ -34,9 +34,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:dkschlos/super-csv-declarative.git</connection>
-        <developerConnection>scm:git:git@github.com:dkschlos/super-csv-declarative.git</developerConnection>
-        <url>git@github.com:dkschlos/super-csv-declarative.git</url>
+        <connection>scm:git:git@github.com:dmn1k/super-csv-declarative.git</connection>
+        <developerConnection>scm:git:git@github.com:dmn1k/super-csv-declarative.git</developerConnection>
+        <url>git@github.com:dmn1k/super-csv-declarative.git</url>
     </scm>
 
     <licenses>
