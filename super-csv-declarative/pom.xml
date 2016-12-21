@@ -18,7 +18,7 @@
 
     <groupId>com.github.dmn1k</groupId>
     <artifactId>super-csv-declarative</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
 
     <name>Super CSV Declarative Extension</name>
     <description>An extension for Super CSV that enables declarative/implicit configuration of POJO-CSV-Mappings</description>
