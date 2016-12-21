@@ -1,5 +1,7 @@
 # super-csv-declarative [![Build Status](https://travis-ci.org/dmn1k/super-csv-declarative.svg?branch=master)](https://travis-ci.org/dmn1k/super-csv-declarative) [![codecov](https://codecov.io/gh/dmn1k/super-csv-declarative/branch/master/graph/badge.svg)](https://codecov.io/gh/dkschlos/super-csv-declarative)
 
+---
+
 *New since 3.0.0:*
 - *Java 8* is required!
 - *repeatable annotations* are supported and many annotations that come with the
@@ -12,6 +14,8 @@
 following processors though)
 - the base-namespace and groupId changed from 'com.github.dkschlos' to
   'com.github.dmn1k'
+
+---
 
 
 Unofficial declarative extension to super-csv, currently supporting version 2.4.0.
