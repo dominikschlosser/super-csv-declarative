@@ -20,33 +20,23 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
 import com.github.dkschlos.supercsv.io.declarative.ProcessorOrder;
-import com.github.dkschlos.supercsv.io.declarative.provider.CellProcessorFactoryMethodProvider;
-import java.lang.annotation.Repeatable;
+import com.github.dkschlos.supercsv.io.declarative.CellProcessorAnnotationDescriptor;
+import com.github.dkschlos.supercsv.io.declarative.StandardCsvContexts;
+import com.github.dkschlos.supercsv.io.declarative.provider.FmtLocalDateTimeCellProcessorProvider;
 
 /**
- * Points to factory method which is used to create a part or the whole of the whole cell processor chain
+ * Annotation for the {@link org.supercsv.cellprocessor.time.FmtLocalDateTime}-cell processor
  *
  * @since 3.0.0
  * @author Dominik Schlosser
  */
-@Repeatable(CellProcessorFactoryMethod.Container.class)
-@CellProcessorAnnotationDescriptor(provider = CellProcessorFactoryMethodProvider.class)
+@CellProcessorAnnotationDescriptor(provider = FmtLocalDateTimeCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface CellProcessorFactoryMethod {
+public @interface FmtLocalDateTime {
+
+    String format();
+
     int order() default ProcessorOrder.UNDEFINED;
-    
-    Class<?> type() default DeclaredType.class;
-    
-    String methodName();
-    
-    public class DeclaredType {}
-    
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target({ElementType.FIELD})
-    @interface Container {
-        CellProcessorFactoryMethod[] value();
-    }
 }

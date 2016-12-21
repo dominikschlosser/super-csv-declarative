@@ -23,7 +23,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Meta-Description of a SuperCSV-bean
  *
+ * @since 3.0.0
  * @author Dominik Schlosser
  */
 public class BeanDescriptor {

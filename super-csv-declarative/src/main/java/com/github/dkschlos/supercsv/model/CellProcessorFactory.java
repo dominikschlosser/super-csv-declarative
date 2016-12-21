@@ -17,9 +17,28 @@ package com.github.dkschlos.supercsv.model;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
+/**
+ * SuperCSV-Declarative defines annotations which point to {@link DeclarativeCellProcessorProvider}s 
+ * which create implementations of this interface.
+ * 
+ *
+ * @since 3.0.0
+ * @author Dominik Schlosser
+ */
 public interface CellProcessorFactory {
 
+    /**
+     * Creates a concrete {@link CellProcessor}-instance
+     * @param next The next processor in the chain
+     * 
+     * @return 
+     */
     CellProcessor create(CellProcessor next);
 
+    /**
+     * Where in the chain should this processor be? Is normally defined via an annotation 
+     * or implicitly via annotation-order
+     * @return 
+     */
     int getOrder();
 }

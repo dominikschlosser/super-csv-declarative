@@ -19,7 +19,14 @@ package com.github.dkschlos.supercsv.model;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-
+/**
+ * Metadata to describe a field with SuperCSV-Declarative annotation(s)
+ * 
+ *
+ * @param <T> The annotation type
+ * @since 3.0.0
+ * @author Dominik Schlosser
+ */
 public class ProcessingMetadata<T extends Annotation> {
     private final T annotation;
     private final Field field;

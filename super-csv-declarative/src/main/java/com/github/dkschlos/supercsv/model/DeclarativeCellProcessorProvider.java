@@ -15,7 +15,6 @@
  */
 package com.github.dkschlos.supercsv.model;
 
-import com.github.dkschlos.supercsv.model.ProcessingMetadata;
 import java.lang.annotation.Annotation;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
