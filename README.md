@@ -17,6 +17,17 @@ following processors though)
 
 ---
 
+## Installation
+
+Get it from Maven Central:
+```Maven
+<dependency>
+    <groupId>com.github.dmn1k</groupId>
+    <artifactId>super-csv-declarative</artifactId>
+    <version>3.0.0</version>
+</dependency>
+```
+## Overview
 
 Unofficial declarative extension to super-csv, currently supporting version 2.4.0.
 
@@ -186,15 +197,4 @@ public class OptionalCellProcessorProvider implements
 	}
 
 }
-```
-
-## Installation
-
-Get it from Maven Central:
-```Maven
-<dependency>
-    <groupId>com.github.dmn1k</groupId>
-    <artifactId>super-csv-declarative</artifactId>
-    <version>3.0.0</version>
-</dependency>
 ```
