@@ -31,7 +31,7 @@ import com.github.dmn1k.supercsv.io.declarative.provider.FmtZonedDateTimeCellPro
  * @since 3.0.0
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtZonedDateTimeCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
+@CellProcessorAnnotationDescriptor(provider = FmtZonedDateTimeCellProcessorProvider.class, contexts = {StandardCsvContexts.WRITE})
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface FmtZonedDateTime {

@@ -31,7 +31,7 @@ import com.github.dmn1k.supercsv.io.declarative.provider.FmtLocalDateCellProcess
  * @since 3.0.0
  * @author Dominik Schlosser
  */
-@CellProcessorAnnotationDescriptor(provider = FmtLocalDateCellProcessorProvider.class, contexts = {StandardCsvContexts.READ})
+@CellProcessorAnnotationDescriptor(provider = FmtLocalDateCellProcessorProvider.class, contexts = {StandardCsvContexts.WRITE})
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface FmtLocalDate {
