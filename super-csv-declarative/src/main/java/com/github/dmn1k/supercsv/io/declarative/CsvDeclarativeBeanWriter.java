@@ -95,4 +95,11 @@ public class CsvDeclarativeBeanWriter extends AbstractCsvWriter {
 
         return beanValues;
     }
+    
+    @Override
+    public void close() throws IOException {
+        super.close();
+        
+        BeanCells.resetCache();
+    }
 }

@@ -31,6 +31,7 @@ import com.github.dmn1k.supercsv.testbeans.BeanWithoutAnnotations;
 import com.github.dmn1k.supercsv.testbeans.BeanWithoutExplicitParseAnnotations;
 import com.github.dmn1k.supercsv.testbeans.StrictBeanWithPartialColumnMapping;
 import com.github.dmn1k.supercsv.testbeans.TestEnum;
+import com.github.dmn1k.supercsv.testbeans.UniqueHashCodeBean;
 import com.github.dmn1k.supercsv.testbeans.order.BeanWithExplicitlyOrderedAnnotations;
 import com.github.dmn1k.supercsv.testbeans.order.BeanWithExplicitlyOrderedFields;
 import com.github.dmn1k.supercsv.testbeans.order.BeanWithIllegalExplicitFieldOrder;
@@ -46,6 +47,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
+import org.supercsv.exception.SuperCsvConstraintViolationException;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.Tokenizer;
@@ -68,6 +70,8 @@ public class CsvDeclarativeBeanReaderTest {
     private static final String BEAN_FOR_DEFAULT_OVERRIDING_TEST = "/beanForDefaultOverridingTest.csv";
     private static final String BEAN_WITHOUT_EXPLICIT_PARSE_ANNOTATIONS_TEST = "/beanWithoutExplicitParseAnnotations.csv";
     private static final String BEAN_WITH_ENUM = "/beanWithEnumTest.csv";
+    private static final String BEAN_UNIQUE_HASHCODE = "/uniqueHashCode.csv";
+    
 
     private CsvDeclarativeBeanReader beanReader;
 
@@ -334,6 +338,25 @@ public class CsvDeclarativeBeanReaderTest {
         beanReader.read(IllegalAccessBean.class);
     }
 
+    @Test(expected = SuperCsvConstraintViolationException.class)
+    public void uniqueHashCodeThrowsOnDuplicateHashValue() throws IOException {
+        setupBeanReader(BEAN_UNIQUE_HASHCODE);
+        beanReader.read(UniqueHashCodeBean.class);
+        beanReader.read(UniqueHashCodeBean.class);
+    }
+    
+    @Test
+    public void uniqueHashCodeIsResetWhenClosingReader() throws IOException {
+        setupBeanReader(BEAN_UNIQUE_HASHCODE);
+        beanReader.read(UniqueHashCodeBean.class);
+        beanReader.close();
+        
+        setupBeanReader(BEAN_UNIQUE_HASHCODE);
+        beanReader.read(UniqueHashCodeBean.class);
+        
+        // expect no exception to be thrown
+    }
+    
     public static class IllegalAccessBean {
 
         public IllegalAccessBean() throws IllegalAccessException {

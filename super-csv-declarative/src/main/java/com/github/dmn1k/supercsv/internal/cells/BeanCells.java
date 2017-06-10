@@ -68,6 +68,10 @@ public final class BeanCells {
         return result;
     }
 
+    public static void resetCache() {
+        FIELD_CACHE.clear();
+    }
+        
     public BeanCell getCell(int index) {
         BeanCell mapped = mappedFields.get(index);
         if (mapped != null) {

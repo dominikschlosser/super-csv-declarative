@@ -188,4 +188,12 @@ public class CsvDeclarativeBeanReader extends AbstractCsvReader {
         return null; // EOF
     }
 
+    @Override
+    public void close() throws IOException {
+        super.close();
+        
+        BeanCells.resetCache();
+    }
+
+    
 }
