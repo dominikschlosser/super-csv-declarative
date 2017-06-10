@@ -24,7 +24,7 @@ Get it from Maven Central:
 <dependency>
     <groupId>com.github.dmn1k</groupId>
     <artifactId>super-csv-declarative</artifactId>
-    <version>3.0.1</version>
+    <version>4.0.0</version>
 </dependency>
 ```
 ## Overview
